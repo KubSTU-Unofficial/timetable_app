@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:timetable_app/common/di/get_it.dart';
-import 'package:timetable_app/common/presentation/router.dart';
+import 'package:timetable_app/core/di/get_it.dart';
+import 'package:timetable_app/routing/router.dart';
 
 void main() async {
 	WidgetsFlutterBinding.ensureInitialized();

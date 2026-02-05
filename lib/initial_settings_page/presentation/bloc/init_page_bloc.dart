@@ -2,8 +2,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:timetable_app/common/di/get_it.dart';
 import 'package:timetable_app/common/domain/entities/group/group.dart';
 import 'package:timetable_app/common/domain/entities/group/usecases/get_groups_by_institute_usecase.dart';
-import 'package:timetable_app/initial_settings_page/domain/init_page_bloc_state.dart';
-import 'package:timetable_app/initial_settings_page/domain/init_page_block_event.dart';
+import 'package:timetable_app/initial_settings_page/presentation/bloc/init_page_bloc_state.dart';
+import 'package:timetable_app/initial_settings_page/presentation/bloc/init_page_block_event.dart';
 
 class InitPageBloc extends Bloc<InitPageBlockEvent, InitPageBlocState> {
   InitPageBloc() : super(InitPageBlocState()) {

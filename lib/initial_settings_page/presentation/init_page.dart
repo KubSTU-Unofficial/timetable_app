@@ -7,9 +7,9 @@ import 'package:timetable_app/common/data/shared_prefs_keys.dart';
 import 'package:timetable_app/common/di/get_it.dart';
 import 'package:timetable_app/common/presentation/error_message.dart';
 import 'package:timetable_app/common/presentation/router.dart';
-import 'package:timetable_app/initial_settings_page/domain/init_page_bloc.dart';
-import 'package:timetable_app/initial_settings_page/domain/init_page_bloc_state.dart';
-import 'package:timetable_app/initial_settings_page/domain/init_page_block_event.dart';
+import 'package:timetable_app/initial_settings_page/presentation/bloc/init_page_bloc.dart';
+import 'package:timetable_app/initial_settings_page/presentation/bloc/init_page_bloc_state.dart';
+import 'package:timetable_app/initial_settings_page/presentation/bloc/init_page_block_event.dart';
 
 class InitPage extends StatelessWidget {
   const InitPage({super.key});

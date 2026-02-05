@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timetable_app/common/data/shared_prefs_keys.dart';
 import 'package:timetable_app/common/di/get_it.dart';
 import 'package:timetable_app/home_page/presentation/my_home_page.dart';
-import 'package:timetable_app/initial_settings_page/domain/init_page_bloc.dart';
+import 'package:timetable_app/initial_settings_page/presentation/bloc/init_page_bloc.dart';
 import 'package:timetable_app/initial_settings_page/presentation/init_page.dart';
 
 const String homePagePath = "/";

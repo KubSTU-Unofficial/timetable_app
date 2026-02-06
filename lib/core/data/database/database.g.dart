@@ -17,19 +17,8 @@ class $GroupsTable extends Groups with TableInfo<$GroupsTable, GroupsEntry> {
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
-  static const VerificationMeta _instituteMeta = const VerificationMeta(
-    'institute',
-  );
   @override
-  late final GeneratedColumn<String> institute = GeneratedColumn<String>(
-    'institute',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  @override
-  List<GeneratedColumn> get $columns => [name, institute];
+  List<GeneratedColumn> get $columns => [name];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -50,14 +39,6 @@ class $GroupsTable extends Groups with TableInfo<$GroupsTable, GroupsEntry> {
     } else if (isInserting) {
       context.missing(_nameMeta);
     }
-    if (data.containsKey('institute')) {
-      context.handle(
-        _instituteMeta,
-        institute.isAcceptableOrUnknown(data['institute']!, _instituteMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_instituteMeta);
-    }
     return context;
   }
 
@@ -71,10 +52,6 @@ class $GroupsTable extends Groups with TableInfo<$GroupsTable, GroupsEntry> {
         DriftSqlType.string,
         data['${effectivePrefix}name'],
       )!,
-      institute: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}institute'],
-      )!,
     );
   }
 
@@ -86,18 +63,16 @@ class $GroupsTable extends Groups with TableInfo<$GroupsTable, GroupsEntry> {
 
 class GroupsEntry extends DataClass implements Insertable<GroupsEntry> {
   final String name;
-  final String institute;
-  const GroupsEntry({required this.name, required this.institute});
+  const GroupsEntry({required this.name});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['name'] = Variable<String>(name);
-    map['institute'] = Variable<String>(institute);
     return map;
   }
 
   GroupsCompanion toCompanion(bool nullToAbsent) {
-    return GroupsCompanion(name: Value(name), institute: Value(institute));
+    return GroupsCompanion(name: Value(name));
   }
 
   factory GroupsEntry.fromJson(
@@ -105,87 +80,58 @@ class GroupsEntry extends DataClass implements Insertable<GroupsEntry> {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return GroupsEntry(
-      name: serializer.fromJson<String>(json['name']),
-      institute: serializer.fromJson<String>(json['institute']),
-    );
+    return GroupsEntry(name: serializer.fromJson<String>(json['name']));
   }
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'name': serializer.toJson<String>(name),
-      'institute': serializer.toJson<String>(institute),
-    };
+    return <String, dynamic>{'name': serializer.toJson<String>(name)};
   }
 
-  GroupsEntry copyWith({String? name, String? institute}) => GroupsEntry(
-    name: name ?? this.name,
-    institute: institute ?? this.institute,
-  );
+  GroupsEntry copyWith({String? name}) => GroupsEntry(name: name ?? this.name);
   GroupsEntry copyWithCompanion(GroupsCompanion data) {
-    return GroupsEntry(
-      name: data.name.present ? data.name.value : this.name,
-      institute: data.institute.present ? data.institute.value : this.institute,
-    );
+    return GroupsEntry(name: data.name.present ? data.name.value : this.name);
   }
 
   @override
   String toString() {
     return (StringBuffer('GroupsEntry(')
-          ..write('name: $name, ')
-          ..write('institute: $institute')
+          ..write('name: $name')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(name, institute);
+  int get hashCode => name.hashCode;
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is GroupsEntry &&
-          other.name == this.name &&
-          other.institute == this.institute);
+      (other is GroupsEntry && other.name == this.name);
 }
 
 class GroupsCompanion extends UpdateCompanion<GroupsEntry> {
   final Value<String> name;
-  final Value<String> institute;
   final Value<int> rowid;
   const GroupsCompanion({
     this.name = const Value.absent(),
-    this.institute = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   GroupsCompanion.insert({
     required String name,
-    required String institute,
     this.rowid = const Value.absent(),
-  }) : name = Value(name),
-       institute = Value(institute);
+  }) : name = Value(name);
   static Insertable<GroupsEntry> custom({
     Expression<String>? name,
-    Expression<String>? institute,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
       if (name != null) 'name': name,
-      if (institute != null) 'institute': institute,
       if (rowid != null) 'rowid': rowid,
     });
   }
 
-  GroupsCompanion copyWith({
-    Value<String>? name,
-    Value<String>? institute,
-    Value<int>? rowid,
-  }) {
-    return GroupsCompanion(
-      name: name ?? this.name,
-      institute: institute ?? this.institute,
-      rowid: rowid ?? this.rowid,
-    );
+  GroupsCompanion copyWith({Value<String>? name, Value<int>? rowid}) {
+    return GroupsCompanion(name: name ?? this.name, rowid: rowid ?? this.rowid);
   }
 
   @override
@@ -193,9 +139,6 @@ class GroupsCompanion extends UpdateCompanion<GroupsEntry> {
     final map = <String, Expression>{};
     if (name.present) {
       map['name'] = Variable<String>(name.value);
-    }
-    if (institute.present) {
-      map['institute'] = Variable<String>(institute.value);
     }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
@@ -207,7 +150,6 @@ class GroupsCompanion extends UpdateCompanion<GroupsEntry> {
   String toString() {
     return (StringBuffer('GroupsCompanion(')
           ..write('name: $name, ')
-          ..write('institute: $institute, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -227,17 +169,9 @@ abstract class _$Database extends GeneratedDatabase {
 }
 
 typedef $$GroupsTableCreateCompanionBuilder =
-    GroupsCompanion Function({
-      required String name,
-      required String institute,
-      Value<int> rowid,
-    });
+    GroupsCompanion Function({required String name, Value<int> rowid});
 typedef $$GroupsTableUpdateCompanionBuilder =
-    GroupsCompanion Function({
-      Value<String> name,
-      Value<String> institute,
-      Value<int> rowid,
-    });
+    GroupsCompanion Function({Value<String> name, Value<int> rowid});
 
 class $$GroupsTableFilterComposer extends Composer<_$Database, $GroupsTable> {
   $$GroupsTableFilterComposer({
@@ -249,11 +183,6 @@ class $$GroupsTableFilterComposer extends Composer<_$Database, $GroupsTable> {
   });
   ColumnFilters<String> get name => $composableBuilder(
     column: $table.name,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get institute => $composableBuilder(
-    column: $table.institute,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -270,11 +199,6 @@ class $$GroupsTableOrderingComposer extends Composer<_$Database, $GroupsTable> {
     column: $table.name,
     builder: (column) => ColumnOrderings(column),
   );
-
-  ColumnOrderings<String> get institute => $composableBuilder(
-    column: $table.institute,
-    builder: (column) => ColumnOrderings(column),
-  );
 }
 
 class $$GroupsTableAnnotationComposer
@@ -288,9 +212,6 @@ class $$GroupsTableAnnotationComposer
   });
   GeneratedColumn<String> get name =>
       $composableBuilder(column: $table.name, builder: (column) => column);
-
-  GeneratedColumn<String> get institute =>
-      $composableBuilder(column: $table.institute, builder: (column) => column);
 }
 
 class $$GroupsTableTableManager
@@ -322,23 +243,13 @@ class $$GroupsTableTableManager
           updateCompanionCallback:
               ({
                 Value<String> name = const Value.absent(),
-                Value<String> institute = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
-              }) => GroupsCompanion(
-                name: name,
-                institute: institute,
-                rowid: rowid,
-              ),
+              }) => GroupsCompanion(name: name, rowid: rowid),
           createCompanionCallback:
               ({
                 required String name,
-                required String institute,
                 Value<int> rowid = const Value.absent(),
-              }) => GroupsCompanion.insert(
-                name: name,
-                institute: institute,
-                rowid: rowid,
-              ),
+              }) => GroupsCompanion.insert(name: name, rowid: rowid),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
               .toList(),

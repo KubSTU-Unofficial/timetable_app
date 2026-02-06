@@ -4,7 +4,6 @@ import 'package:timetable_app/features/initial_settings/data/datasources/databas
 import 'package:timetable_app/features/initial_settings/data/models/groups_table.dart';
 import 'package:timetable_app/features/initial_settings/domain/entities/group/group.dart';
 import 'package:timetable_app/features/initial_settings/domain/repo_ints/group_repo_int.dart';
-import 'package:timetable_app/shared/data/constants.dart';
 
 class GroupRepo implements GroupRepoInt {
 	final GroupsDao db;
@@ -24,10 +23,13 @@ class GroupRepo implements GroupRepoInt {
   }
 
   @override
-  Future<List<Group>> selectByInstitute(String institute) async {
-		List<Group> groups = (await db.selectByInstitute(institute)).toGroupList();
-		if (groups.isEmpty && institutes.contains(institute)) {
-			groups = await api.getByInstitute(institute);
+  Future<List<Group>> getAll() async {
+		// Для тестирования экранов ошибки и загрузки
+		// throw Exception("Что-то пошло не так");
+		// await Future.delayed(Duration(seconds: 5));
+		List<Group> groups = (await db.selectAll()).toGroupList();
+		if (groups.isEmpty) {
+			groups = await api.getAll();
 			await saveAll(groups);
 		}
 		return groups;

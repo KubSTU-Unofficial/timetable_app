@@ -2,7 +2,7 @@ import 'package:timetable_app/features/initial_settings/domain/entities/group/gr
 
 abstract class GroupRemoteDataSourceInt {
   
-	Future<List<Group>> getByInstitute(String institute);
+	Future<List<Group>> getAll();
 
 	Future<List<Group>> getBySubstring(String substring);
 

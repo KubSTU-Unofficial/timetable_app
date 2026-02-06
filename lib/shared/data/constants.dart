@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 // Потом нужно будет заменить на получение из API
 List<String> institutes = [
   "ФЭУБ",
@@ -28,5 +27,3 @@ List<String> groups = [
   "22-КБ-ИВ15",
   "22-КБ-ИВ16",
 ];
-
-const sizedBox = SizedBox(height: 10);

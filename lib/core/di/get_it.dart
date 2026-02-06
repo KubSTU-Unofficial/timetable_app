@@ -6,7 +6,7 @@ import 'package:timetable_app/features/initial_settings/data/datasources/api/gro
 import 'package:timetable_app/features/initial_settings/data/datasources/database/groups_dao.dart';
 import 'package:timetable_app/features/initial_settings/data/repos/group_repo.dart';
 import 'package:timetable_app/features/initial_settings/domain/repo_ints/group_repo_int.dart';
-import 'package:timetable_app/features/initial_settings/domain/usecases/get_groups_by_institute_usecase.dart';
+import 'package:timetable_app/features/initial_settings/domain/usecases/get_all_groups_usecase.dart';
 
 final	getIt = GetIt.asNewInstance();
 
@@ -45,7 +45,7 @@ void _initializeRepositories() {
 }
 
 void _initializeUsecases() {
-	getIt.registerLazySingleton(() => GetGroupsByInstituteUsecase(
+	getIt.registerLazySingleton(() => GetAllGroupsUsecase(
 		repo: getIt.get()
 	));
 	// ... Другие сценарии здесь

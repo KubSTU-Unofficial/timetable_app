@@ -8,8 +8,8 @@ part 'groups_dao.g.dart';
 class GroupsDao extends DatabaseAccessor<Database> with _$GroupsDaoMixin {
   GroupsDao(super.attachedDatabase);
 
-	Future<List<GroupsEntry>> selectByInstitute(String institute) {
-		return (select(groups)..where((e) => e.institute.equals(institute))).get();
+	Future<List<GroupsEntry>> selectAll() {
+		return (select(groups)).get();
 	}
 
 	Future<void> upsertAll(List<GroupsCompanion> entries) {

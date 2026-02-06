@@ -7,17 +7,6 @@ import 'package:timetable_app/features/initial_settings/domain/entities/group/gr
 class GroupRemoteDataSource implements GroupRemoteDataSourceInt {
 
 	@override
-  Future<List<Group>> getByInstitute(String institute) async {
-		String body = await Api.get(
-			"get-by-institute",
-			queryParameters: { "institute": institute, }
-		);
-		List<dynamic> rawJson = jsonDecode(body);
-		List<Group> groups = rawJson.map((e) => Group.fromJson(e as Map<String, dynamic>)).toList();
-		return groups;
-	}
-
-	@override
   Future<List<Group>> getBySubstring(String substring) async {
 		String body = await Api.get(
 			"get-by-substring",
@@ -27,6 +16,12 @@ class GroupRemoteDataSource implements GroupRemoteDataSourceInt {
 		List<Group> groups = rawJson.map((e) => Group.fromJson(e as Map<String, dynamic>)).toList();
 		return groups;
 	}
+
+  @override
+  Future<List<Group>> getAll() {
+    // TODO: implement getAll
+    throw UnimplementedError();
+  }
 
 	// ... (другие запросы по для получения групп, если требуются)
 }

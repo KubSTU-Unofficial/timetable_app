@@ -2,8 +2,10 @@ part of "init_page_bloc.dart";
 
 abstract class InitPageBlockEvent {}
 
-class loudGroupsEvent extends InitPageBlockEvent {
-  final String groupName;
+class InitEvent extends InitPageBlockEvent {}
 
-  loudGroupsEvent(this.groupName);
+class SetupFinishedEvent extends InitPageBlockEvent {
+	final String group;
+
+  SetupFinishedEvent({required this.group});
 }

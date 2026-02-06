@@ -1,9 +1,21 @@
 part of "init_page_bloc.dart";
 
-class InitPageBlocState {}
+sealed class InitPageBlocState {}
 
 class InitPageInitial extends InitPageBlocState {}
 
-class InitPageLouding extends InitPageBlocState {}
+class InitPageLoading extends InitPageBlocState {}
 
-class InitPageLoaded extends InitPageBlocState {}
+class InitPageLoaded extends InitPageBlocState {
+	final List<Group> groups;
+
+  InitPageLoaded({required this.groups});
+}
+
+class InitPageError extends InitPageBlocState {
+	final String errorMessage;
+
+  InitPageError({required this.errorMessage});
+}
+
+class InitPageSetupFinished extends InitPageBlocState {}

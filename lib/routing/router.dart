@@ -29,7 +29,7 @@ final router = GoRouter(
 			path: initPagePath,
 			builder: (ctx, state) {
 				return BlocProvider(
-					create: (ctx) => InitPageBloc(),
+					create: (ctx) => InitPageBloc()..add(InitEvent()),
 					child: InitPage()
 				);
 			}

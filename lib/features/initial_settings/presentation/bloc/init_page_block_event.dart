@@ -1,13 +1,9 @@
+part of "init_page_bloc.dart";
+
 abstract class InitPageBlockEvent {}
 
-class InstituteSelectedEvent implements InitPageBlockEvent {
-	final String? institute;
+class loudGroupsEvent extends InitPageBlockEvent {
+  final String groupName;
 
-	InstituteSelectedEvent(this.institute);
-}
-
-class GroupSelectedEvent implements InitPageBlockEvent {
-	final String? group;
-
-	GroupSelectedEvent(this.group);
+  loudGroupsEvent(this.groupName);
 }

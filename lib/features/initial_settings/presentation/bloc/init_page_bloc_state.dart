@@ -1,16 +1,9 @@
-import 'package:timetable_app/features/initial_settings/domain/entities/group/group.dart';
+part of "init_page_bloc.dart";
 
-class InitPageBlocState {
-  final List<Group> groups;
-	final String? selectedInstitute;
-  final String? selectedGroup;
-  final String? errorMessage;
+class InitPageBlocState {}
 
-  const InitPageBlocState({
-    this.groups = const [],
-    this.selectedInstitute,
-    this.selectedGroup,
-    this.errorMessage,
-  });
-}
+class InitPageInitial extends InitPageBlocState {}
 
+class InitPageLouding extends InitPageBlocState {}
+
+class InitPageLoaded extends InitPageBlocState {}

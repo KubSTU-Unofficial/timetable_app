@@ -1,12 +1,12 @@
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timetable_app/core/data/database/database.dart';
-import 'package:timetable_app/features/initial_settings/data/datasources/api/groups/group_remote_data_source_int.dart';
-import 'package:timetable_app/features/initial_settings/data/datasources/api/groups/mock_group_api.dart';
-import 'package:timetable_app/features/initial_settings/data/datasources/database/groups_dao.dart';
-import 'package:timetable_app/features/initial_settings/data/repos/group_repo.dart';
-import 'package:timetable_app/features/initial_settings/domain/repo_ints/group_repo_int.dart';
-import 'package:timetable_app/features/initial_settings/domain/usecases/get_all_groups_usecase.dart';
+import 'package:timetable_app/features/initial_settings_page/data/datasources/api/groups/group_remote_data_source_int.dart';
+import 'package:timetable_app/features/initial_settings_page/data/datasources/api/groups/mock_group_api.dart';
+import 'package:timetable_app/features/initial_settings_page/data/datasources/database/groups_dao.dart';
+import 'package:timetable_app/features/initial_settings_page/data/repos/group_repo.dart';
+import 'package:timetable_app/features/initial_settings_page/domain/repo_ints/group_repo_int.dart';
+import 'package:timetable_app/features/initial_settings_page/domain/usecases/get_all_groups_usecase.dart';
 
 final	getIt = GetIt.asNewInstance();
 

@@ -1,25 +1,28 @@
 import 'package:flutter/material.dart';
 
 abstract class AppColors {
-  // Основная черно-оранжево-золотая гамма
+  // Оранжево-золотая гамма
   static const Color primary = Color(0xFFF97316);     // Яркий оранжевый
   static const Color primaryDark = Color(0xFFEA580C); // Темный оранжевый
   static const Color primaryLight = Color(0xFFFDBA74); // Светлый оранжевый
   
+  // Навигационная панель
+  static const Color navigationBarBackground = Color(0xFF1E293B); // Темный фон
+
   // Акцентные цвета
   static const Color accent = Color(0xFFD4AF37);      // Золотой акцент
   static const Color secondary = Color(0xFF0F172A);   // Черный для контраста
   
   // Нейтральные
-  static const Color background = Color(0xFF0F172A);  // серый фон
-  static const Color surface = Color(0xFFF8FAFC);     // Светло-серый фон
+  static const Color background = Color(0xFFF8FAFC);  // Белый фон
+  static const Color surface = Color(0xFFD5D5D5);     // Темно-белый фон
   static const Color card = Color(0xFFF1F5F9);        // Фон карточек
   
   // Текст
   static const Color textPrimary = Color(0xFF0F172A); // Черный текст
   static const Color textSecondary = Color(0xFF475569); // Темно-серый
   static const Color textDisabled = Color(0xFF94A3B8); // Серый
-  static const Color textAccent = Color(0xFFEA580C); // Белый текст на оранжевом
+  static const Color textAccent = Color(0xFFEA580C); // Оранжевый для акцентов в тексте
   
   // Системные
   static const Color error = Color(0xFFEF4444);       // Красный
@@ -28,7 +31,7 @@ abstract class AppColors {
   static const Color info = Color(0xFF3B82F6);        // Синий
   
   // Границы и разделители
-  static const Color enabledBorder = Color(0xFFFDBA74); // Светло-серый для границ
+  static const Color enabledBorder = Color(0xFFFDBA74); // Светло-оранжевый для границ
   static const Color focusedBorder = Color(0xFFF97316); // Оранжевый для границ в фокусе
   static const Color divider = Color(0xFFE2E8F0);     // Светло-серый разделитель
   

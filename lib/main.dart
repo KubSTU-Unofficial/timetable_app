@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+
+// Core
 import 'package:timetable_app/core/di/get_it.dart';
+
+// Router
 import 'package:timetable_app/routing/router.dart';
 
 void main() async {

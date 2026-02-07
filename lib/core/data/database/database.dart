@@ -1,8 +1,8 @@
 import 'package:drift/drift.dart';
 import 'package:drift_flutter/drift_flutter.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:timetable_app/features/initial_settings/data/datasources/database/groups_dao.dart';
-import 'package:timetable_app/features/initial_settings/data/models/groups_table.dart';
+import 'package:timetable_app/features/initial_settings_page/data/datasources/database/groups_dao.dart';
+import 'package:timetable_app/features/initial_settings_page/data/models/groups_table.dart';
 part 'database.g.dart';
 
 

@@ -55,7 +55,7 @@ class _InitPageState extends State<InitPage> {
 											"Впишите название своей группы, чтобы мы могли загрузить ваше расписание",
 											style: TextStyle(
 												color: AppColors.textAccent,
-												fontSize: 18,
+												fontSize: 20,
 												fontWeight: FontWeight.bold,
 											),
 										),
@@ -82,10 +82,10 @@ class _InitPageState extends State<InitPage> {
 										padding: const EdgeInsets.all(16.0),
 										child: Text(
 											textAlign: TextAlign.center,
-											"Пожалуйста, выберите группу из списка",
+											"Введено неверное значение. Пожалуйста, выберите группу из списка или введите заново свою группу",
 											style: TextStyle(
 												color: AppColors.error,
-												fontSize: 12,
+												fontSize: 18,
 												fontWeight: FontWeight.bold,
 											),
 										),

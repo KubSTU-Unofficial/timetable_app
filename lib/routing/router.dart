@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Core
 import 'package:timetable_app/core/di/get_it.dart';
+import 'package:timetable_app/features/schedule_page/presentation/pages/schedule_page.dart';
 
 // Shared
 import 'package:timetable_app/shared/data/shared_prefs_keys.dart';
@@ -25,6 +26,7 @@ const String homePagePath = "/";
 const String initPagePath = "/init";
 const String examsPagePath = "/exams";
 const String teachersPagePath = "/teachers";
+const String schedulePagePath = "/schedule";
 const String settingsPagePath = "/settings";
 
 final router = GoRouter(
@@ -34,6 +36,22 @@ final router = GoRouter(
       builder: (context, state, navigationShell) =>
           MainNavigationScreen(navigationShell: navigationShell),
       branches: [
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: teachersPagePath,
+              builder: (ctx, state) => TeachersPage(),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: schedulePagePath,
+              builder: (ctx, state) => SchedulePage(),
+            ),
+          ],
+        ),
         StatefulShellBranch(
           routes: [
             GoRoute(
@@ -55,28 +73,7 @@ final router = GoRouter(
         ),
         StatefulShellBranch(
           routes: [
-            GoRoute(
-              path: initPagePath,
-              builder: (ctx, state) {
-                return BlocProvider(
-                  create: (ctx) => InitPageBloc()..add(InitEvent()),
-                  child: InitPage(),
-                );
-              },
-            ),
-          ],
-        ),
-        StatefulShellBranch(
-          routes: [
             GoRoute(path: examsPagePath, builder: (ctx, state) => ExamsPage()),
-          ],
-        ),
-        StatefulShellBranch(
-          routes: [
-            GoRoute(
-              path: teachersPagePath,
-              builder: (ctx, state) => TeachersPage(),
-            ),
           ],
         ),
         StatefulShellBranch(
@@ -89,5 +86,14 @@ final router = GoRouter(
         ),
       ],
     ),
-  ],
+		GoRoute(
+			path: initPagePath,
+			builder: (ctx, state) {
+				return BlocProvider(
+					create: (ctx) => InitPageBloc()..add(InitEvent()),
+					child: InitPage(),
+				);
+			},
+		),
+	],
 );

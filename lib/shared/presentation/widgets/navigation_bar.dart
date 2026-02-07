@@ -8,10 +8,10 @@ class CustomBottomNavigationBar extends StatelessWidget {
   final Function(int) onTap;
 
   const CustomBottomNavigationBar({
-    Key? key,
+    super.key,
     required this.currentIndex,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
       unselectedItemColor: AppColors.primary.withAlpha(150),
       items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-          icon: Icon(Icons.today),
+          icon: Icon(Icons.school),
           label: "",
           backgroundColor: AppColors.navigationBarBackground,
         ),
@@ -32,12 +32,12 @@ class CustomBottomNavigationBar extends StatelessWidget {
           backgroundColor: AppColors.navigationBarBackground,
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.groups),
+          icon: Icon(Icons.today),
           label: "",
           backgroundColor: AppColors.navigationBarBackground,
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.school),
+          icon: Icon(Icons.grading),
           label: "",
           backgroundColor: AppColors.navigationBarBackground,
         ),

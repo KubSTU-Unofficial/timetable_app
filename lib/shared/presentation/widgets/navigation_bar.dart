@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 // Shared
 import 'package:timetable_app/shared/presentation/theme/app_colors.dart';
+import 'package:timetable_app/shared/presentation/widgets/svg_icon.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
   final int currentIndex;
@@ -37,7 +38,9 @@ class CustomBottomNavigationBar extends StatelessWidget {
           backgroundColor: AppColors.navigationBarBackground,
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.grading),
+          icon: SvgIcon(
+						assetName: 'assets/exam.svg',
+					),
           label: "",
           backgroundColor: AppColors.navigationBarBackground,
         ),

@@ -162,15 +162,6 @@ class $LessonsTable extends Lessons
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $LessonsTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _keyMeta = const VerificationMeta('key');
-  @override
-  late final GeneratedColumn<int> key = GeneratedColumn<int>(
-    'key',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: true,
-  );
   static const VerificationMeta _groupMeta = const VerificationMeta('group');
   @override
   late final GeneratedColumn<String> group = GeneratedColumn<String>(
@@ -379,7 +370,6 @@ class $LessonsTable extends Lessons
   );
   @override
   List<GeneratedColumn> get $columns => [
-    key,
     group,
     name,
     type,
@@ -412,14 +402,6 @@ class $LessonsTable extends Lessons
   }) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
-    if (data.containsKey('key')) {
-      context.handle(
-        _keyMeta,
-        key.isAcceptableOrUnknown(data['key']!, _keyMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_keyMeta);
-    }
     if (data.containsKey('group')) {
       context.handle(
         _groupMeta,
@@ -570,10 +552,6 @@ class $LessonsTable extends Lessons
   LessonsEntry map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return LessonsEntry(
-      key: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}key'],
-      )!,
       group: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}group'],
@@ -660,7 +638,6 @@ class $LessonsTable extends Lessons
 }
 
 class LessonsEntry extends DataClass implements Insertable<LessonsEntry> {
-  final int key;
   final String group;
   final String name;
   final int type;
@@ -681,7 +658,6 @@ class LessonsEntry extends DataClass implements Insertable<LessonsEntry> {
   final bool? isOnline;
   final String? comment;
   const LessonsEntry({
-    required this.key,
     required this.group,
     required this.name,
     required this.type,
@@ -705,7 +681,6 @@ class LessonsEntry extends DataClass implements Insertable<LessonsEntry> {
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    map['key'] = Variable<int>(key);
     map['group'] = Variable<String>(group);
     map['name'] = Variable<String>(name);
     map['type'] = Variable<int>(type);
@@ -756,7 +731,6 @@ class LessonsEntry extends DataClass implements Insertable<LessonsEntry> {
 
   LessonsCompanion toCompanion(bool nullToAbsent) {
     return LessonsCompanion(
-      key: Value(key),
       group: Value(group),
       name: Value(name),
       type: Value(type),
@@ -809,7 +783,6 @@ class LessonsEntry extends DataClass implements Insertable<LessonsEntry> {
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return LessonsEntry(
-      key: serializer.fromJson<int>(json['key']),
       group: serializer.fromJson<String>(json['group']),
       name: serializer.fromJson<String>(json['name']),
       type: serializer.fromJson<int>(json['type']),
@@ -835,7 +808,6 @@ class LessonsEntry extends DataClass implements Insertable<LessonsEntry> {
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
-      'key': serializer.toJson<int>(key),
       'group': serializer.toJson<String>(group),
       'name': serializer.toJson<String>(name),
       'type': serializer.toJson<int>(type),
@@ -859,7 +831,6 @@ class LessonsEntry extends DataClass implements Insertable<LessonsEntry> {
   }
 
   LessonsEntry copyWith({
-    int? key,
     String? group,
     String? name,
     int? type,
@@ -880,7 +851,6 @@ class LessonsEntry extends DataClass implements Insertable<LessonsEntry> {
     Value<bool?> isOnline = const Value.absent(),
     Value<String?> comment = const Value.absent(),
   }) => LessonsEntry(
-    key: key ?? this.key,
     group: group ?? this.group,
     name: name ?? this.name,
     type: type ?? this.type,
@@ -907,7 +877,6 @@ class LessonsEntry extends DataClass implements Insertable<LessonsEntry> {
   );
   LessonsEntry copyWithCompanion(LessonsCompanion data) {
     return LessonsEntry(
-      key: data.key.present ? data.key.value : this.key,
       group: data.group.present ? data.group.value : this.group,
       name: data.name.present ? data.name.value : this.name,
       type: data.type.present ? data.type.value : this.type,
@@ -943,7 +912,6 @@ class LessonsEntry extends DataClass implements Insertable<LessonsEntry> {
   @override
   String toString() {
     return (StringBuffer('LessonsEntry(')
-          ..write('key: $key, ')
           ..write('group: $group, ')
           ..write('name: $name, ')
           ..write('type: $type, ')
@@ -969,7 +937,6 @@ class LessonsEntry extends DataClass implements Insertable<LessonsEntry> {
 
   @override
   int get hashCode => Object.hash(
-    key,
     group,
     name,
     type,
@@ -994,7 +961,6 @@ class LessonsEntry extends DataClass implements Insertable<LessonsEntry> {
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is LessonsEntry &&
-          other.key == this.key &&
           other.group == this.group &&
           other.name == this.name &&
           other.type == this.type &&
@@ -1017,7 +983,6 @@ class LessonsEntry extends DataClass implements Insertable<LessonsEntry> {
 }
 
 class LessonsCompanion extends UpdateCompanion<LessonsEntry> {
-  final Value<int> key;
   final Value<String> group;
   final Value<String> name;
   final Value<int> type;
@@ -1039,7 +1004,6 @@ class LessonsCompanion extends UpdateCompanion<LessonsEntry> {
   final Value<String?> comment;
   final Value<int> rowid;
   const LessonsCompanion({
-    this.key = const Value.absent(),
     this.group = const Value.absent(),
     this.name = const Value.absent(),
     this.type = const Value.absent(),
@@ -1062,7 +1026,6 @@ class LessonsCompanion extends UpdateCompanion<LessonsEntry> {
     this.rowid = const Value.absent(),
   });
   LessonsCompanion.insert({
-    required int key,
     required String group,
     required String name,
     required int type,
@@ -1083,15 +1046,13 @@ class LessonsCompanion extends UpdateCompanion<LessonsEntry> {
     this.isOnline = const Value.absent(),
     this.comment = const Value.absent(),
     this.rowid = const Value.absent(),
-  }) : key = Value(key),
-       group = Value(group),
+  }) : group = Value(group),
        name = Value(name),
        type = Value(type),
        year = Value(year),
        semester = Value(semester),
        lessonNumber = Value(lessonNumber);
   static Insertable<LessonsEntry> custom({
-    Expression<int>? key,
     Expression<String>? group,
     Expression<String>? name,
     Expression<int>? type,
@@ -1114,7 +1075,6 @@ class LessonsCompanion extends UpdateCompanion<LessonsEntry> {
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
-      if (key != null) 'key': key,
       if (group != null) 'group': group,
       if (name != null) 'name': name,
       if (type != null) 'type': type,
@@ -1139,7 +1099,6 @@ class LessonsCompanion extends UpdateCompanion<LessonsEntry> {
   }
 
   LessonsCompanion copyWith({
-    Value<int>? key,
     Value<String>? group,
     Value<String>? name,
     Value<int>? type,
@@ -1162,7 +1121,6 @@ class LessonsCompanion extends UpdateCompanion<LessonsEntry> {
     Value<int>? rowid,
   }) {
     return LessonsCompanion(
-      key: key ?? this.key,
       group: group ?? this.group,
       name: name ?? this.name,
       type: type ?? this.type,
@@ -1189,9 +1147,6 @@ class LessonsCompanion extends UpdateCompanion<LessonsEntry> {
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (key.present) {
-      map['key'] = Variable<int>(key.value);
-    }
     if (group.present) {
       map['group'] = Variable<String>(group.value);
     }
@@ -1258,7 +1213,6 @@ class LessonsCompanion extends UpdateCompanion<LessonsEntry> {
   @override
   String toString() {
     return (StringBuffer('LessonsCompanion(')
-          ..write('key: $key, ')
           ..write('group: $group, ')
           ..write('name: $name, ')
           ..write('type: $type, ')
@@ -1404,7 +1358,6 @@ typedef $$GroupsTableProcessedTableManager =
     >;
 typedef $$LessonsTableCreateCompanionBuilder =
     LessonsCompanion Function({
-      required int key,
       required String group,
       required String name,
       required int type,
@@ -1428,7 +1381,6 @@ typedef $$LessonsTableCreateCompanionBuilder =
     });
 typedef $$LessonsTableUpdateCompanionBuilder =
     LessonsCompanion Function({
-      Value<int> key,
       Value<String> group,
       Value<String> name,
       Value<int> type,
@@ -1459,11 +1411,6 @@ class $$LessonsTableFilterComposer extends Composer<_$Database, $LessonsTable> {
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnFilters<int> get key => $composableBuilder(
-    column: $table.key,
-    builder: (column) => ColumnFilters(column),
-  );
-
   ColumnFilters<String> get group => $composableBuilder(
     column: $table.group,
     builder: (column) => ColumnFilters(column),
@@ -1569,11 +1516,6 @@ class $$LessonsTableOrderingComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnOrderings<int> get key => $composableBuilder(
-    column: $table.key,
-    builder: (column) => ColumnOrderings(column),
-  );
-
   ColumnOrderings<String> get group => $composableBuilder(
     column: $table.group,
     builder: (column) => ColumnOrderings(column),
@@ -1679,9 +1621,6 @@ class $$LessonsTableAnnotationComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  GeneratedColumn<int> get key =>
-      $composableBuilder(column: $table.key, builder: (column) => column);
-
   GeneratedColumn<String> get group =>
       $composableBuilder(column: $table.group, builder: (column) => column);
 
@@ -1781,7 +1720,6 @@ class $$LessonsTableTableManager
               $$LessonsTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
-                Value<int> key = const Value.absent(),
                 Value<String> group = const Value.absent(),
                 Value<String> name = const Value.absent(),
                 Value<int> type = const Value.absent(),
@@ -1803,7 +1741,6 @@ class $$LessonsTableTableManager
                 Value<String?> comment = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => LessonsCompanion(
-                key: key,
                 group: group,
                 name: name,
                 type: type,
@@ -1827,7 +1764,6 @@ class $$LessonsTableTableManager
               ),
           createCompanionCallback:
               ({
-                required int key,
                 required String group,
                 required String name,
                 required int type,
@@ -1849,7 +1785,6 @@ class $$LessonsTableTableManager
                 Value<String?> comment = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => LessonsCompanion.insert(
-                key: key,
                 group: group,
                 name: name,
                 type: type,

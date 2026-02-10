@@ -15,7 +15,7 @@ class LessonsDao extends DatabaseAccessor<Database> with _$LessonsDaoMixin {
 	Future<void> saveAllForGroup(List<LessonsCompanion> lessonList) async {
 		if (lessonList.isEmpty) { return; }
 		for (int i = 0; i < lessonList.length - 1; i++) {
-			if (lessonList[i] != lessonList[i + 1]) { throw InvalidDataException("Переданы пары с разными группами"); }
+			if (lessonList[i].group.value != lessonList[i + 1].group.value) { throw InvalidDataException("Переданы пары с разными группами"); }
 		}
 		return transaction(() async {
 			await (delete(lessons)..where((e) => e.group.equals(lessonList[0].group.value))).go();

@@ -6,7 +6,6 @@ import 'package:timetable_app/shared/domain/entities/weeks.dart';
 
 @DataClassName("LessonsEntry")
 class Lessons extends Table {
-	IntColumn get key => integer()();
 	TextColumn get group => text()();
 	TextColumn get name => text()();
 	IntColumn get type => integer()();

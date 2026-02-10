@@ -28,8 +28,8 @@ class Lessons extends Table {
 	TextColumn get comment => text().nullable()();
 }
 
-extension LessonsCompanionMapper on LessonsCompanion {
-	static LessonsCompanion fromClass(Lesson lesson) => LessonsCompanion(
+extension LessonsCompanionMapper on List<Lesson> {
+	List<LessonsCompanion> toCompanions() => map((lesson) => LessonsCompanion(
 		group: Value(lesson.group),
 		name: Value(lesson.name),
 		type: Value(lesson.type.index),
@@ -49,7 +49,7 @@ extension LessonsCompanionMapper on LessonsCompanion {
 		isInLectureHall: Value(lesson.isInLectureHall),
 		isOnline: Value(lesson.isOnline),
 		comment: Value(lesson.comment),
-	);
+)).toList();
 }
 
 extension LessonsEntryMapper on List<LessonsEntry> {

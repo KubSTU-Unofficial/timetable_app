@@ -25,7 +25,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    groupName = getIt.get<SharedPreferences>().getString(defaultGroupKey);
+    groupName = getIt.get<SharedPreferences>().getString(userGroupKey);
   }
 
   @override

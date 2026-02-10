@@ -32,7 +32,7 @@ class InitPageBloc extends Bloc<InitPageBlockEvent, InitPageBlocState> {
 	Future<void> _onSetupFinished(SetupFinishedEvent event, Emitter<InitPageBlocState> emit) async {
 		if (state is! InitPageLoaded) { return; }
 		await getIt.get<SharedPreferences>().setBool(isInitializedKey, true);
-		await getIt.get<SharedPreferences>().setString(defaultGroupKey, event.group);
+		await getIt.get<SharedPreferences>().setString(userGroupKey, event.group);
 		emit(InitPageSetupFinished());
 	}
 }

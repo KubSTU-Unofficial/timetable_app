@@ -7,6 +7,13 @@ import 'package:timetable_app/features/initial_settings_page/data/datasources/da
 import 'package:timetable_app/features/initial_settings_page/data/repos/group_repo.dart';
 import 'package:timetable_app/features/initial_settings_page/domain/repo_ints/group_repo_int.dart';
 import 'package:timetable_app/features/initial_settings_page/domain/usecases/get_all_groups_usecase.dart';
+import 'package:timetable_app/shared/data/datasources/api/lessons/lesson_remote_data_source_int.dart';
+import 'package:timetable_app/shared/data/datasources/api/lessons/mock_lessons_remote_datasource.dart';
+import 'package:timetable_app/shared/data/datasources/database/lessons_dao.dart';
+import 'package:timetable_app/shared/data/repos/lesson_repo.dart';
+import 'package:timetable_app/shared/domain/repo_ints/lesson_repo_int.dart';
+import 'package:timetable_app/shared/domain/usecases/get_all_classes_for_group_usecase.dart';
+import 'package:timetable_app/shared/domain/usecases/get_lessons_for_date_usecase.dart';
 
 final	getIt = GetIt.asNewInstance();
 
@@ -25,6 +32,7 @@ Future<void> configureDependencises() async {
 
 void _initializeDaos() {
 	getIt.registerLazySingleton(() => GroupsDao(getIt.get()));
+	getIt.registerLazySingleton(() => LessonsDao(getIt.get()));
 	// .. Объекты доступа к данным других сущностей здесь
 }
 
@@ -32,6 +40,7 @@ void _initializeRemoteSources() {
 	// Подставляем тестовый источник данных, т.к. API пока нет
 	// getIt.registerLazySingleton<GroupRemoteDataSource>(() => GroupRemoteDataSource());
 	getIt.registerLazySingleton<GroupRemoteDataSourceInt>(() => MockGroupRemoteDataSource());
+	getIt.registerLazySingleton<LessonRemoteDataSourceInt>(() => MockLessonsRemoteDatasource());
 	// ... Апишки для других сущностей здесь
 }
 
@@ -41,12 +50,27 @@ void _initializeRepositories() {
 		api: getIt.get(),
 		prefs: getIt.get(),
 	));
+
+	getIt.registerLazySingleton<LessonRepoInt>(() => LessonRepo(
+		db: getIt.get(),
+		api: getIt.get(),
+		prefs: getIt.get(),
+	));
 	// .. Другие репозитории здесь
 }
 
 void _initializeUsecases() {
-	getIt.registerLazySingleton(() => GetAllGroupsUsecase(
+	getIt.registerLazySingleton<GetAllGroupsUsecase>(() => GetAllGroupsUsecase(
 		repo: getIt.get()
 	));
+	
+	getIt.registerLazySingleton<GetAllLessonsForUserGroupUsecase>(() => GetAllLessonsForUserGroupUsecase(
+		repo: getIt.get()
+	));
+
+	getIt.registerLazySingleton<GetLessonsForUserGroupForDateUsecase>(() => GetLessonsForUserGroupForDateUsecase(
+		repo: getIt.get()
+	));
+
 	// ... Другие сценарии здесь
 }

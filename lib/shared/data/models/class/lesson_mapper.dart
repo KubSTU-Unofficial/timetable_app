@@ -4,7 +4,7 @@ import 'package:timetable_app/shared/domain/entities/timing.dart';
 import 'package:timetable_app/shared/domain/entities/weeks.dart';
 
 extension LessonDtoMapper on LessonDTO {
-Lesson toClass() => Lesson(
+Lesson toLesson() => Lesson(
 	group: group,
 	name: name,
 	type: LessonType.values[type],

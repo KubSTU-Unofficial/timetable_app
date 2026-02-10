@@ -1,4 +1,3 @@
-
 import 'package:timetable_app/shared/domain/entities/timing.dart';
 
 enum LessonType {

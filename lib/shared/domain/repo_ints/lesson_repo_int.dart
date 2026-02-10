@@ -1,8 +1,9 @@
 import 'package:timetable_app/shared/domain/entities/lesson.dart';
 
 abstract class LessonRepoInt {
-	List<Lesson> getForDate(
+	Future<List<Lesson>> getForDateForUserGroup(
 		DateTime date,
-		String groupname,
 	);
+
+	Future<List<Lesson>> getAllForUserGroup();
 }

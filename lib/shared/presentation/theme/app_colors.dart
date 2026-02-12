@@ -23,6 +23,8 @@ abstract class AppColors {
   static const Color textSecondary = Color(0xFF475569); // Темно-серый
   static const Color textDisabled = Color(0xFF94A3B8); // Серый
   static const Color textAccent = Color(0xFFEA580C); // Оранжевый для акцентов в тексте
+  static const Color focusedText = Color(0xFFEA580C); // Оранжевый для фокус текста
+  static const Color unfocusedText = Color(0x80EA580C);
   
   // Системные
   static const Color error = Color(0xFFEF4444);       // Красный

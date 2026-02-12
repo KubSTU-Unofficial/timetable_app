@@ -55,7 +55,7 @@ WeeksDTO _$WeeksDTOFromJson(Map<String, dynamic> json) => WeeksDTO(
   to: (json['to'] as num).toInt(),
   startDate: DateTime.parse(json['startDate'] as String),
   endDate: DateTime.parse(json['endDate'] as String),
-  isEven: json['type'] as bool,
+  isEven: json['isEven'] as bool,
   dayOfWeek: (json['dayOfWeek'] as num).toInt(),
 );
 
@@ -64,6 +64,6 @@ Map<String, dynamic> _$WeeksDTOToJson(WeeksDTO instance) => <String, dynamic>{
   'to': instance.to,
   'startDate': instance.startDate.toIso8601String(),
   'endDate': instance.endDate.toIso8601String(),
-  'type': instance.isEven,
+  'isEven': instance.isEven,
   'dayOfWeek': instance.dayOfWeek,
 };

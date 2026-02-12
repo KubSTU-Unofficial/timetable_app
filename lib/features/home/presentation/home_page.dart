@@ -38,9 +38,9 @@ class _HomePageState extends State<HomePage> {
             Text("Здесь будет расписание для группы $groupName"),
             ElevatedButton(
               onPressed: () async {
-                await getIt.get<SharedPreferences>().setBool(
-                  isInitializedKey,
-                  false,
+                await getIt.get<SharedPreferences>().setString(
+                  userGroupKey,
+                  "",
                 );
                 if (context.mounted) {
                   context.go(homePagePath);

@@ -60,10 +60,10 @@ final router = GoRouter(
                 return HomePage();
               },
               redirect: (ctx, state) async {
-                if (!(getIt.get<SharedPreferences>().getBool(
-                      isInitializedKey,
+                if ((getIt.get<SharedPreferences>().getString(
+                      userGroupKey,
                     ) ??
-                    false)) {
+                    "") == "") {
                   return initPagePath;
                 }
                 return null;

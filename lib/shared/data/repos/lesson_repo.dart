@@ -16,16 +16,13 @@ class LessonRepo implements LessonRepoInt {
 
   @override
   Future<List<Lesson>> getAllForUserGroup() async {
-		List<Lesson> lessons = (await db.selectByGroup(_getUserGroup())).toLessonList();
-		if (lessons.isEmpty) {
-			lessons = (await api.getByGroup(_getUserGroup())).map((e) => e.toLesson()).toList();
-			await db.saveAllForGroup(lessons.toCompanions());
-		}
-		return lessons;
+		await _ensureInitialLoading();
+		return (await db.selectByGroup(_getUserGroup())).toLessonList();
   }
 
   @override
   Future<List<Lesson>> getForDateForUserGroup(DateTime date) async {
+		await _ensureInitialLoading();
 		return (await db.getForDateForGroup(date, _getUserGroup())).toLessonList();
   }
 
@@ -33,6 +30,17 @@ class LessonRepo implements LessonRepoInt {
 		String? group = prefs.getString(userGroupKey);
 		if (group == null) { throw Exception("Группа пользователя не задана"); }
 		return group;
+	}
+
+	Future<void> _ensureInitialLoading() async {
+		if (!(prefs.getBool(initialGroupLoadingDone) ?? false)) {
+			_loadForGroupFromServer(_getUserGroup());
+		}
+	}
+
+	Future<void> _loadForGroupFromServer(String groupname) async {
+			List<Lesson> lessons = (await api.getByGroup(_getUserGroup())).map((e) => e.toLesson()).toList();
+			await db.saveAllForGroup(lessons.toCompanions());
 	}
   
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 //Widgets
-import 'package:timetable_app/features/schedule_page/presentation/widgets/lessons_dropdown_widgets.dart';
+import 'package:timetable_app/features/schedule_page/presentation/widgets/expansion_title_widgets.dart';
 
 //Appcolor
 import 'package:timetable_app/shared/presentation/theme/app_colors.dart';

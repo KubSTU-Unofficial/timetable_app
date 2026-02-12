@@ -4,13 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:timetable_app/shared/presentation/theme/app_colors.dart';
 
 class ExpansionTileWidget extends StatefulWidget {
+
   @override
   _ExpansionTileWidgetState createState() => _ExpansionTileWidgetState();
 }
 
 class _ExpansionTileWidgetState extends State<ExpansionTileWidget> {
-
-  final String name = 'пара';
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +20,7 @@ class _ExpansionTileWidgetState extends State<ExpansionTileWidget> {
           fontWeight: FontWeight.bold,
           color: AppColors.textAccent,
         ),
-        name,
+        'пара',
       ),
       iconColor: AppColors.focusedBorder,
       collapsedIconColor: AppColors.enabledBorder,

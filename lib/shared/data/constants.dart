@@ -46,8 +46,8 @@ List<LessonDTO> lessonsTestExample = [
 				to: 12,
 				startDate: DateTime(2026, 1, 15),
 				endDate: DateTime(2026, 6, 12),
-				type: false,
-				dayOfWeek: 0
+				isEven: false,
+				dayOfWeek: 1
 			),
 
 			date: null
@@ -73,8 +73,8 @@ List<LessonDTO> lessonsTestExample = [
 				to: 12,
 				startDate: DateTime(2026, 1, 15),
 				endDate: DateTime(2026, 6, 12),
-				type: false,
-				dayOfWeek: 1
+				isEven: false,
+				dayOfWeek: 2
 			),
 
 			date: null
@@ -100,8 +100,8 @@ List<LessonDTO> lessonsTestExample = [
 				to: 6,
 				startDate: DateTime(2026, 1, 15),
 				endDate: DateTime(2026, 6, 12),
-				type: true,
-				dayOfWeek: 2
+				isEven: true,
+				dayOfWeek: 3
 			),
 
 			date: null
@@ -127,8 +127,8 @@ List<LessonDTO> lessonsTestExample = [
 				to: 12,
 				startDate: DateTime(2026, 1, 15),
 				endDate: DateTime(2026, 6, 12),
-				type: true,
-				dayOfWeek: 3
+				isEven: false,
+				dayOfWeek: 4
 			),
 
 			date: null
@@ -154,8 +154,8 @@ List<LessonDTO> lessonsTestExample = [
 				to: 12,
 				startDate: DateTime(2026, 1, 15),
 				endDate: DateTime(2026, 6, 12),
-				type: false,
-				dayOfWeek: 4
+				isEven: false,
+				dayOfWeek: 5
 			),
 
 			date: null
@@ -181,8 +181,8 @@ List<LessonDTO> lessonsTestExample = [
 				to: 12,
 				startDate: DateTime(2026, 1, 15),
 				endDate: DateTime(2026, 6, 12),
-				type: true,
-				dayOfWeek: 5
+				isEven: true,
+				dayOfWeek: 6
 			),
 
 			date: null

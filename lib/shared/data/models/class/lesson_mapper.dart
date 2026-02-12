@@ -35,7 +35,7 @@ extension WeeksDtoMapper on WeeksDTO {
 		to: to,
 		startDate: startDate,
 		endDate: endDate,
-		isEven: type,
+		isEven: isEven,
 		dayOfWeek: dayOfWeek,
 	);
 }

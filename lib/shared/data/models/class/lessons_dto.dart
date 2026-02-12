@@ -58,7 +58,7 @@ class WeeksDTO {
 	final int to;
 	final DateTime startDate;
 	final DateTime endDate;
-	final bool type;
+	final bool isEven;
 	final int dayOfWeek;
 
 	WeeksDTO({
@@ -66,7 +66,7 @@ class WeeksDTO {
 		required this.to,
 		required this.startDate,
 		required this.endDate,
-		required this.type,
+		required this.isEven,
 		required this.dayOfWeek
 	});
 

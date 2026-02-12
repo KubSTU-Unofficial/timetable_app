@@ -11,6 +11,7 @@ import 'package:timetable_app/routing/router.dart';
 // Shared
 import 'package:timetable_app/shared/data/shared_prefs_keys.dart';
 
+//Widgets
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -23,7 +24,7 @@ class _HomePageState extends State<HomePage> {
   String? groupName = "";
 
   @override
-  void initState() {
+  void  initState() {
     super.initState();
     groupName = getIt.get<SharedPreferences>().getString(userGroupKey);
   }

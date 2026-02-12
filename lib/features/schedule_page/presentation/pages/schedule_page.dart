@@ -1,12 +1,33 @@
 import 'package:flutter/material.dart';
-// заглушка, макет будущей страницы не более
-class SchedulePage extends StatelessWidget {
+
+//Widgets
+import 'package:timetable_app/features/schedule_page/presentation/widgets/lessons_dropdown_widgets.dart';
+
+class SchedulePage extends StatefulWidget {
   const SchedulePage({super.key});
 
   @override
+  State<SchedulePage> createState() => _SchedulePageState();
+}
+
+class _SchedulePageState extends State<SchedulePage> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: Text('Полное расписание занятий')),
+      body: Padding(
+        padding: EdgeInsets.all(16),
+        child: Center(
+          child: ListView(
+            children: [
+              Text("Четная неделя"),
+              SizedBox(height: 5),
+              LessonDropdown(),
+              SizedBox(height: 5),
+              Text("Нечетная неделя")
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

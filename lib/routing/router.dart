@@ -16,7 +16,7 @@ import 'package:timetable_app/shared/presentation/widgets/main_navigation_screen
 import 'package:timetable_app/features/initial_settings_page/presentation/bloc/init_page_bloc.dart';
 
 // Экраны
-import 'package:timetable_app/features/home/presentation/home_page.dart';
+import 'package:timetable_app/features/home/presentation/pages/home_page.dart';
 import 'package:timetable_app/features/exams_page/presentation/pages/exams_page.dart';
 import 'package:timetable_app/features/app_settings_page/presentation/pages/app_settings_page.dart';
 import 'package:timetable_app/features/initial_settings_page/presentation/pages/init_page.dart';

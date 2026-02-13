@@ -6,7 +6,7 @@ class  GetLessonsForUserGroupForDateUsecase {
 
   GetLessonsForUserGroupForDateUsecase({required this.repo});
 
-	Future<List<Lesson>> execute(DateTime date) async {
+	Stream<List<Lesson>> execute(DateTime date) {
 		return repo.getForDateForUserGroup(date);
 	}
   

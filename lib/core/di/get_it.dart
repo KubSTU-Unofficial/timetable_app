@@ -12,6 +12,7 @@ import 'package:timetable_app/shared/data/datasources/api/lessons/mock_lessons_r
 import 'package:timetable_app/shared/data/datasources/database/lessons_dao.dart';
 import 'package:timetable_app/shared/data/repos/lesson_repo.dart';
 import 'package:timetable_app/shared/domain/repo_ints/lesson_repo_int.dart';
+import 'package:timetable_app/shared/domain/usecases/ensure_user_group_classes_up_to_data_usecase.dart';
 import 'package:timetable_app/shared/domain/usecases/get_all_classes_for_group_usecase.dart';
 import 'package:timetable_app/shared/domain/usecases/get_lessons_for_date_usecase.dart';
 
@@ -72,5 +73,8 @@ void _initializeUsecases() {
 		repo: getIt.get()
 	));
 
+	getIt.registerLazySingleton<EnsureUserGroupClassesUpToDataUsecase>(() => EnsureUserGroupClassesUpToDataUsecase(
+		repo: getIt.get()
+	));
 	// ... Другие сценарии здесь
 }

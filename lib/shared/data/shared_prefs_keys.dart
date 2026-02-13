@@ -1,2 +1,2 @@
-const String initialGroupLoadingDone = "INITIAL_GROUP_LOADING_DONE";
+const String userLessonsUpdatedAt = "USER_LESSONS_UPDATED_AT";
 const String userGroupKey = "DEFAULT_GROUP";

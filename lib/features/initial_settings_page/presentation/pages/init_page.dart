@@ -13,8 +13,8 @@ import 'package:timetable_app/shared/presentation/widgets/autocomplete_field.dar
 
 // Bloc
 import 'package:timetable_app/features/initial_settings_page/presentation/bloc/init_page_bloc.dart';
-import 'package:timetable_app/features/initial_settings_page/presentation/widgets/error_message_block.dart';
-import 'package:timetable_app/features/initial_settings_page/presentation/widgets/loading_indicator_block.dart';
+import 'package:timetable_app/shared/presentation/widgets/error_message_block.dart';
+import 'package:timetable_app/shared/presentation/widgets/loading_indicator_block.dart';
 
 class InitPage extends StatefulWidget {
   const InitPage({super.key});

@@ -4,10 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Core
 import 'package:timetable_app/core/di/get_it.dart';
+import 'package:timetable_app/features/schedule_page/presentation/bloc/timetable_page_bloc.dart';
 import 'package:timetable_app/features/schedule_page/presentation/pages/schedule_page.dart';
 
 // Shared
 import 'package:timetable_app/shared/data/shared_prefs_keys.dart';
+import 'package:timetable_app/shared/presentation/bloc/timetable_loading_bloc.dart';
 
 // Виджеты
 import 'package:timetable_app/shared/presentation/widgets/main_navigation_screen.dart';
@@ -34,7 +36,10 @@ final router = GoRouter(
   routes: [
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) =>
-          MainNavigationScreen(navigationShell: navigationShell),
+          BlocProvider(
+					create: (ctx) => TimetableLoadingBloc()..add(TimetableLoadingEnsureDataLoadedEvent()),
+					child: MainNavigationScreen(navigationShell: navigationShell)
+				),
       branches: [
         StatefulShellBranch(
           routes: [
@@ -48,7 +53,10 @@ final router = GoRouter(
           routes: [
             GoRoute(
               path: schedulePagePath,
-              builder: (ctx, state) => SchedulePage(),
+              builder: (ctx, state) => BlocProvider(
+							create: (ctx) => TimetablePageBloc()..add(TimetablePageLessonsRequested()),
+								child: SchedulePage()
+							),
             ),
           ],
         ),
@@ -62,8 +70,7 @@ final router = GoRouter(
               redirect: (ctx, state) async {
                 if ((getIt.get<SharedPreferences>().getString(
                       userGroupKey,
-                    ) ??
-                    "") == "") {
+                    ) ?? "") == "") {
                   return initPagePath;
                 }
                 return null;

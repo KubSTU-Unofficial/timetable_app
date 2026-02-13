@@ -1,96 +1,130 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:timetable_app/features/schedule_page/presentation/bloc/timetable_page_bloc.dart';
+import 'package:timetable_app/shared/presentation/widgets/lessons_loading_bloc_manager.dart';
 
 //Widgets
-import 'package:timetable_app/features/schedule_page/presentation/widgets/expansion_title_widgets.dart';
+import 'package:timetable_app/features/schedule_page/presentation/widgets/expansion_title_widget.dart';
 
 //Appcolor
 import 'package:timetable_app/shared/presentation/theme/app_colors.dart';
+import 'package:timetable_app/shared/presentation/widgets/error_message_block.dart';
 
 class SchedulePage extends StatefulWidget {
-  const SchedulePage({super.key});
+	const SchedulePage({super.key});
 
-  @override
-  State<SchedulePage> createState() => _SchedulePageState();
+	@override
+	State<SchedulePage> createState() => _SchedulePageState();
 }
 
 class _SchedulePageState extends State<SchedulePage> {
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: DefaultTabController(
-        length: 2,
-        child: Scaffold(
-          backgroundColor: AppColors.darkBackground,
-          body: Column(
-            children: [
-              Container(
-                color: AppColors.darkBackground,
-                child: TabBar(
-                  indicatorColor: AppColors.primary,
-                  indicatorWeight: 3.0,
-                  dividerHeight: 1.0,
-                  dividerColor: AppColors.primary,
-                  labelColor: AppColors.focusedText,
-                  tabs: [
-                    Tab(
-                      child: Text(
-                        style: TextStyle(
-                          color: AppColors.textAccent,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        'Четная',
-                      ),
-                    ),
-                    Tab(
-                      child: Text(
-                        style: TextStyle(
-                          color: AppColors.textAccent,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        'Нечетная',
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: TabBarView(
-                  children: [
-                    //Пары 1ой вкладки
-                    Center(
-                      child: Padding(
-                        padding: EdgeInsets.fromLTRB(5, 10, 5, 0),
-                        child: ListView.separated(
-                          itemCount: 3,
-                          separatorBuilder: (context, index) =>
-                              SizedBox(height: 8),
-                          itemBuilder: (context, index) =>
-                              ExpansionTileWidget(),
-                        ),
-                      ),
-                    ),
-                    // Пары 2ой вкладки
-                    Center(
-                      child: Padding(
-                        padding: EdgeInsets.fromLTRB(5, 10, 5, 0),
-                        child: ListView.separated(
-                          itemCount: 3,
-                          separatorBuilder: (context, index) =>
-                              SizedBox(height: 8),
-                          itemBuilder: (context, index) =>
-                              ExpansionTileWidget(),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+	@override
+	Widget build(BuildContext context) {
+		return DefaultTabController(
+			length: 2,
+			child: Scaffold(
+				backgroundColor: AppColors.darkBackground,
+				body: SafeArea(
+				  child: LessonsLoadingBlocManager(
+						child: BlocBuilder<TimetablePageBloc, TimetablePageBlocState>(
+    						builder: (BuildContext context, TimetablePageBlocState state) { 
+    							return switch (state) {
+    								TimetablePageInitialState() => SizedBox.shrink(),
+    								TimetablePageErrorState(error: final error) => ErrorMessageBlock(
+    									errorMessage: error,
+    									circumstances: "загрузке пар из базы данных",
+    									onRetry: () {
+    										context.read<TimetablePageBloc>().add(TimetablePageLessonsRequested());
+    									}
+    								),
+    								TimetablePageLoadedState(lessons: final lessons) => StreamBuilder(
+    									stream: lessons,
+    									builder: (context, asyncSnapshot) {
+    										if (asyncSnapshot.data == null) { return SizedBox.shrink(); }
+
+
+											// Чтобы получить список занятий теперь пиши:
+											// asyncSnapshot.data
+
+											
+											return Column(
+												children: [
+													SizedBox.square(
+														child: Container(
+															color: AppColors.darkBackground,
+															child: TabBar(
+																indicatorColor: AppColors.primary,
+																indicatorWeight: 3.0,
+																dividerHeight: 1.0,
+																dividerColor: AppColors.primary,
+																labelColor: AppColors.focusedText,
+																tabs: [
+																	Tab(
+																		child: Text(
+																			style: TextStyle(
+																				color: AppColors.textAccent,
+																				fontSize: 18,
+																				fontWeight: FontWeight.bold,
+																			),
+																			'Четная',
+																		),
+																	),
+																	Tab(
+																		child: Text(
+																			style: TextStyle(
+																				color: AppColors.textAccent,
+																				fontSize: 18,
+																				fontWeight: FontWeight.bold,
+																			),
+																			'Нечетная',
+																		),
+																	),
+																],
+															),
+														),
+													),
+													Expanded(
+														child: TabBarView(
+															children: [
+																//Пары 1ой вкладки
+																Center(
+																	child: Padding(
+																		padding: EdgeInsets.fromLTRB(5, 10, 5, 0),
+																		child: ListView.separated(
+																			itemCount: 3,
+																			separatorBuilder: (context, index) =>
+																				SizedBox(height: 8),
+																			itemBuilder: (context, index) =>
+																				ExpansionTitleWidget(),
+																		),
+																	),
+																),
+																// Пары 2ой вкладки
+																Center(
+																	child: Padding(
+																		padding: EdgeInsets.fromLTRB(5, 10, 5, 0),
+																		child: ListView.separated(
+																			itemCount: 3,
+																			separatorBuilder: (context, index) =>
+																				SizedBox(height: 8),
+																			itemBuilder: (context, index) =>
+																				ExpansionTitleWidget(),
+																		),
+																	),
+																),
+															],
+														),
+													),
+												],
+											);
+										}
+									)
+								};
+							},
+						),
+					),
+				),
+			),
+		);
+	}
 }

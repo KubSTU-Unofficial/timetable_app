@@ -8,7 +8,7 @@ class GetAllLessonsForUserGroupUsecase {
 		required this.repo,
 	});
 
-	Future<List<Lesson>> execute() async {
+	Stream<List<Lesson>> execute() {
 		return repo.getAllForUserGroup();
 	}
   

@@ -3,13 +3,15 @@ import 'package:flutter/material.dart';
 //AppColors
 import 'package:timetable_app/shared/presentation/theme/app_colors.dart';
 
-class ExpansionTileWidget extends StatefulWidget {
+class ExpansionTitleWidget extends StatefulWidget {
+  const ExpansionTitleWidget({super.key});
+
 
   @override
-  _ExpansionTileWidgetState createState() => _ExpansionTileWidgetState();
+  State<ExpansionTitleWidget> createState() => _ExpansionTitleWidgetState();
 }
 
-class _ExpansionTileWidgetState extends State<ExpansionTileWidget> {
+class _ExpansionTitleWidgetState extends State<ExpansionTitleWidget> {
 
   @override
   Widget build(BuildContext context) {

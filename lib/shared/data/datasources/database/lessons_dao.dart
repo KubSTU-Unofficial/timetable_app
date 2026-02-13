@@ -9,13 +9,13 @@ part 'lessons_dao.g.dart';
 class LessonsDao extends DatabaseAccessor<Database> with _$LessonsDaoMixin {
   LessonsDao(super.attachedDatabase);
   
-	Future<List<LessonsEntry>> selectByGroup(String group) async {
+	Stream<List<LessonsEntry>> selectByGroup(String group) {
 		return (select(lessons)..where((e) {
 			return e.group.equals(group) &
 				e.startDate.isSmallerOrEqualValue(DateTime.now()) &
 				e.endDate.isBiggerOrEqualValue(DateTime.now());
 			
-		})).get();
+		})).watch();
 	}
 
 	Future<void> saveAllForGroup(List<LessonsCompanion> lessonList) async {
@@ -31,7 +31,7 @@ class LessonsDao extends DatabaseAccessor<Database> with _$LessonsDaoMixin {
 		});
 	}
 
-	Future<List<LessonsEntry>> getForDateForGroup(DateTime date, String groupname) async {
+	Stream<List<LessonsEntry>> getForDateForGroup(DateTime date, String groupname) {
 		return (select(lessons)..where((e) {
 			return e.group.equals(groupname) & (
 				e.date.equals(date) |
@@ -40,6 +40,6 @@ class LessonsDao extends DatabaseAccessor<Database> with _$LessonsDaoMixin {
 				e.isWeekEven.equals(date.weekOfYear % 2 == 0) &
 				e.dayOfWeek.equals(date.weekday)
 			);
-		})).get();
+		})).watch();
 	}
 }

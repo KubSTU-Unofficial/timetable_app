@@ -10,14 +10,14 @@ import 'package:timetable_app/features/schedule_page/presentation/widgets/expans
 import 'package:timetable_app/shared/presentation/theme/app_colors.dart';
 import 'package:timetable_app/shared/presentation/widgets/error_message_block.dart';
 
-class SchedulePage extends StatefulWidget {
-	const SchedulePage({super.key});
+class TimetablePage extends StatefulWidget {
+	const TimetablePage({super.key});
 
 	@override
-	State<SchedulePage> createState() => _SchedulePageState();
+	State<TimetablePage> createState() => _TimetablePageState();
 }
 
-class _SchedulePageState extends State<SchedulePage> {
+class _TimetablePageState extends State<TimetablePage> {
 	@override
 	Widget build(BuildContext context) {
 		return DefaultTabController(

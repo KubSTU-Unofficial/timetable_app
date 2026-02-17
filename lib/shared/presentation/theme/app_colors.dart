@@ -11,7 +11,7 @@ abstract class AppColors {
 
   // Акцентные цвета
   static const Color accent = Color(0xFFD4AF37);      // Золотой акцент
-  static const Color secondary = Color(0xFF0F172A);   // Черный для контраста
+  static const Color secondary = Color(0xFF03070E);   // Черный для контраста
   
   // Нейтральные
   static const Color background = Color(0xFFF8FAFC);  // Белый фон
@@ -38,7 +38,7 @@ abstract class AppColors {
   static const Color divider = Color(0xFFE2E8F0);     // Светло-серый разделитель
   
   // Темная тема
-  static const Color darkBackground = Color(0xFF0F172A); // Темный фон
+  static const Color darkBackground = Color(0xFF03070E); // Темный фон
   static const Color darkSurface = Color(0xFF1E293B);   // Поверхность
   static const Color darkTextPrimary = Color(0xFFF1F5F9); // Светлый текст
 }

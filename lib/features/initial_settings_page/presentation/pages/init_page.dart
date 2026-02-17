@@ -65,7 +65,7 @@ class _InitPageState extends State<InitPage> {
                         'assets/logo.svg',
                         colorFilter: ColorFilter.mode(
                           AppColors.primary,
-                          BlendMode.multiply,
+                          BlendMode.srcOut,
                         ),
                         width: 200,
                         height: 200,

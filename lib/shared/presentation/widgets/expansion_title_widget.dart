@@ -28,8 +28,8 @@ class _ExpansionTitleWidgetState extends State<ExpansionTitleWidget> {
       collapsedIconColor: AppColors.enabledBorder,
       textColor: AppColors.textAccent,
       collapsedTextColor: Colors.black,
-      backgroundColor: AppColors.darkSurface,
-      collapsedBackgroundColor: AppColors.darkSurface,
+      backgroundColor: AppColors.darkBackground,
+      collapsedBackgroundColor: AppColors.darkBackground,
       collapsedShape: RoundedRectangleBorder(
         side: BorderSide(color: AppColors.enabledBorder, width: 1),
         borderRadius: BorderRadius.all(Radius.circular(3)),

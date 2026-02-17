@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 // Core
-import 'package:timetable_app/core/di/get_it.dart';
 
 // Router
-import 'package:timetable_app/routing/router.dart';
 
 // Shared
-import 'package:timetable_app/shared/data/shared_prefs_keys.dart';
+
+//appcolors
+import 'package:timetable_app/shared/presentation/theme/app_colors.dart';
+import 'package:timetable_app/shared/presentation/widgets/expansion_title_widget.dart';
 
 //Widgets
+import 'package:timetable_app/features/home/presentation/widgets/calendar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -21,35 +21,108 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String? groupName = "";
-
-  @override
-  void  initState() {
-    super.initState();
-    groupName = getIt.get<SharedPreferences>().getString(userGroupKey);
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: .center,
-          children: [
-            Text("Здесь будет расписание для группы $groupName"),
-            ElevatedButton(
-              onPressed: () async {
-                await getIt.get<SharedPreferences>().setString(
-                  userGroupKey,
-                  "",
-                );
-                if (context.mounted) {
-                  context.go(homePagePath);
-                }
-              },
-              child: Text("Назад"),
-            ),
-          ],
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        floatingActionButton: Calendar(),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+        backgroundColor: AppColors.darkBackground,
+        body: SafeArea(
+          child: Column(
+            children: [
+              SizedBox.square(
+                child: Container(
+                  color: AppColors.darkBackground,
+                  child: TabBar(
+                    indicatorColor: AppColors.primary,
+                    indicatorWeight: 3.0,
+                    dividerHeight: 1.0,
+                    dividerColor: AppColors.primary,
+                    labelColor: AppColors.focusedText,
+                    tabs: [
+                      Tab(
+                        child: Text(
+                          style: TextStyle(
+                            color: AppColors.textAccent,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          'Дата',
+                        ),
+                      ),
+                      Tab(
+                        child: Text(
+                          style: TextStyle(
+                            color: AppColors.textAccent,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          'Сегодня',
+                        ),
+                      ),
+                      Tab(
+                        child: Text(
+                          style: TextStyle(
+                            color: AppColors.textAccent,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          'Завтра',
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(
+                child: TabBarView(
+                  children: [
+                    //Пары на нужную дату
+                    Center(
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(5, 10, 5, 0),
+                        child: ListView.separated(
+                          itemCount: 3,
+                          separatorBuilder: (context, index) =>
+                              SizedBox(height: 8),
+                          itemBuilder: (context, index) =>
+                              ExpansionTitleWidget(),
+                        ),
+                      ),
+                    ),
+                    //Пары на сегодня
+                    Center(
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(5, 10, 5, 0),
+                        child: ListView.separated(
+                          itemCount: 3,
+                          separatorBuilder: (context, index) =>
+                              SizedBox(height: 8),
+                          itemBuilder: (context, index) =>
+                              ExpansionTitleWidget(),
+                        ),
+                      ),
+                    ),
+                    // Пары на завтра
+                    Center(
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(5, 10, 5, 0),
+                        child: ListView.separated(
+                          itemCount: 3,
+                          separatorBuilder: (context, index) =>
+                              SizedBox(height: 8),
+                          itemBuilder: (context, index) =>
+                              ExpansionTitleWidget(),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

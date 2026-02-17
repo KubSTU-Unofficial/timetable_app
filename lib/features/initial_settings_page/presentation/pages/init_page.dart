@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -54,7 +55,23 @@ class _InitPageState extends State<InitPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // Логотип или иконка приложения туточки будет
+                    Card(
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(color: AppColors.primary, width: 2),
+                      ),
+                      elevation: 0,
+                      color: Colors.transparent,
+                      child: SvgPicture.asset(
+                        'assets/logo.svg',
+                        colorFilter: ColorFilter.mode(
+                          AppColors.primary,
+                          BlendMode.multiply,
+                        ),
+                        width: 200,
+                        height: 200,
+                      ),
+                    ),
+                    const SizedBox(height: 10,),
                     Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Text(
@@ -106,7 +123,7 @@ class _InitPageState extends State<InitPage> {
                           ),
                         ),
                       ),
-                    const SizedBox(height: 15),
+                    const SizedBox(height: 10),
                     TextButton(
                       onPressed: () async {
                         if (groups.indexWhere(

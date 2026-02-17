@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:timetable_app/features/home/presentation/bloc/home_page_bloc.dart';
+import 'package:timetable_app/features/home/presentation/widgets/home_page_tab.dart';
 
 // Core
 
@@ -8,123 +11,118 @@ import 'package:flutter/material.dart';
 
 //appcolors
 import 'package:timetable_app/shared/presentation/theme/app_colors.dart';
-import 'package:timetable_app/shared/presentation/widgets/expansion_title_widget.dart';
 
 //Widgets
 import 'package:timetable_app/features/home/presentation/widgets/calendar.dart';
+import 'package:timetable_app/shared/presentation/widgets/lessons_loading_bloc_manager.dart';
+import 'package:timetable_app/shared/presentation/widgets/loading_indicator_block.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class HomePage extends StatelessWidget {
+	const HomePage({super.key});
 
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 3,
-      child: Scaffold(
-        floatingActionButton: Calendar(),
-        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-        backgroundColor: AppColors.darkBackground,
-        body: SafeArea(
-          child: Column(
-            children: [
-              SizedBox.square(
-                child: Container(
-                  color: AppColors.darkBackground,
-                  child: TabBar(
-                    indicatorColor: AppColors.primary,
-                    indicatorWeight: 3.0,
-                    dividerHeight: 1.0,
-                    dividerColor: AppColors.primary,
-                    labelColor: AppColors.focusedText,
-                    tabs: [
-                      Tab(
-                        child: Text(
-                          style: TextStyle(
-                            color: AppColors.textAccent,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          'Дата',
-                        ),
-                      ),
-                      Tab(
-                        child: Text(
-                          style: TextStyle(
-                            color: AppColors.textAccent,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          'Сегодня',
-                        ),
-                      ),
-                      Tab(
-                        child: Text(
-                          style: TextStyle(
-                            color: AppColors.textAccent,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          'Завтра',
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Expanded(
-                child: TabBarView(
-                  children: [
-                    //Пары на нужную дату
-                    Center(
-                      child: Padding(
-                        padding: EdgeInsets.fromLTRB(5, 10, 5, 0),
-                        child: ListView.separated(
-                          itemCount: 3,
-                          separatorBuilder: (context, index) =>
-                              SizedBox(height: 8),
-                          itemBuilder: (context, index) =>
-                              ExpansionTitleWidget(),
-                        ),
-                      ),
-                    ),
-                    //Пары на сегодня
-                    Center(
-                      child: Padding(
-                        padding: EdgeInsets.fromLTRB(5, 10, 5, 0),
-                        child: ListView.separated(
-                          itemCount: 3,
-                          separatorBuilder: (context, index) =>
-                              SizedBox(height: 8),
-                          itemBuilder: (context, index) =>
-                              ExpansionTitleWidget(),
-                        ),
-                      ),
-                    ),
-                    // Пары на завтра
-                    Center(
-                      child: Padding(
-                        padding: EdgeInsets.fromLTRB(5, 10, 5, 0),
-                        child: ListView.separated(
-                          itemCount: 3,
-                          separatorBuilder: (context, index) =>
-                              SizedBox(height: 8),
-                          itemBuilder: (context, index) =>
-                              ExpansionTitleWidget(),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+	@override
+	Widget build(BuildContext context) {
+		return DefaultTabController(
+			length: 3,
+			initialIndex: 1,
+			child: BlocBuilder<HomePageBloc, HomePageBlocState>(
+				builder: (BuildContext context, HomePageBlocState state) { 
+					return switch (state) {
+						HomePageInitialState() => LoadingIndicatorBlock(),
+						HomePageLoadedState(
+							todayData: final todayData,
+							tomorrowData: final tomorrowData,
+							selectedDateData: final selectedDateData,
+						) => Scaffold(
+							floatingActionButton: Calendar(
+								onPicked: (date) {
+									context.read<HomePageBloc>().add(HomePageGetForDateEvent(date: date));
+								},
+							),
+							floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+							backgroundColor: AppColors.darkBackground,
+							body: SafeArea(
+								child: LessonsLoadingBlocManager(
+									child: Column(
+										children: [
+											SizedBox.square(
+												child: Container(
+													color: AppColors.darkBackground,
+													child: TabBar(
+														indicatorColor: AppColors.primary,
+														indicatorWeight: 3.0,
+														dividerHeight: 1.0,
+														dividerColor: AppColors.primary,
+														labelColor: AppColors.focusedText,
+														tabs: [
+															Tab(
+																child: Text(
+																	style: TextStyle(
+																		color: AppColors.textAccent,
+																		fontSize: 18,
+																		fontWeight: FontWeight.bold,
+																	),
+																	'Дата',
+																),
+															),
+															Tab(
+																child: Text(
+																	style: TextStyle(
+																		color: AppColors.textAccent,
+																		fontSize: 18,
+																		fontWeight: FontWeight.bold,
+																	),
+																	'Сегодня',
+																),
+															),
+															Tab(
+																child: Text(
+																	style: TextStyle(
+																		color: AppColors.textAccent,
+																		fontSize: 18,
+																		fontWeight: FontWeight.bold,
+																	),
+																	'Завтра',
+																),
+															),
+														],
+													),
+												),
+											),
+											Expanded(
+												child: TabBarView(
+													children: [
+														//Пары на нужную дату
+														HomePageTab(
+															data: selectedDateData,
+															onRetry: () {
+																if (state.selectedDate == null) return;
+																context.read<HomePageBloc>().add(HomePageGetForDateEvent(
+																	date: state.selectedDate!,
+																));
+															},
+														),
+														//Пары на сегодня
+														HomePageTab(
+															data: todayData,
+															onRetry: () => context.read<HomePageBloc>().add(HomePageGetForTodayEvent()),
+														),
+														// Пары на завтра
+														HomePageTab(
+															data: tomorrowData,
+															onRetry: () => context.read<HomePageBloc>().add(HomePageGetForTomorrowEvent()),
+														),
+													],
+												),
+											),
+										],
+									),
+								),
+							),
+						)
+					};
+				},
+			),
+		);
+	}
 }

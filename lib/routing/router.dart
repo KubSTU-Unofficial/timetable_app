@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Core
 import 'package:timetable_app/core/di/get_it.dart';
+import 'package:timetable_app/features/home/presentation/bloc/home_page_bloc.dart';
 import 'package:timetable_app/features/timetable_page/presentation/bloc/timetable_page_bloc.dart';
 import 'package:timetable_app/features/timetable_page/presentation/pages/timetable_page.dart';
 
@@ -65,7 +66,10 @@ final router = GoRouter(
             GoRoute(
               path: homePagePath,
               builder: (ctx, state) {
-                return HomePage();
+                return BlocProvider(
+									create: (ctx) => HomePageBloc()..add(HomePageInitEvent()),
+									child: HomePage()
+								);
               },
               redirect: (ctx, state) async {
                 if ((getIt.get<SharedPreferences>().getString(

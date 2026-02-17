@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:timetable_app/features/timetable_page/presentation/bloc/timetable_page_bloc.dart';
+import 'package:timetable_app/shared/domain/entities/lesson.dart';
 import 'package:timetable_app/shared/presentation/widgets/lessons_loading_bloc_manager.dart';
 
 //Widgets
@@ -25,28 +26,28 @@ class _TimetablePageState extends State<TimetablePage> {
 			child: Scaffold(
 				backgroundColor: AppColors.darkBackground,
 				body: SafeArea(
-				  child: LessonsLoadingBlocManager(
+					child: LessonsLoadingBlocManager(
 						child: BlocBuilder<TimetablePageBloc, TimetablePageBlocState>(
-    						builder: (BuildContext context, TimetablePageBlocState state) { 
-    							return switch (state) {
-    								TimetablePageInitialState() => SizedBox.shrink(),
-    								TimetablePageErrorState(error: final error) => ErrorMessageBlock(
-    									errorMessage: error,
-    									circumstances: "загрузке пар из базы данных",
-    									onRetry: () {
-    										context.read<TimetablePageBloc>().add(TimetablePageLessonsRequested());
-    									}
-    								),
-    								TimetablePageLoadedState(lessons: final lessons) => StreamBuilder(
-    									stream: lessons,
-    									builder: (context, asyncSnapshot) {
-    										if (asyncSnapshot.data == null) { return SizedBox.shrink(); }
+							builder: (BuildContext context, TimetablePageBlocState state) { 
+								return switch (state) {
+									TimetablePageInitialState() => SizedBox.shrink(),
+									TimetablePageErrorState(error: final error) => ErrorMessageBlock(
+										errorMessage: error,
+										circumstances: "загрузке пар из базы данных",
+										onRetry: () {
+											context.read<TimetablePageBloc>().add(TimetablePageLessonsRequested());
+										}
+									),
+									TimetablePageLoadedState(lessons: final lessons) => StreamBuilder(
+										stream: lessons,
+										builder: (context, asyncSnapshot) {
+											if (asyncSnapshot.data == null) { return SizedBox.shrink(); }
+											List<Lesson> lessons = asyncSnapshot.data!;
 
 
-											// Чтобы получить список занятий теперь пиши:
-											// asyncSnapshot.data
+											// Используй lessons здесь
 
-											
+
 											return Column(
 												children: [
 													SizedBox.square(

@@ -1,22 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:timetable_app/shared/presentation/theme/app_colors.dart';
 
-class Calendar extends StatefulWidget {
-  const Calendar({super.key});
+class Calendar extends StatelessWidget {
+  const Calendar({super.key, required this.onPicked});
 
-  @override
-  State<Calendar> createState() => _CalendarState();
-}
-
-class _CalendarState extends State<Calendar> {
-  DateTime? selectedDate;
+	final void Function(DateTime data) onPicked;
 
   Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
+    final DateTime? pickedDate = await showDatePicker(
       context: context,
-      initialDate:
-          selectedDate ??
-          DateTime.now(), // Используем выбранную дату или текущую
+      initialDate: DateTime.now(), // Используем выбранную дату или текущую
       firstDate: DateTime(1800), // Минимальная дата
       lastDate: DateTime(2100), // Максимальная дата
       builder: (BuildContext context, Widget? child) {
@@ -27,8 +20,6 @@ class _CalendarState extends State<Calendar> {
               onPrimary: AppColors.darkBackground, // Цвет текста на выделенной дате
               surface: AppColors.darkBackground, // Фон календаря
               onSurface: AppColors.textAccent, // Цвет текста дат
-              background: AppColors.darkBackground, // Фон всего диалога
-              onBackground: AppColors.textAccent, // Цвет текста в заголовке
             ),
 
             // Настройка текста
@@ -43,7 +34,9 @@ class _CalendarState extends State<Calendar> {
               labelSmall: TextStyle(color: AppColors.textAccent), // Дни недели
             ),
 
-            dialogBackgroundColor: AppColors.darkBackground,
+						dialogTheme: DialogThemeData(
+							backgroundColor: AppColors.darkBackground,
+						),
 
             // Настройка AppBar внутри календаря
             appBarTheme: AppBarTheme(
@@ -64,10 +57,8 @@ class _CalendarState extends State<Calendar> {
       },
     );
 
-    if (picked != null) {
-      setState(() {
-        selectedDate = picked;
-      });
+    if (pickedDate != null) {
+			onPicked(pickedDate);
     }
   }
 

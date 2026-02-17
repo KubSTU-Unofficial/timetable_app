@@ -87,7 +87,7 @@ List<LessonDTO> lessonsTestExample = [
 	),
 	LessonDTO(
 		group: "22-КБ-ИВ1",
-		name: "Теория алгоритмических задач воздействия в автоматических информационных системах",
+		name: "Теория алгоритмических задач расчёта мер воздействия в автоматических информационных системах",
 		type: 2,
 		teacherName: "Галушко Иван Фёдорович",
 		classroom: "А-134",
@@ -116,7 +116,7 @@ List<LessonDTO> lessonsTestExample = [
 		group: "22-КБ-ИВ1",
 		name: "Квантовая физическая культура",
 		type: 1,
-		teacherName: "Зупрудь Зинаида Семёновна",
+		teacherName: "Запрудь Зинаида Семёновна",
 		classroom: "Ф",
 		timing: TimingDTO(
 			year: 2026,
@@ -127,7 +127,7 @@ List<LessonDTO> lessonsTestExample = [
 				to: 12,
 				startDate: DateTime(2026, 1, 15),
 				endDate: DateTime(2026, 6, 12),
-				isEven: false,
+				isEven: true,
 				dayOfWeek: 4
 			),
 
@@ -154,8 +154,8 @@ List<LessonDTO> lessonsTestExample = [
 				to: 12,
 				startDate: DateTime(2026, 1, 15),
 				endDate: DateTime(2026, 6, 12),
-				isEven: false,
-				dayOfWeek: 5
+				isEven: true,
+				dayOfWeek: 2
 			),
 
 			date: null
@@ -182,7 +182,7 @@ List<LessonDTO> lessonsTestExample = [
 				startDate: DateTime(2026, 1, 15),
 				endDate: DateTime(2026, 6, 12),
 				isEven: true,
-				dayOfWeek: 6
+				dayOfWeek: 3
 			),
 
 			date: null

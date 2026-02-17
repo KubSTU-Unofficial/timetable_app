@@ -17,7 +17,7 @@ class LessonsLoadingBlocManager extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<TimetableLoadingBloc, TimetableLoadingBlocState>(
     	builder: (BuildContext context, TimetableLoadingBlocState loadingState) {
-    		if (loadingState == TimetableInitialLoadingInProcessState()) { return LoadingIndicatorBlock(); }
+    		if (loadingState is TimetableInitialLoadingInProcessState) { return LoadingIndicatorBlock(); }
     		return Column(
     			children: [
     				if (loadingState is TimetableLoadingErrorState)
@@ -28,7 +28,7 @@ class LessonsLoadingBlocManager extends StatelessWidget {
     				  child: Row(
     				  	mainAxisAlignment: .center,
     				    children: [
-    				      CircularProgressIndicator(),
+									Text("Данные обновляются...", style: TextStyle(color: AppColors.textAccent),),
     				    ],
     				  ),
     				),

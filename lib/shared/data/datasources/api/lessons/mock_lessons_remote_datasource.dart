@@ -6,7 +6,7 @@ class MockLessonsRemoteDatasource implements LessonRemoteDataSourceInt {
 
   @override
   Future<List<LessonDTO>> getByGroup(String group) async {
-		await Future.delayed(Duration(seconds: 10));
+		await Future.delayed(Duration(seconds: 5));
 		return lessonsTestExample;
   }
   

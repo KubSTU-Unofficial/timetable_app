@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:timetable_app/features/schedule_page/presentation/bloc/timetable_page_bloc.dart';
+import 'package:timetable_app/features/timetable_page/presentation/bloc/timetable_page_bloc.dart';
 import 'package:timetable_app/shared/presentation/widgets/lessons_loading_bloc_manager.dart';
 
 //Widgets
-import 'package:timetable_app/features/schedule_page/presentation/widgets/expansion_title_widget.dart';
+import 'package:timetable_app/features/timetable_page/presentation/widgets/expansion_title_widget.dart';
 
 //Appcolor
 import 'package:timetable_app/shared/presentation/theme/app_colors.dart';

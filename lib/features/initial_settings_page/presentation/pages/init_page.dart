@@ -54,10 +54,7 @@ class _InitPageState extends State<InitPage> {
 						),
 						InitPageLoaded(groups: final groups) => Center(
 							child: Column(
-								mainAxisAlignment: isKeyboardVisible ? .center : .center,
 								children: [
-									// if (isKeyboardVisible)
-									// SizedBox(height: 32,),
 									Spacer(flex: 1,),
 									Flexible(
 										flex: 2,

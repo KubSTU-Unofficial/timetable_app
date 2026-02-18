@@ -1,5 +1,5 @@
+import 'dart:convert';
 import 'dart:io';
-import 'package:dio/browser.dart';
 import 'package:dio/dio.dart';
 import 'package:timetable_app/core/data/config_provider.dart';
 
@@ -19,9 +19,6 @@ class Api {
     );
 
     var dio = Dio(options);
-    var adapter = BrowserHttpClientAdapter();
-    adapter.withCredentials = true;
-    dio.httpClientAdapter = adapter;
     return dio;
   }
 
@@ -56,12 +53,22 @@ class Api {
 		Response? response;
 		try {
 			response = await request();
+
+			// Временно, покуда в API не будет HTTP кодов
+			Map<String, dynamic> json = jsonDecode(response.toString());
+			if (json["isok"] != true) {
+				throw json.containsKey("msg") ? Exception(json["msg"]) : Exception();
+			}
+
 		} on DioException catch (e) {
 			_handleDioException(e);
-		} on Exception {
-			_throwDefault();
+		} on Exception catch (e) {
+			_throwDefault(e);
 		}
-		return response.data as T;
+
+		// Опять же, пока не будут добавлены HTTP коды.
+		return (response.data as Map<String, dynamic>)["data"] as T;
+		// return response.data as T;
 	}
 
 	static Never _handleDioException(DioException e) {
@@ -74,5 +81,5 @@ class Api {
 		_throwDefault();
 	}
 
-	static Never _throwDefault() => throw Exception("Нет данных об ошибке.");
+	static Never _throwDefault([Exception? e]) => throw e ?? Exception("Нет данных об ошибке.");
 }

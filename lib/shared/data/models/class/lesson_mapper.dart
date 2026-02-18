@@ -7,7 +7,7 @@ extension LessonDtoMapper on LessonDTO {
 Lesson toLesson() => Lesson(
 	group: group,
 	name: name,
-	type: LessonType.values[type],
+	type: LessonType.values[type - 1],
 	teacherName: teacherName,
 	classroom: classroom,
 	timing: timing.toTiming(),
@@ -36,6 +36,6 @@ extension WeeksDtoMapper on WeeksDTO {
 		startDate: startDate,
 		endDate: endDate,
 		isEven: isEven,
-		dayOfWeek: dayOfWeek,
+		dayOfWeek: dayOfWeek == 0 ? 7 : dayOfWeek,
 	);
 }

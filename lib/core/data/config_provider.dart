@@ -1,3 +1,3 @@
 class ConfigProvider {
-	static String baseAddress = "https://put_address_here.ru";
+	static String baseAddress = "https://api.kubstu.electr0.ru";
 }

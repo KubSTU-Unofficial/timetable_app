@@ -21,7 +21,7 @@ class LessonsLoadingBlocManager extends StatelessWidget {
     		return Column(
     			children: [
     				if (loadingState is TimetableLoadingErrorState)
-    				ErrorMessage(circumstances: "загрузке пар", error: loadingState.error),
+    				ErrorMessage(circumstances: "загрузке пар", error: loadingState.error, direction: ErrorMessage.down,),
     				if (loadingState is TimetableLoadingInProcessState)
     				Padding(
     				  padding: const EdgeInsets.symmetric(vertical: 16.0),

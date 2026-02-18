@@ -1,14 +1,14 @@
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timetable_app/core/data/database/database.dart';
+import 'package:timetable_app/features/initial_settings_page/data/datasources/api/groups/group_remote_data_source.dart';
 import 'package:timetable_app/features/initial_settings_page/data/datasources/api/groups/group_remote_data_source_int.dart';
-import 'package:timetable_app/features/initial_settings_page/data/datasources/api/groups/mock_group_api.dart';
 import 'package:timetable_app/features/initial_settings_page/data/datasources/database/groups_dao.dart';
 import 'package:timetable_app/features/initial_settings_page/data/repos/group_repo.dart';
 import 'package:timetable_app/features/initial_settings_page/domain/repo_ints/group_repo_int.dart';
 import 'package:timetable_app/features/initial_settings_page/domain/usecases/get_all_groups_usecase.dart';
 import 'package:timetable_app/shared/data/datasources/api/lessons/lesson_remote_data_source_int.dart';
-import 'package:timetable_app/shared/data/datasources/api/lessons/mock_lessons_remote_datasource.dart';
+import 'package:timetable_app/shared/data/datasources/api/lessons/lesson_remote_datasource.dart';
 import 'package:timetable_app/shared/data/datasources/database/lessons_dao.dart';
 import 'package:timetable_app/shared/data/repos/lesson_repo.dart';
 import 'package:timetable_app/shared/domain/repo_ints/lesson_repo_int.dart';
@@ -39,9 +39,8 @@ void _initializeDaos() {
 
 void _initializeRemoteSources() {
 	// Подставляем тестовый источник данных, т.к. API пока нет
-	// getIt.registerLazySingleton<GroupRemoteDataSource>(() => GroupRemoteDataSource());
-	getIt.registerLazySingleton<GroupRemoteDataSourceInt>(() => MockGroupRemoteDataSource());
-	getIt.registerLazySingleton<LessonRemoteDataSourceInt>(() => MockLessonsRemoteDatasource());
+	getIt.registerLazySingleton<GroupRemoteDataSourceInt>(() => GroupRemoteDataSource());
+	getIt.registerLazySingleton<LessonRemoteDataSourceInt>(() => LessonRemoteDatasource());
 	// ... Апишки для других сущностей здесь
 }
 

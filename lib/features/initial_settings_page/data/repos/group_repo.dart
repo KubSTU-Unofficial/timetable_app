@@ -13,11 +13,6 @@ class GroupRepo implements GroupRepoInt {
   GroupRepo({required this.db, required this.api, required this.prefs});
 
   @override
-  Future<List<Group>> find(String substring) async {
-		return (await api.getBySubstring(substring));
-  }
-
-  @override
   Future<void> saveAll(List<Group> groups) async {
 		return db.upsertAll(groups.map((e) => GroupsCompanionExt.fromGroup(e)).toList());
   }

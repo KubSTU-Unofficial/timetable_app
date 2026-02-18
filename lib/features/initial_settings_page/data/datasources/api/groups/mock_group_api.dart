@@ -4,11 +4,6 @@ import 'package:timetable_app/shared/data/constants.dart';
 
 class MockGroupRemoteDataSource implements GroupRemoteDataSourceInt {
 
-	@override
-  Future<List<Group>> getBySubstring(String substring) async {
-		return groups.where((e) => e.contains(substring)).map((e) => Group(name: e)).toList();
-	}
-
   @override
   Future<List<Group>> getAll() async {
 		return groups.map((e) => Group(name: e)).toList();

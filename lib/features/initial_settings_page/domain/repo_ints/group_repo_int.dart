@@ -4,7 +4,5 @@ abstract class GroupRepoInt {
 
 	Future<void> saveAll(List<Group> groups);
 
-	Future<List<Group>> find(String substring);
-
 	Future<List<Group>> getAll();
 }

@@ -14,6 +14,7 @@ import 'package:timetable_app/shared/data/repos/lesson_repo.dart';
 import 'package:timetable_app/shared/domain/repo_ints/lesson_repo_int.dart';
 import 'package:timetable_app/shared/domain/usecases/ensure_user_group_classes_up_to_data_usecase.dart';
 import 'package:timetable_app/shared/domain/usecases/get_all_classes_for_group_usecase.dart';
+import 'package:timetable_app/shared/domain/usecases/get_all_lessons_for_group_for_next_date_usecase.dart';
 import 'package:timetable_app/shared/domain/usecases/get_lessons_for_date_usecase.dart';
 
 final	getIt = GetIt.asNewInstance();
@@ -69,6 +70,10 @@ void _initializeUsecases() {
 	));
 
 	getIt.registerLazySingleton<GetLessonsForUserGroupForDateUsecase>(() => GetLessonsForUserGroupForDateUsecase(
+		repo: getIt.get()
+	));
+
+	getIt.registerLazySingleton<GetAllLessonsForGroupForNextDateUsecase>(() => GetAllLessonsForGroupForNextDateUsecase(
 		repo: getIt.get()
 	));
 

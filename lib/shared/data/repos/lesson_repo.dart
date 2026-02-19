@@ -54,4 +54,9 @@ class LessonRepo implements LessonRepoInt {
 		prefs.setString(userLessonsUpdatedAt, now.toIso8601String());
 		return now;
   }
+
+  @override
+  Stream<List<Lesson>> getNextForDateForUserGroup(DateTime date) {
+		return db.getNextForDateForGroup(date, _getUserGroup()).map((data) => data.toLessonList());
+  }
 }

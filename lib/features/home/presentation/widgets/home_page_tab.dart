@@ -3,11 +3,14 @@ import 'package:timetable_app/features/home/presentation/bloc/home_page_bloc.dar
 import 'package:timetable_app/shared/domain/entities/lesson.dart';
 import 'package:timetable_app/shared/presentation/theme/app_colors.dart';
 import 'package:timetable_app/shared/presentation/widgets/error_message_block.dart';
-import 'package:timetable_app/shared/presentation/widgets/expansion_title_widget.dart';
 import 'package:timetable_app/shared/presentation/widgets/lesson_widget.dart';
 
 class HomePageTab extends StatelessWidget {
-  const HomePageTab({super.key, required this.onRetry, this.data});
+  const HomePageTab({
+		super.key,
+		required this.onRetry,
+		this.data,
+	});
 
   final HomePageTabData? data;
   final void Function() onRetry;

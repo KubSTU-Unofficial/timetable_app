@@ -5,6 +5,10 @@ abstract class LessonRepoInt {
 		DateTime date,
 	);
 
+	Stream<List<Lesson>> getNextForDateForUserGroup(
+		DateTime date,
+	);
+
 	Stream<List<Lesson>> getAllForUserGroup();
 
 	Future<DateTime> ensureLessonsUpToDateForUser();

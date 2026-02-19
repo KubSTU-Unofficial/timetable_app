@@ -42,4 +42,35 @@ class LessonsDao extends DatabaseAccessor<Database> with _$LessonsDaoMixin {
 			);
 		})).watch();
 	}
+
+	Stream<List<LessonsEntry>> getNextForDateForGroup(DateTime date, String group) {
+		int evenCoef = date.weekOfYear % 2 == 0 ? 1 : 10;
+		int oddCoef = date.weekOfYear % 2 == 1 ? 1 : 10;
+		int givenDayCoef = date.weekday * (date.weekOfYear % 2 == 0 ? evenCoef : oddCoef);
+		var dayWithCoef = (lessons.dayOfWeek * lessons.isWeekEven.caseMatch<int>(when: { const Constant(true): Constant(evenCoef)}, orElse: Constant(oddCoef),));
+		return (select(lessons)
+			..addColumns([dayWithCoef])
+			..where((e) {
+			return e.group.equals(group) & (
+				(
+					dayWithCoef.equalsExp(
+						subqueryExpression<int>(selectOnly(e)
+							..addColumns([dayWithCoef.min()])
+							..where(
+								dayWithCoef.isBiggerThanValue(givenDayCoef)
+							)
+						) 
+					) &
+					e.startDate.isSmallerOrEqualValue(date) &
+					e.endDate.isBiggerOrEqualValue(date)
+				) |
+					e.date.equalsExp(
+						subqueryExpression<DateTime>(selectOnly(lessons)
+							..addColumns([lessons.date.min()])
+							..where(lessons.date.isBiggerThanValue(date))
+						)
+					)
+				);
+		})).watch();
+	}
 }

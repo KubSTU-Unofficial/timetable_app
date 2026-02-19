@@ -6,57 +6,80 @@ import 'package:timetable_app/shared/presentation/widgets/error_message_block.da
 import 'package:timetable_app/shared/presentation/widgets/expansion_title_widget.dart';
 
 class HomePageTab extends StatelessWidget {
-	const HomePageTab({
-		super.key,
-		required this.onRetry,
-		this.data,
-	});
+  HomePageTab({super.key, required this.onRetry, this.data});
 
-	final HomePageTabData? data;
-	final void Function() onRetry; 
+  final HomePageTabData? data;
+  final void Function() onRetry;
 
-	@override
-	Widget build(BuildContext context) {
-		if (data == null) {
-			return Center(
-			  child: Text(
-			  	"Выберите дату для показа",
-			  	style: TextStyle(
-			  		color: AppColors.primary
-			  	),
-			  ),
-			);
-		}
-		if (data!.error != null) {
-		  return ErrorMessageBlock(
-				errorMessage: data!.error!,
-				circumstances: "загрузке пар",
-				onRetry: onRetry
-			);
-		}
-		return StreamBuilder(
-		  stream: data!.lessons,
-		  builder: (context, asyncSnapshot) {
-				if (asyncSnapshot.data == null) { return SizedBox.shrink(); }
-				List<Lesson> lessons = asyncSnapshot.data!;
+  @override
+  Widget build(BuildContext context) {
+    if (data == null) {
+      return Center(
+        child: Text(
+          "Выберите дату для показа",
+          style: TextStyle(color: AppColors.primary),
+        ),
+      );
+    }
+    if (data!.error != null) {
+      return ErrorMessageBlock(
+        errorMessage: data!.error!,
+        circumstances: "загрузке пар",
+        onRetry: onRetry,
+      );
+    }
+    return StreamBuilder(
+      stream: data!.lessons,
+      builder: (context, asyncSnapshot) {
+        if (asyncSnapshot.data == null || asyncSnapshot.data!.isEmpty) {
+          return Padding(
+            padding: EdgeInsets.all(20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  'ПАР НЕТ!!!',
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.textAccent,
+                  ),
+                ),
+                Image.asset(
+                  'assets/chill_girl.gif',
+                  fit: BoxFit.contain,
+                  gaplessPlayback: true,
+                  width: 300,
+                  height: 300,
+                ),
+                Text(
+                  'ОТДОХНИ!!!',
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.textAccent,
+                  ),
+                ),
+              ],
+            ),
+          );
+        }
 
+        List<Lesson> lessons = asyncSnapshot.data!;
 
-				// Используй lessons здесь
-
-
-		    return Center(
-		    	child: Padding(
-		    		padding: EdgeInsets.fromLTRB(5, 10, 5, 0),
-		    		child: ListView.separated(
-		    			itemCount: 3,
-		    			separatorBuilder: (context, index) =>
-		    				SizedBox(height: 8),
-		    			itemBuilder: (context, index) =>
-		    				ExpansionTitleWidget(),
-		    		),
-		    	),
-		    );
-		  }
-		);
-	}
+        return Center(
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(5, 10, 5, 0),
+            child: ListView.separated(
+              itemCount: lessons.length,
+              separatorBuilder: (context, index) => SizedBox(height: 8),
+              itemBuilder: (context, index) =>
+                  ExpansionTitleWidget(lesson: lessons[index]),
+            ),
+          ),
+        );
+      },
+    );
+  }
 }

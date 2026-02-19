@@ -1,7 +1,9 @@
 import 'package:timetable_app/shared/domain/entities/timing.dart';
 
 enum LessonType {
-	lecture, practical, lab
+	lecture('Лекция'), practical('Практика'), lab('Лабораторная');
+  final String translation;
+  const LessonType(this.translation);
 }
 
 class Lesson {

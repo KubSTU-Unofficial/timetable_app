@@ -21,7 +21,7 @@ abstract class AppColors {
   // Текст
   static const Color textPrimary = Color(0xFF0F172A); // Черный текст
   static const Color textSecondary = Color(0xFF475569); // Темно-серый
-  static const Color textDisabled = Color(0xFF94A3B8); // Серый
+  static const Color textDisabled = Color(0xFFF8FAFC); // Белый
   static const Color textAccent = Color(0xFFEA580C); // Оранжевый для акцентов в тексте
   static const Color focusedText = Color(0xFFEA580C); // Оранжевый для фокус текста
   static const Color unfocusedText = Color(0x80EA580C);
@@ -35,7 +35,7 @@ abstract class AppColors {
   // Границы и разделители
   static const Color enabledBorder = Color(0xFFFDBA74); // Светло-оранжевый для границ
   static const Color focusedBorder = Color(0xFFF97316); // Оранжевый для границ в фокусе
-  static const Color divider = Color(0xFFE2E8F0);     // Светло-серый разделитель
+  static const Color divider = Color(0xFF1E293B);     // Светло-серый разделитель
   
   // Темная тема
   static const Color darkBackground = Color(0xFF03070E); // Темный фон

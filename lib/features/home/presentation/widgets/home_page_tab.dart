@@ -4,9 +4,10 @@ import 'package:timetable_app/shared/domain/entities/lesson.dart';
 import 'package:timetable_app/shared/presentation/theme/app_colors.dart';
 import 'package:timetable_app/shared/presentation/widgets/error_message_block.dart';
 import 'package:timetable_app/shared/presentation/widgets/expansion_title_widget.dart';
+import 'package:timetable_app/shared/presentation/widgets/lesson_widget.dart';
 
 class HomePageTab extends StatelessWidget {
-  HomePageTab({super.key, required this.onRetry, this.data});
+  const HomePageTab({super.key, required this.onRetry, this.data});
 
   final HomePageTabData? data;
   final void Function() onRetry;
@@ -75,7 +76,8 @@ class HomePageTab extends StatelessWidget {
               itemCount: lessons.length,
               separatorBuilder: (context, index) => SizedBox(height: 8),
               itemBuilder: (context, index) =>
-                  ExpansionTitleWidget(lesson: lessons[index]),
+								LessonWidget(lesson: lessons[index])
+								// ExpansionTitleWidget(lesson: lessons[index])
             ),
           ),
         );

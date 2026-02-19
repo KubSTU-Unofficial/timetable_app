@@ -5,6 +5,7 @@ abstract class AppColors {
   static const Color primary = Color(0xFFF97316);     // Яркий оранжевый
   static const Color primaryDark = Color(0xFFEA580C); // Темный оранжевый
   static const Color primaryLight = Color(0xFFFDBA74); // Светлый оранжевый
+	static const Color darkBrown = Color(0x8f5c2200);
   
   // Навигационная панель
   static const Color navigationBarBackground = Color(0xFF1E293B); // Темный фон

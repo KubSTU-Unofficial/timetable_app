@@ -4,6 +4,8 @@ import 'package:timetable_app/shared/presentation/bloc/timetable_loading_bloc.da
 import 'package:timetable_app/shared/presentation/error_message.dart';
 import 'package:timetable_app/shared/presentation/theme/app_colors.dart';
 import 'package:timetable_app/shared/presentation/widgets/loading_indicator_block.dart';
+import 'package:intl/intl.dart';
+
 
 class LessonsLoadingBlocManager extends StatelessWidget {
   const LessonsLoadingBlocManager({
@@ -35,7 +37,7 @@ class LessonsLoadingBlocManager extends StatelessWidget {
     				if (loadingState is TimetableLoadingReadyState)
     				Padding(
     				  padding: const EdgeInsets.symmetric(vertical: 16.0),
-    				  child: Text("Данные обновлены в ${loadingState.updatedAt}", style: TextStyle(color: AppColors.textAccent),),
+    				  child: Text("Данные обновлены в ${DateFormat('dd-MM-yyyy, HH:mm').format(loadingState.updatedAt)}", style: TextStyle(color: AppColors.textAccent),),
     				),
     				Expanded(
     					child: child,

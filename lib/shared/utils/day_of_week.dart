@@ -5,7 +5,6 @@ extension DateTimeWeekdayExtension on DateTime {
     if (weekday < 1 || weekday > 7) {
       return null;
     }
-    
     // Находим начало текущей недели (понедельник) относительно текущей даты
     final monday = subtract(Duration(days: this.weekday - 1));
     

@@ -74,7 +74,7 @@ class HomePageTab extends StatelessWidget {
 
         return Center(
           child: Padding(
-            padding: EdgeInsets.fromLTRB(5, 10, 5, 0),
+            padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
             child: ListView.separated(
               itemCount: lessons.length,
               separatorBuilder: (context, index) => SizedBox(height: 8),

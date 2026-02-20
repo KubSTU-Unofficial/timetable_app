@@ -16,7 +16,11 @@ class LessonWidget extends StatelessWidget {
         padding: EdgeInsets.fromLTRB(46, 5, 0, 0),
         child: Text(
           lesson.name,
-          style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
       showTrailingIcon: false,
@@ -60,7 +64,11 @@ class _Title extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 20, right: 8),
                     child: Text(
                       "${lesson.timing.lessonNumber}",
-                      style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
@@ -71,7 +79,11 @@ class _Title extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: Text(
                       lesson.type.translation,
-                      style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
@@ -83,7 +95,11 @@ class _Title extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: Text(
                         lesson.classroom!,
-                        style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
@@ -91,7 +107,11 @@ class _Title extends StatelessWidget {
             ),
             Text(
               lesson.timing.lessonTime,
-              style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ],
         ),
@@ -126,7 +146,8 @@ class _Body extends StatelessWidget {
         if (lesson.isOnline == true) Texttile(text: "Онлайн: да"),
         if (lesson.comment != null)
           Texttile(text: "Примечание: ${lesson.comment}"),
-        if (lesson.teacherName != null) Texttile(text: "Преподователь: ${lesson.teacherName!}"),
+        if (lesson.teacherName != null)
+          Texttile(text: "Преподователь: ${lesson.teacherName!}"),
       ],
     );
   }
@@ -141,8 +162,14 @@ class Texttile extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Divider(color: AppColors.primary.withAlpha(100)),
-        Text(text, style: TextStyle(color: Colors.white, fontSize: 16 , fontWeight: FontWeight.bold)),
-        
+        Text(
+          text,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ],
     );
   }

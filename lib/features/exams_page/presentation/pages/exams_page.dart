@@ -1,12 +1,34 @@
 import 'package:flutter/material.dart';
-// заглушка, макет будущей страницы не более
+import 'package:timetable_app/features/exams_page/presentation/widgets/exams_page_bloc_widget.dart';
+import 'package:timetable_app/shared/presentation/theme/app_colors.dart';
+
 class ExamsPage extends StatelessWidget {
   const ExamsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(child: Text('Расписание экзаменов')),
-    );
-  }
+		return Scaffold(
+			backgroundColor: AppColors.darkBackground,
+			body: SafeArea(
+			  child: Center(
+			    child: ExamsPageBlocWidget(
+			    	builder: (ctx, exams) {
+			    		
+			    		// Если экзаменов нет
+			    		if (exams == null || exams.isEmpty) {
+			    			return SizedBox.shrink();
+			    		}
+			    		
+			    		return Text(
+			    			"Здесь будут выведены экзамены. Сейчас загружено: ${exams.length.toString()}",
+			    			style: TextStyle(
+			    				color: Colors.blue
+			    			),
+			    		);
+			    	},
+			    ),
+			  ),
+			),
+		);
+	}
 }

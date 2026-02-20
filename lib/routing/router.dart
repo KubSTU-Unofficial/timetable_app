@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Core
 import 'package:timetable_app/core/di/get_it.dart';
+import 'package:timetable_app/features/exams_page/presentation/bloc/local_bloc/exams_page_bloc.dart';
+import 'package:timetable_app/features/exams_page/presentation/bloc/remote_bloc/exams_loading_bloc.dart';
 import 'package:timetable_app/features/home/presentation/bloc/home_page_bloc.dart';
 import 'package:timetable_app/features/timetable_page/presentation/bloc/timetable_page_bloc.dart';
 import 'package:timetable_app/features/timetable_page/presentation/pages/timetable_page.dart';
@@ -84,7 +86,19 @@ final router = GoRouter(
         ),
         StatefulShellBranch(
           routes: [
-            GoRoute(path: examsPagePath, builder: (ctx, state) => ExamsPage()),
+            GoRoute(
+							path: examsPagePath,
+							builder: (ctx, state) => MultiBlocProvider(
+								providers: [
+									BlocProvider(
+										create: (ctx) => ExamsLoadingBloc()..add(ExamsLoadingEnsureDataLoadedEvent())
+									),
+									BlocProvider(
+										create: (ctx) => ExamsPageBloc()..add(ExamsPageLessonsRequested())
+									),
+								],
+								child: ExamsPage()
+							)),
           ],
         ),
         StatefulShellBranch(

@@ -1,6 +1,13 @@
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timetable_app/core/data/database/database.dart';
+import 'package:timetable_app/features/exams_page/data/datasources/api/exam_remote_data_source_int.dart';
+import 'package:timetable_app/features/exams_page/data/datasources/api/mock_exam_remote_datasource.dart';
+import 'package:timetable_app/features/exams_page/data/datasources/database/exams_dao.dart';
+import 'package:timetable_app/features/exams_page/data/repos/exam_repo.dart';
+import 'package:timetable_app/features/exams_page/domain/repo_ints/exam_repo_int.dart';
+import 'package:timetable_app/features/exams_page/domain/usecases/ensure_exams_up_to_date_for_user_usecase.dart';
+import 'package:timetable_app/features/exams_page/domain/usecases/get_all_exams_for_user_usecase.dart';
 import 'package:timetable_app/features/initial_settings_page/data/datasources/api/groups/group_remote_data_source.dart';
 import 'package:timetable_app/features/initial_settings_page/data/datasources/api/groups/group_remote_data_source_int.dart';
 import 'package:timetable_app/features/initial_settings_page/data/datasources/database/groups_dao.dart';
@@ -35,6 +42,7 @@ Future<void> configureDependencises() async {
 void _initializeDaos() {
 	getIt.registerLazySingleton(() => GroupsDao(getIt.get()));
 	getIt.registerLazySingleton(() => LessonsDao(getIt.get()));
+	getIt.registerLazySingleton(() => ExamsDao(getIt.get()));
 	// .. Объекты доступа к данным других сущностей здесь
 }
 
@@ -42,6 +50,7 @@ void _initializeRemoteSources() {
 	// Подставляем тестовый источник данных, т.к. API пока нет
 	getIt.registerLazySingleton<GroupRemoteDataSourceInt>(() => GroupRemoteDataSource());
 	getIt.registerLazySingleton<LessonRemoteDataSourceInt>(() => LessonRemoteDatasource());
+	getIt.registerLazySingleton<ExamRemoteDataSourceInt>(() => MockExamRemoteDatasource());
 	// ... Апишки для других сущностей здесь
 }
 
@@ -53,6 +62,12 @@ void _initializeRepositories() {
 	));
 
 	getIt.registerLazySingleton<LessonRepoInt>(() => LessonRepo(
+		db: getIt.get(),
+		api: getIt.get(),
+		prefs: getIt.get(),
+	));
+
+	getIt.registerLazySingleton<ExamRepoInt>(() => ExamRepo(
 		db: getIt.get(),
 		api: getIt.get(),
 		prefs: getIt.get(),
@@ -78,6 +93,14 @@ void _initializeUsecases() {
 	));
 
 	getIt.registerLazySingleton<EnsureUserGroupClassesUpToDataUsecase>(() => EnsureUserGroupClassesUpToDataUsecase(
+		repo: getIt.get()
+	));
+
+	getIt.registerLazySingleton<GetAllExamsForUserUsecase>(() => GetAllExamsForUserUsecase(
+		repo: getIt.get()
+	));
+
+	getIt.registerLazySingleton<EnsureExamsUpToDateForUserUsecase>(() => EnsureExamsUpToDateForUserUsecase(
 		repo: getIt.get()
 	));
 	// ... Другие сценарии здесь

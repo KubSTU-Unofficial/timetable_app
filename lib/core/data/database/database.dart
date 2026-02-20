@@ -1,6 +1,8 @@
 import 'package:drift/drift.dart';
 import 'package:drift_flutter/drift_flutter.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:timetable_app/features/exams_page/data/datasources/database/exams_dao.dart' show ExamsDao;
+import 'package:timetable_app/features/exams_page/data/models/exam_table.dart';
 import 'package:timetable_app/features/initial_settings_page/data/datasources/database/groups_dao.dart';
 import 'package:timetable_app/features/initial_settings_page/data/models/groups_table.dart';
 import 'package:timetable_app/shared/data/datasources/database/lessons_dao.dart';
@@ -9,8 +11,8 @@ part 'database.g.dart';
 
 
 @DriftDatabase(
-	tables: [Groups, Lessons],
-	daos: [GroupsDao, LessonsDao]
+	tables: [Groups, Lessons, Exams],
+	daos: [GroupsDao, LessonsDao, ExamsDao]
 )
 class Database extends _$Database {
 	Database([QueryExecutor? executor]) : super(executor ?? _openConnection());

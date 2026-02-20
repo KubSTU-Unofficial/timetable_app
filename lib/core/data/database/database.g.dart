@@ -1238,18 +1238,473 @@ class LessonsCompanion extends UpdateCompanion<LessonsEntry> {
   }
 }
 
+class $ExamsTable extends Exams with TableInfo<$ExamsTable, ExamsEntry> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ExamsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _groupMeta = const VerificationMeta('group');
+  @override
+  late final GeneratedColumn<String> group = GeneratedColumn<String>(
+    'group',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _dateMeta = const VerificationMeta('date');
+  @override
+  late final GeneratedColumn<DateTime> date = GeneratedColumn<DateTime>(
+    'date',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _classroomMeta = const VerificationMeta(
+    'classroom',
+  );
+  @override
+  late final GeneratedColumn<String> classroom = GeneratedColumn<String>(
+    'classroom',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _teacherMeta = const VerificationMeta(
+    'teacher',
+  );
+  @override
+  late final GeneratedColumn<String> teacher = GeneratedColumn<String>(
+    'teacher',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _yearMeta = const VerificationMeta('year');
+  @override
+  late final GeneratedColumn<int> year = GeneratedColumn<int>(
+    'year',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _semesterMeta = const VerificationMeta(
+    'semester',
+  );
+  @override
+  late final GeneratedColumn<int> semester = GeneratedColumn<int>(
+    'semester',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    group,
+    name,
+    date,
+    classroom,
+    teacher,
+    year,
+    semester,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'exams';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ExamsEntry> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('group')) {
+      context.handle(
+        _groupMeta,
+        group.isAcceptableOrUnknown(data['group']!, _groupMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_groupMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('date')) {
+      context.handle(
+        _dateMeta,
+        date.isAcceptableOrUnknown(data['date']!, _dateMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dateMeta);
+    }
+    if (data.containsKey('classroom')) {
+      context.handle(
+        _classroomMeta,
+        classroom.isAcceptableOrUnknown(data['classroom']!, _classroomMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_classroomMeta);
+    }
+    if (data.containsKey('teacher')) {
+      context.handle(
+        _teacherMeta,
+        teacher.isAcceptableOrUnknown(data['teacher']!, _teacherMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_teacherMeta);
+    }
+    if (data.containsKey('year')) {
+      context.handle(
+        _yearMeta,
+        year.isAcceptableOrUnknown(data['year']!, _yearMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_yearMeta);
+    }
+    if (data.containsKey('semester')) {
+      context.handle(
+        _semesterMeta,
+        semester.isAcceptableOrUnknown(data['semester']!, _semesterMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_semesterMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  ExamsEntry map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ExamsEntry(
+      group: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}group'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      date: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date'],
+      )!,
+      classroom: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}classroom'],
+      )!,
+      teacher: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}teacher'],
+      )!,
+      year: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}year'],
+      )!,
+      semester: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}semester'],
+      )!,
+    );
+  }
+
+  @override
+  $ExamsTable createAlias(String alias) {
+    return $ExamsTable(attachedDatabase, alias);
+  }
+}
+
+class ExamsEntry extends DataClass implements Insertable<ExamsEntry> {
+  final String group;
+  final String name;
+  final DateTime date;
+  final String classroom;
+  final String teacher;
+  final int year;
+  final int semester;
+  const ExamsEntry({
+    required this.group,
+    required this.name,
+    required this.date,
+    required this.classroom,
+    required this.teacher,
+    required this.year,
+    required this.semester,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['group'] = Variable<String>(group);
+    map['name'] = Variable<String>(name);
+    map['date'] = Variable<DateTime>(date);
+    map['classroom'] = Variable<String>(classroom);
+    map['teacher'] = Variable<String>(teacher);
+    map['year'] = Variable<int>(year);
+    map['semester'] = Variable<int>(semester);
+    return map;
+  }
+
+  ExamsCompanion toCompanion(bool nullToAbsent) {
+    return ExamsCompanion(
+      group: Value(group),
+      name: Value(name),
+      date: Value(date),
+      classroom: Value(classroom),
+      teacher: Value(teacher),
+      year: Value(year),
+      semester: Value(semester),
+    );
+  }
+
+  factory ExamsEntry.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ExamsEntry(
+      group: serializer.fromJson<String>(json['group']),
+      name: serializer.fromJson<String>(json['name']),
+      date: serializer.fromJson<DateTime>(json['date']),
+      classroom: serializer.fromJson<String>(json['classroom']),
+      teacher: serializer.fromJson<String>(json['teacher']),
+      year: serializer.fromJson<int>(json['year']),
+      semester: serializer.fromJson<int>(json['semester']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'group': serializer.toJson<String>(group),
+      'name': serializer.toJson<String>(name),
+      'date': serializer.toJson<DateTime>(date),
+      'classroom': serializer.toJson<String>(classroom),
+      'teacher': serializer.toJson<String>(teacher),
+      'year': serializer.toJson<int>(year),
+      'semester': serializer.toJson<int>(semester),
+    };
+  }
+
+  ExamsEntry copyWith({
+    String? group,
+    String? name,
+    DateTime? date,
+    String? classroom,
+    String? teacher,
+    int? year,
+    int? semester,
+  }) => ExamsEntry(
+    group: group ?? this.group,
+    name: name ?? this.name,
+    date: date ?? this.date,
+    classroom: classroom ?? this.classroom,
+    teacher: teacher ?? this.teacher,
+    year: year ?? this.year,
+    semester: semester ?? this.semester,
+  );
+  ExamsEntry copyWithCompanion(ExamsCompanion data) {
+    return ExamsEntry(
+      group: data.group.present ? data.group.value : this.group,
+      name: data.name.present ? data.name.value : this.name,
+      date: data.date.present ? data.date.value : this.date,
+      classroom: data.classroom.present ? data.classroom.value : this.classroom,
+      teacher: data.teacher.present ? data.teacher.value : this.teacher,
+      year: data.year.present ? data.year.value : this.year,
+      semester: data.semester.present ? data.semester.value : this.semester,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExamsEntry(')
+          ..write('group: $group, ')
+          ..write('name: $name, ')
+          ..write('date: $date, ')
+          ..write('classroom: $classroom, ')
+          ..write('teacher: $teacher, ')
+          ..write('year: $year, ')
+          ..write('semester: $semester')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(group, name, date, classroom, teacher, year, semester);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ExamsEntry &&
+          other.group == this.group &&
+          other.name == this.name &&
+          other.date == this.date &&
+          other.classroom == this.classroom &&
+          other.teacher == this.teacher &&
+          other.year == this.year &&
+          other.semester == this.semester);
+}
+
+class ExamsCompanion extends UpdateCompanion<ExamsEntry> {
+  final Value<String> group;
+  final Value<String> name;
+  final Value<DateTime> date;
+  final Value<String> classroom;
+  final Value<String> teacher;
+  final Value<int> year;
+  final Value<int> semester;
+  final Value<int> rowid;
+  const ExamsCompanion({
+    this.group = const Value.absent(),
+    this.name = const Value.absent(),
+    this.date = const Value.absent(),
+    this.classroom = const Value.absent(),
+    this.teacher = const Value.absent(),
+    this.year = const Value.absent(),
+    this.semester = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ExamsCompanion.insert({
+    required String group,
+    required String name,
+    required DateTime date,
+    required String classroom,
+    required String teacher,
+    required int year,
+    required int semester,
+    this.rowid = const Value.absent(),
+  }) : group = Value(group),
+       name = Value(name),
+       date = Value(date),
+       classroom = Value(classroom),
+       teacher = Value(teacher),
+       year = Value(year),
+       semester = Value(semester);
+  static Insertable<ExamsEntry> custom({
+    Expression<String>? group,
+    Expression<String>? name,
+    Expression<DateTime>? date,
+    Expression<String>? classroom,
+    Expression<String>? teacher,
+    Expression<int>? year,
+    Expression<int>? semester,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (group != null) 'group': group,
+      if (name != null) 'name': name,
+      if (date != null) 'date': date,
+      if (classroom != null) 'classroom': classroom,
+      if (teacher != null) 'teacher': teacher,
+      if (year != null) 'year': year,
+      if (semester != null) 'semester': semester,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ExamsCompanion copyWith({
+    Value<String>? group,
+    Value<String>? name,
+    Value<DateTime>? date,
+    Value<String>? classroom,
+    Value<String>? teacher,
+    Value<int>? year,
+    Value<int>? semester,
+    Value<int>? rowid,
+  }) {
+    return ExamsCompanion(
+      group: group ?? this.group,
+      name: name ?? this.name,
+      date: date ?? this.date,
+      classroom: classroom ?? this.classroom,
+      teacher: teacher ?? this.teacher,
+      year: year ?? this.year,
+      semester: semester ?? this.semester,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (group.present) {
+      map['group'] = Variable<String>(group.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (date.present) {
+      map['date'] = Variable<DateTime>(date.value);
+    }
+    if (classroom.present) {
+      map['classroom'] = Variable<String>(classroom.value);
+    }
+    if (teacher.present) {
+      map['teacher'] = Variable<String>(teacher.value);
+    }
+    if (year.present) {
+      map['year'] = Variable<int>(year.value);
+    }
+    if (semester.present) {
+      map['semester'] = Variable<int>(semester.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExamsCompanion(')
+          ..write('group: $group, ')
+          ..write('name: $name, ')
+          ..write('date: $date, ')
+          ..write('classroom: $classroom, ')
+          ..write('teacher: $teacher, ')
+          ..write('year: $year, ')
+          ..write('semester: $semester, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$Database extends GeneratedDatabase {
   _$Database(QueryExecutor e) : super(e);
   $DatabaseManager get managers => $DatabaseManager(this);
   late final $GroupsTable groups = $GroupsTable(this);
   late final $LessonsTable lessons = $LessonsTable(this);
+  late final $ExamsTable exams = $ExamsTable(this);
   late final GroupsDao groupsDao = GroupsDao(this as Database);
   late final LessonsDao lessonsDao = LessonsDao(this as Database);
+  late final ExamsDao examsDao = ExamsDao(this as Database);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [groups, lessons];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [groups, lessons, exams];
 }
 
 typedef $$GroupsTableCreateCompanionBuilder =
@@ -1828,6 +2283,235 @@ typedef $$LessonsTableProcessedTableManager =
       LessonsEntry,
       PrefetchHooks Function()
     >;
+typedef $$ExamsTableCreateCompanionBuilder =
+    ExamsCompanion Function({
+      required String group,
+      required String name,
+      required DateTime date,
+      required String classroom,
+      required String teacher,
+      required int year,
+      required int semester,
+      Value<int> rowid,
+    });
+typedef $$ExamsTableUpdateCompanionBuilder =
+    ExamsCompanion Function({
+      Value<String> group,
+      Value<String> name,
+      Value<DateTime> date,
+      Value<String> classroom,
+      Value<String> teacher,
+      Value<int> year,
+      Value<int> semester,
+      Value<int> rowid,
+    });
+
+class $$ExamsTableFilterComposer extends Composer<_$Database, $ExamsTable> {
+  $$ExamsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get group => $composableBuilder(
+    column: $table.group,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get date => $composableBuilder(
+    column: $table.date,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get classroom => $composableBuilder(
+    column: $table.classroom,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get teacher => $composableBuilder(
+    column: $table.teacher,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get year => $composableBuilder(
+    column: $table.year,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get semester => $composableBuilder(
+    column: $table.semester,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$ExamsTableOrderingComposer extends Composer<_$Database, $ExamsTable> {
+  $$ExamsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get group => $composableBuilder(
+    column: $table.group,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get date => $composableBuilder(
+    column: $table.date,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get classroom => $composableBuilder(
+    column: $table.classroom,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get teacher => $composableBuilder(
+    column: $table.teacher,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get year => $composableBuilder(
+    column: $table.year,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get semester => $composableBuilder(
+    column: $table.semester,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$ExamsTableAnnotationComposer extends Composer<_$Database, $ExamsTable> {
+  $$ExamsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get group =>
+      $composableBuilder(column: $table.group, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get date =>
+      $composableBuilder(column: $table.date, builder: (column) => column);
+
+  GeneratedColumn<String> get classroom =>
+      $composableBuilder(column: $table.classroom, builder: (column) => column);
+
+  GeneratedColumn<String> get teacher =>
+      $composableBuilder(column: $table.teacher, builder: (column) => column);
+
+  GeneratedColumn<int> get year =>
+      $composableBuilder(column: $table.year, builder: (column) => column);
+
+  GeneratedColumn<int> get semester =>
+      $composableBuilder(column: $table.semester, builder: (column) => column);
+}
+
+class $$ExamsTableTableManager
+    extends
+        RootTableManager<
+          _$Database,
+          $ExamsTable,
+          ExamsEntry,
+          $$ExamsTableFilterComposer,
+          $$ExamsTableOrderingComposer,
+          $$ExamsTableAnnotationComposer,
+          $$ExamsTableCreateCompanionBuilder,
+          $$ExamsTableUpdateCompanionBuilder,
+          (ExamsEntry, BaseReferences<_$Database, $ExamsTable, ExamsEntry>),
+          ExamsEntry,
+          PrefetchHooks Function()
+        > {
+  $$ExamsTableTableManager(_$Database db, $ExamsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ExamsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ExamsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ExamsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> group = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<DateTime> date = const Value.absent(),
+                Value<String> classroom = const Value.absent(),
+                Value<String> teacher = const Value.absent(),
+                Value<int> year = const Value.absent(),
+                Value<int> semester = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ExamsCompanion(
+                group: group,
+                name: name,
+                date: date,
+                classroom: classroom,
+                teacher: teacher,
+                year: year,
+                semester: semester,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String group,
+                required String name,
+                required DateTime date,
+                required String classroom,
+                required String teacher,
+                required int year,
+                required int semester,
+                Value<int> rowid = const Value.absent(),
+              }) => ExamsCompanion.insert(
+                group: group,
+                name: name,
+                date: date,
+                classroom: classroom,
+                teacher: teacher,
+                year: year,
+                semester: semester,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$ExamsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$Database,
+      $ExamsTable,
+      ExamsEntry,
+      $$ExamsTableFilterComposer,
+      $$ExamsTableOrderingComposer,
+      $$ExamsTableAnnotationComposer,
+      $$ExamsTableCreateCompanionBuilder,
+      $$ExamsTableUpdateCompanionBuilder,
+      (ExamsEntry, BaseReferences<_$Database, $ExamsTable, ExamsEntry>),
+      ExamsEntry,
+      PrefetchHooks Function()
+    >;
 
 class $DatabaseManager {
   final _$Database _db;
@@ -1836,4 +2520,6 @@ class $DatabaseManager {
       $$GroupsTableTableManager(_db, _db.groups);
   $$LessonsTableTableManager get lessons =>
       $$LessonsTableTableManager(_db, _db.lessons);
+  $$ExamsTableTableManager get exams =>
+      $$ExamsTableTableManager(_db, _db.exams);
 }

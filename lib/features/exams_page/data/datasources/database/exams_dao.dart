@@ -28,7 +28,9 @@ class ExamsDao extends DatabaseAccessor<Database> with _$ExamsDaoMixin {
 			e.group.equals(group) &
 			e.year.equals(now.year) &
 			e.semester.equals(semester)
-		)).watch();
+		)..orderBy([
+				(e) => OrderingTerm(expression: e.date, mode: OrderingMode.asc)
+			])).watch();
 	}
   
 }

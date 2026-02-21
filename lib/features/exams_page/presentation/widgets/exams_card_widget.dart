@@ -66,15 +66,14 @@ class _ExamsCardWidgetState extends State<ExamsCardWidget> {
               ],
             ),
             SizedBox(height: 5),
-            Row(children: [
-                ],
-              ),
             Row(
               children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-                  child: Expanded(
-                    child: TextContainer(text: widget.exams.name, fontSize: 24),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                    child: Expanded(
+                      child: TextContainer(text: widget.exams.name, fontSize: 22),
+                    ),
                   ),
                 ),
                 SizedBox(width: 5),
@@ -82,12 +81,14 @@ class _ExamsCardWidgetState extends State<ExamsCardWidget> {
             ),
             Row(
               children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-                  child: TextContainer(
-                    text: widget.exams.teacher,
-                    fontSize: 18,
-                    color: AppColors.darkTextPrimary.withAlpha(150),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                    child: TextContainer(
+                      text: widget.exams.teacher,
+                      fontSize: 18,
+                      color: AppColors.darkTextPrimary.withAlpha(150),
+                    ),
                   ),
                 ),
               ],
@@ -114,6 +115,7 @@ class TextContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
+			softWrap: true,
       style: TextStyle(
         color: color,
         fontSize: fontSize.toDouble(),

@@ -13,27 +13,25 @@ class ExamsPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.darkBackground,
       body: SafeArea(
-        child: Column(
-          children: [
-            ExamsPageBlocWidget(
-              builder: (ctx, exams, onRefreshRequested) {
-                // Если экзаменов нет
-                if (exams == null || exams.isEmpty) {
-                  return SizedBox.shrink();
-                }
-                return RefreshIndicator(
-                  onRefresh: onRefreshRequested,
-                  child: ListView.builder(
-                    itemCount: exams.length,
-                    itemBuilder: (ctx, idx) {
-                      return Placeholder(); 
-                      //ExamsCardWidget(exams: exams[idx]);
-                    },
-                  ),
-                );
-              },
-            ),
-          ],
+        child: Center(
+          child: ExamsPageBlocWidget(
+            builder: (ctx, exams, onRefreshRequested) {
+              // Если экзаменов нет
+              if (exams == null || exams.isEmpty) {
+                return SizedBox.shrink();
+              }
+              return RefreshIndicator(
+                onRefresh: onRefreshRequested,
+                child: ListView.builder(
+                  itemCount: exams.length,
+                  itemBuilder: (context, index) {
+                    return ExamsCardWidget(exams: exams[index]); 
+                    //ExamsCardWidget(exams: exams[idx]);
+                  },
+                ),
+              );
+            },
+          ),
         ),
       ),
     );

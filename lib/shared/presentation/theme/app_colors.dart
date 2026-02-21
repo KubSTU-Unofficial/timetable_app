@@ -39,7 +39,10 @@ abstract class AppColors {
   static const Color divider = Color(0xFF1E293B);     // Светло-серый разделитель
   
   // Темная тема
-  static const Color darkBackground = Color(0xFF03070E); // Темный фон
-  static const Color darkSurface = Color(0xFF1E293B);   // Поверхность
+  static const Color darkBackground = Color(0xFF111318); // Темный фон Старый вариант 0xFF03070E
+  static const Color darkSurface = Color(0x08FFFFFF);   // Поверхность Старый вариант 0xFF1E293B
   static const Color darkTextPrimary = Color(0xFFF1F5F9); // Светлый текст
+
+  //Тень
+  static const Color shadow = Color(0x32000000);
 }

@@ -9,37 +9,49 @@ class LessonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ExpansionTile(
-      tilePadding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-      title: _Title(lesson: lesson),
-      subtitle: Padding(
-        padding: EdgeInsets.fromLTRB(46, 5, 0, 0),
-        child: Text(
-          lesson.name,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColors.darkSurface,
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.shadow,
+            blurRadius: 5,
+            offset: Offset(0, 0),
+          ),
+        ],
+      ),
+      child: ExpansionTile(
+        tilePadding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+        title: _Title(lesson: lesson),
+        subtitle: Padding(
+          padding: EdgeInsets.fromLTRB(46, 5, 0, 0),
+          child: Text(
+            lesson.name,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
-      ),
-      showTrailingIcon: false,
-      collapsedTextColor: Colors.black,
-      backgroundColor: AppColors.darkSurface,
-      collapsedBackgroundColor: AppColors.darkSurface,
-      shape: const RoundedRectangleBorder(
-        side: BorderSide(color: AppColors.focusedBorder, width: 1),
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(3),
-          topRight: Radius.circular(3),
+        showTrailingIcon: false,
+        collapsedTextColor: Colors.black,
+        backgroundColor: AppColors.darkSurface,
+        collapsedBackgroundColor: AppColors.darkSurface,
+        shape: const RoundedRectangleBorder(
+          side: BorderSide(color: AppColors.focusedBorder, width: 1),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(3),
+            topRight: Radius.circular(3),
+          ),
         ),
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: _Body(lesson: lesson),
+          ),
+        ],
       ),
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: _Body(lesson: lesson),
-        ),
-      ],
     );
   }
 }
@@ -72,7 +84,7 @@ class _Title extends StatelessWidget {
                     ),
                   ),
                 ),
-                Container(width: 2, height: 22, color: AppColors.primary),
+                SizedBox(width: 5,),
                 Container(
                   color: AppColors.darkBrown,
                   child: Padding(

@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:timetable_app/features/timetable_page/presentation/bloc/timetable_page_bloc.dart';
 import 'package:timetable_app/shared/domain/entities/lesson.dart';
+import 'package:timetable_app/shared/presentation/widgets/lesson_widget.dart';
 import 'package:timetable_app/shared/presentation/widgets/lessons_loading_bloc_manager.dart';
 
 //Widgets
-import 'package:timetable_app/shared/presentation/widgets/expansion_title_widget.dart';
+
 
 //Appcolor
 import 'package:timetable_app/shared/presentation/theme/app_colors.dart';
@@ -102,7 +103,7 @@ class _TimetablePageState extends State<TimetablePage> {
 																			  	separatorBuilder: (context, index) =>
 																			  		SizedBox(height: 8),
 																			  	itemBuilder: (context, index) =>
-																			  		ExpansionTitleWidget(
+																			  		LessonWidget(
 																			  			lesson: evenWeekLessons[index],
 																			  		),
 																			  ),
@@ -120,7 +121,7 @@ class _TimetablePageState extends State<TimetablePage> {
 																			  	separatorBuilder: (context, index) =>
 																			  		SizedBox(height: 8),
 																			  	itemBuilder: (context, index) =>
-																			  		ExpansionTitleWidget(
+																			  		LessonWidget(
 																			  			lesson: oddWeekLessons[index],
 																			  		),
 																			  ),

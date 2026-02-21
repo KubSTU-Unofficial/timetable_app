@@ -30,7 +30,7 @@ class ExamsLoadingBloc extends Bloc<ExamsLoadingBlocEvent, ExamsLoadingBlocState
 		if (lastUpdateTime != null) {
 			emit(ExamsLoadingInProcessState());
 		} else {
-			emit(ExamsInitialState());
+			emit(ExamsInitialLoadingInProcessState());
 		}
 		try {
 			DateTime updatedAt = await getIt.get<EnsureExamsUpToDateForUserUsecase>().execute();

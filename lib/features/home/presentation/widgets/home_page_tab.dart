@@ -37,7 +37,8 @@ class HomePageTab extends StatelessWidget {
     return StreamBuilder(
       stream: data!.lessons,
       builder: (context, asyncSnapshot) {
-        if (asyncSnapshot.data == null || asyncSnapshot.data!.isEmpty) {
+				if (asyncSnapshot.data == null) return SizedBox.expand();
+        if (asyncSnapshot.data!.isEmpty) {
           return Padding(
             padding: EdgeInsets.all(20),
             child: Column(

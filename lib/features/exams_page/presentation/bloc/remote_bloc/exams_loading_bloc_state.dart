@@ -12,6 +12,8 @@ class ExamsLoadingInProcessState extends ExamsLoadingBlocState {}
 
 class ExamsInitialLoadingInProcessState extends ExamsLoadingBlocState {}
 
+class ExamsInitialState extends ExamsLoadingBlocState {}
+
 class ExamsLoadingErrorState extends ExamsLoadingBlocState {
 	final String error;
 

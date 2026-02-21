@@ -9,7 +9,7 @@ part 'exams_loading_bloc_state.dart';
 part 'exams_loading_bloc_event.dart';
 
 class ExamsLoadingBloc extends Bloc<ExamsLoadingBlocEvent, ExamsLoadingBlocState> {
-  ExamsLoadingBloc() : super(ExamsInitialLoadingInProcessState()) {
+  ExamsLoadingBloc() : super(ExamsInitialState()) {
 		on<ExamsLoadingEnsureDataLoadedEvent>(_onEnsureDataLoaded);
 		on<ExamsLoadingUpdateEvent>(_onUpdate);
 	}
@@ -29,6 +29,8 @@ class ExamsLoadingBloc extends Bloc<ExamsLoadingBlocEvent, ExamsLoadingBlocState
 		String? lastUpdateTime = prefs.getString(userExamsUpdatedAt);
 		if (lastUpdateTime != null) {
 			emit(ExamsLoadingInProcessState());
+		} else {
+			emit(ExamsInitialState());
 		}
 		try {
 			DateTime updatedAt = await getIt.get<EnsureExamsUpToDateForUserUsecase>().execute();

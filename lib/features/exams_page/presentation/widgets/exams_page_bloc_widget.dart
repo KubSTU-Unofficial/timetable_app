@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -9,18 +11,41 @@ import 'package:timetable_app/shared/presentation/theme/app_colors.dart';
 import 'package:timetable_app/shared/presentation/widgets/error_message_block.dart';
 import 'package:timetable_app/shared/presentation/widgets/loading_indicator_block.dart';
 
-class ExamsPageBlocWidget extends StatelessWidget {
+class ExamsPageBlocWidget extends StatefulWidget {
 	const ExamsPageBlocWidget({
 		super.key,
 		required this.builder,
 	});
 
-	final Widget Function(BuildContext context, List<Exam>? exams) builder;
+	final Widget Function(
+		BuildContext context,
+		List<Exam>? exams,
+		Future<void> Function() onRefreshRequested
+	) builder;
+
+  @override
+  State<ExamsPageBlocWidget> createState() => _ExamsPageBlocWidgetState();
+}
+
+class _ExamsPageBlocWidgetState extends State<ExamsPageBlocWidget> {
+
+	Future<void> _onRefreshRequested(BuildContext context) async {
+		context.read<ExamsLoadingBloc>().add(ExamsLoadingUpdateEvent());
+		await _refreshCompleter.future;
+	}
+
+	final Completer<void> _refreshCompleter = Completer<void>();
 
 	@override
 	Widget build(BuildContext context) {
 		return BlocBuilder<ExamsLoadingBloc, ExamsLoadingBlocState>(
 			builder: (BuildContext context, ExamsLoadingBlocState loadingState) {
+				if (loadingState is! ExamsInitialLoadingInProcessState &&
+					loadingState is! ExamsLoadingInProcessState &&
+					!_refreshCompleter.isCompleted
+				) {
+					_refreshCompleter.complete();
+				}
 				if (loadingState is ExamsInitialLoadingInProcessState) { return LoadingIndicatorBlock(); }
 				return Column(
 					children: [
@@ -60,7 +85,12 @@ class ExamsPageBlocWidget extends StatelessWidget {
 										StreamBuilder(
 											stream: examsStream,
 											builder: (context, asyncSnapshot) {
-												return builder(context, asyncSnapshot.data);
+												context.read<ExamsLoadingBloc>().state;
+												return widget.builder(
+													context,
+													asyncSnapshot.data,
+													() => _onRefreshRequested(context),
+												);
 											},
 										),
 									};

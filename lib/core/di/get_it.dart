@@ -8,6 +8,7 @@ import 'package:timetable_app/features/exams_page/data/repos/exam_repo.dart';
 import 'package:timetable_app/features/exams_page/domain/repo_ints/exam_repo_int.dart';
 import 'package:timetable_app/features/exams_page/domain/usecases/ensure_exams_up_to_date_for_user_usecase.dart';
 import 'package:timetable_app/features/exams_page/domain/usecases/get_all_exams_for_user_usecase.dart';
+import 'package:timetable_app/features/exams_page/domain/usecases/update_exams_for_user_usecase.dart';
 import 'package:timetable_app/features/initial_settings_page/data/datasources/api/groups/group_remote_data_source.dart';
 import 'package:timetable_app/features/initial_settings_page/data/datasources/api/groups/group_remote_data_source_int.dart';
 import 'package:timetable_app/features/initial_settings_page/data/datasources/database/groups_dao.dart';
@@ -23,6 +24,7 @@ import 'package:timetable_app/shared/domain/usecases/ensure_user_group_classes_u
 import 'package:timetable_app/shared/domain/usecases/get_all_classes_for_group_usecase.dart';
 import 'package:timetable_app/shared/domain/usecases/get_all_lessons_for_group_for_next_date_usecase.dart';
 import 'package:timetable_app/shared/domain/usecases/get_lessons_for_date_usecase.dart';
+import 'package:timetable_app/shared/domain/usecases/update_lessons_for_user_usecase.dart';
 
 final	getIt = GetIt.asNewInstance();
 
@@ -96,11 +98,19 @@ void _initializeUsecases() {
 		repo: getIt.get()
 	));
 
+	getIt.registerLazySingleton<UpdateLessonsForUserUsecase>(() => UpdateLessonsForUserUsecase(
+		repo: getIt.get()
+	));
+
 	getIt.registerLazySingleton<GetAllExamsForUserUsecase>(() => GetAllExamsForUserUsecase(
 		repo: getIt.get()
 	));
 
 	getIt.registerLazySingleton<EnsureExamsUpToDateForUserUsecase>(() => EnsureExamsUpToDateForUserUsecase(
+		repo: getIt.get()
+	));
+
+	getIt.registerLazySingleton<UpdateExamsForUserUsecase>(() => UpdateExamsForUserUsecase(
 		repo: getIt.get()
 	));
 	// ... Другие сценарии здесь

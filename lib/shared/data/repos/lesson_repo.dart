@@ -39,8 +39,6 @@ class LessonRepo implements LessonRepoInt {
     await db.saveAllForGroup(lessons.toCompanions());
   }
 
-	// Не обновляет данные, просто проверяет, недавно ли они обновлены
-	// Для обновления нужен будет отдельный метод
   @override
   Future<DateTime> ensureLessonsUpToDateForUser() async {
 		DateTime? lastUpdate = DateTime.tryParse(
@@ -49,6 +47,11 @@ class LessonRepo implements LessonRepoInt {
 		if (lastUpdate != null && DateTime.now().difference(lastUpdate).inHours < 12) {
 			return lastUpdate;
 		}
+		return updateLessonsForUser();
+  }
+
+  @override
+  Future<DateTime> updateLessonsForUser() async {
 		await _loadForGroupFromServer(_getUserGroup());
 		DateTime now = DateTime.now();
 		prefs.setString(userLessonsUpdatedAt, now.toIso8601String());

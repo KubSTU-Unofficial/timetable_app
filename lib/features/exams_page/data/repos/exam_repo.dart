@@ -26,9 +26,14 @@ class ExamRepo implements ExamRepoInt {
 		if (lastUpdate != null && DateTime.now().difference(lastUpdate).inHours < 12) {
 			return lastUpdate;
 		}
+		return updateExamsForUser();
+  }
+
+  @override
+  Future<DateTime> updateExamsForUser() async {
 		await _loadForGroupFromServer(_getUserGroup());
 		DateTime now = DateTime.now();
-		prefs.setString(userLessonsUpdatedAt, now.toIso8601String());
+		prefs.setString(userExamsUpdatedAt, now.toIso8601String());
 		return now;
   }
 

@@ -6,4 +6,5 @@ abstract class ExamRepoInt {
 
 	Future<DateTime> ensureExamsUpToDateForUser();
 
+  Future<DateTime> updateExamsForUser();
 }

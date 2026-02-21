@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:timetable_app/shared/presentation/bloc/timetable_loading_bloc.dart';
@@ -7,18 +8,40 @@ import 'package:timetable_app/shared/presentation/widgets/loading_indicator_bloc
 import 'package:intl/intl.dart';
 
 
-class LessonsLoadingBlocManager extends StatelessWidget {
+class LessonsLoadingBlocManager extends StatefulWidget {
   const LessonsLoadingBlocManager({
     super.key,
-		required this.child,
+		required this.builder,
   });
 
-	final Widget child;
+	final Widget Function(
+		BuildContext context,
+		Future<void> Function() onRefreshRequested
+	) builder;
+
+  @override
+  State<LessonsLoadingBlocManager> createState() => _LessonsLoadingBlocManagerState();
+}
+
+class _LessonsLoadingBlocManagerState extends State<LessonsLoadingBlocManager> {
+
+	Future<void> _onRefreshRequested(BuildContext context) async {
+		context.read<TimetableLoadingBloc>().add(TimetableLoadingUpdateEvent());
+		await _refreshCompleter.future;
+	}
+
+	final Completer<void> _refreshCompleter = Completer<void>();
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TimetableLoadingBloc, TimetableLoadingBlocState>(
     	builder: (BuildContext context, TimetableLoadingBlocState loadingState) {
+				if (loadingState is! TimetableInitialLoadingInProcessState &&
+					loadingState is! TimetableLoadingInProcessState &&
+					!_refreshCompleter.isCompleted
+				) {
+					_refreshCompleter.complete();
+				}
     		if (loadingState is TimetableInitialLoadingInProcessState) { return LoadingIndicatorBlock(); }
     		return Column(
     			children: [
@@ -40,7 +63,10 @@ class LessonsLoadingBlocManager extends StatelessWidget {
     				  child: Text("Данные обновлены в ${DateFormat('dd-MM-yyyy, HH:mm').format(loadingState.updatedAt)}", style: TextStyle(color: AppColors.textAccent),),
     				),
     				Expanded(
-    					child: child,
+    					child: widget.builder(
+								context,
+								() => _onRefreshRequested(context),
+							),
     				),
     			],
     		);

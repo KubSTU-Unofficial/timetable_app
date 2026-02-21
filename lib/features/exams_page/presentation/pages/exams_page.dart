@@ -12,19 +12,22 @@ class ExamsPage extends StatelessWidget {
 			body: SafeArea(
 			  child: Center(
 			    child: ExamsPageBlocWidget(
-			    	builder: (ctx, exams) {
+			    	builder: (ctx, exams, onRefreshRequested) {
 			    		
 			    		// Если экзаменов нет
 			    		if (exams == null || exams.isEmpty) {
 			    			return SizedBox.shrink();
 			    		}
 			    		
-			    		return Text(
-			    			"Здесь будут выведены экзамены. Сейчас загружено: ${exams.length.toString()}",
-			    			style: TextStyle(
-			    				color: Colors.blue
-			    			),
-			    		);
+			    		return RefreshIndicator(
+								onRefresh: onRefreshRequested,
+								child: ListView.builder(
+									itemCount: exams.length,
+									itemBuilder: (ctx, idx) {
+										return Text("${idx + 1}. ${exams[idx].name}");
+									}
+								)
+							);
 			    	},
 			    ),
 			  ),

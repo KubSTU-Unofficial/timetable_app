@@ -9,11 +9,13 @@ class HomePageTab extends StatelessWidget {
   const HomePageTab({
 		super.key,
 		required this.onRetry,
+		required this.onRefreshRequested,
 		this.data,
 	});
 
   final HomePageTabData? data;
   final void Function() onRetry;
+	final Future<void> Function() onRefreshRequested;
 
   @override
   Widget build(BuildContext context) {
@@ -75,16 +77,19 @@ class HomePageTab extends StatelessWidget {
         return Center(
           child: Padding(
             padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-            child: ListView.separated(
-              itemCount: lessons.length,
-              separatorBuilder: (context, index) => SizedBox(height: 8),
-              itemBuilder: (context, index) =>
-								LessonWidget(lesson: lessons[index])
+            child: RefreshIndicator(
+              onRefresh: onRefreshRequested,
+							child: ListView.separated(
+								itemCount: lessons.length,
+								separatorBuilder: (context, index) => SizedBox(height: 8),
+								itemBuilder: (context, index) =>
+									LessonWidget(lesson: lessons[index])
 								// ExpansionTitleWidget(lesson: lessons[index])
-            ),
-          ),
-        );
-      },
-    );
-  }
+							),
+						),
+					),
+				);
+			},
+		);
+	}
 }

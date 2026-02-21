@@ -47,112 +47,117 @@ class HomePage extends StatelessWidget {
 				return switch (state) {
 					HomePageInitialState() => LoadingIndicatorBlock(),
 					HomePageLoadedState(
-						todayData: final todayData,
-						nextDayData: final nextDayData,
-						selectedDateData: final selectedDateData,
-						selectedDate: final selectedDate,
-					) => DefaultTabController(
+					todayData: final todayData,
+					nextDayData: final nextDayData,
+					selectedDateData: final selectedDateData,
+					selectedDate: final selectedDate,
+				) => DefaultTabController(
 						length: nextDayData == null ? 2 : 3,
 						initialIndex: 1,
-					  child: Scaffold(
-					  	floatingActionButton: Calendar(
-					  		onPicked: (date) {
-					  			context.read<HomePageBloc>().add(HomePageGetForDateEvent(date: date));
-					  		},
-					  	),
-					  	floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-					  	backgroundColor: AppColors.darkBackground,
-					  	body: SafeArea(
-					  		child: LessonsLoadingBlocManager(
-					  			child: StreamBuilder(
-					  			  stream: nextDayData?.lessons,
-					  			  builder: (context, asyncSnapshot) {
-											String nextTabName = "Следующий день";
-											if (asyncSnapshot.data != null && asyncSnapshot.data!.isNotEmpty) {
-												nextTabName = _determineNextDayTabName(asyncSnapshot.data![0].timing.nextDate);
+						child: Scaffold(
+							floatingActionButton: Calendar(
+								onPicked: (date) {
+									context.read<HomePageBloc>().add(HomePageGetForDateEvent(date: date));
+								},
+							),
+							floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+							backgroundColor: AppColors.darkBackground,
+							body: SafeArea(
+								child: LessonsLoadingBlocManager(
+									builder: (context, onUpdateRequested) {
+										return StreamBuilder(
+											stream: nextDayData?.lessons,
+											builder: (context, asyncSnapshot) {
+												String nextTabName = "Следующий день";
+												if (asyncSnapshot.data != null && asyncSnapshot.data!.isNotEmpty) {
+													nextTabName = _determineNextDayTabName(asyncSnapshot.data![0].timing.nextDate);
+												}
+												return Column(
+													children: [
+														SizedBox.square(
+															child: Container(
+																color: AppColors.darkBackground,
+																child: TabBar(
+																	indicatorColor: AppColors.primary,
+																	indicatorWeight: 3.0,
+																	dividerHeight: 1.0,
+																	dividerColor: AppColors.primary,
+																	labelColor: AppColors.focusedText,
+																	tabs: [
+																		Tab(
+																			child: Text(
+																				style: TextStyle(
+																					color: AppColors.textAccent,
+																					fontSize: 18,
+																					fontWeight: FontWeight.bold,
+																				),
+																				'Дата',
+																			),
+																		),
+																		Tab(
+																			child: Text(
+																				style: TextStyle(
+																					color: AppColors.textAccent,
+																					fontSize: 18,
+																					fontWeight: FontWeight.bold,
+																				),
+																				'Сегодня',
+																			),
+																		),
+																		if (nextDayData != null)
+																		Tab(
+																			child: AutoSizeText(
+																				wrapWords: false,
+																				style: TextStyle(
+																					color: AppColors.textAccent,
+																					fontSize: 18,
+																					fontWeight: FontWeight.bold,
+																				),
+																				nextTabName,
+																			),
+																		),
+																	],
+																),
+															),
+														),
+														Expanded(
+															child: TabBarView(
+																children: [
+																	//Пары на нужную дату
+																	HomePageTab(
+																		data: selectedDateData,
+																		onRefreshRequested: onUpdateRequested,
+																		onRetry: () {
+																			if (selectedDate == null) return;
+																			context.read<HomePageBloc>().add(HomePageGetForDateEvent(
+																				date: state.selectedDate!,
+																			));
+																		},
+																	),
+																	//Пары на сегодня
+																	HomePageTab(
+																		data: todayData,
+																		onRefreshRequested: onUpdateRequested,
+																		onRetry: () => context.read<HomePageBloc>().add(HomePageGetForTodayEvent()),
+																	),
+																	// Пары на завтра
+																	if (nextDayData != null)
+																	HomePageTab(
+																		data: nextDayData,
+																		onRefreshRequested: onUpdateRequested,
+																		onRetry: () => context.read<HomePageBloc>().add(HomePageGetForNextDayEvent()),
+																	),
+																],
+															),
+														),
+													],
+												);
 											}
-											return Column(
-					  			    	children: [
-					  			    		SizedBox.square(
-					  			    			child: Container(
-					  			    				color: AppColors.darkBackground,
-					  			    				child: TabBar(
-					  			    					indicatorColor: AppColors.primary,
-					  			    					indicatorWeight: 3.0,
-					  			    					dividerHeight: 1.0,
-					  			    					dividerColor: AppColors.primary,
-					  			    					labelColor: AppColors.focusedText,
-					  			    					tabs: [
-					  			    						Tab(
-					  			    							child: Text(
-					  			    								style: TextStyle(
-					  			    									color: AppColors.textAccent,
-					  			    									fontSize: 18,
-					  			    									fontWeight: FontWeight.bold,
-					  			    								),
-					  			    								'Дата',
-					  			    							),
-					  			    						),
-					  			    						Tab(
-					  			    							child: Text(
-					  			    								style: TextStyle(
-					  			    									color: AppColors.textAccent,
-					  			    									fontSize: 18,
-					  			    									fontWeight: FontWeight.bold,
-					  			    								),
-					  			    								'Сегодня',
-					  			    							),
-					  			    						),
-					  			    						if (nextDayData != null)
-					  			    						Tab(
-					  			    							child: AutoSizeText(
-																			wrapWords: false,
-					  			    								style: TextStyle(
-					  			    									color: AppColors.textAccent,
-					  			    									fontSize: 18,
-					  			    									fontWeight: FontWeight.bold,
-					  			    								),
-																			nextTabName,
-					  			    							),
-					  			    						),
-					  			    					],
-					  			    				),
-					  			    			),
-					  			    		),
-					  			    		Expanded(
-													child: TabBarView(
-														children: [
-															//Пары на нужную дату
-															HomePageTab(
-																data: selectedDateData,
-																onRetry: () {
-																	if (selectedDate == null) return;
-																	context.read<HomePageBloc>().add(HomePageGetForDateEvent(
-																		date: state.selectedDate!,
-																	));
-																},
-															),
-															//Пары на сегодня
-															HomePageTab(
-																data: todayData,
-																onRetry: () => context.read<HomePageBloc>().add(HomePageGetForTodayEvent()),
-															),
-															// Пары на завтра
-															if (nextDayData != null)
-															HomePageTab(
-																data: nextDayData,
-																onRetry: () => context.read<HomePageBloc>().add(HomePageGetForNextDayEvent()),
-															),
-														],
-													),
-												),
-					  			    	],
-					  			    );
-					  			  }
-					  			),
-					  		),
-					  	),
-					  ),
+										);
+									},
+								),
+							),
+						),
 					)
 				};
 			},

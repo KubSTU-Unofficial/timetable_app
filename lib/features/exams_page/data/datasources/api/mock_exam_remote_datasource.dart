@@ -3,7 +3,10 @@ import 'package:timetable_app/features/exams_page/data/models/exam_dto.dart';
 
 class  MockExamRemoteDatasource implements ExamRemoteDataSourceInt {
   @override
-  Future<List<ExamDTO>> getByGroup(String group) async => _exams;
+  Future<List<ExamDTO>> getByGroup(String group) async {
+		await Future.delayed(Duration(seconds: 2));
+		return _exams;
+	}
 
 	static final List<ExamDTO> _exams = [
 		ExamDTO(

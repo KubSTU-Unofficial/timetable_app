@@ -113,9 +113,14 @@ class _InitPageState extends State<InitPage> {
 													}
 												return groups
 													.where(
-													(group) => group.name.toLowerCase().contains(
-															value.text.toLowerCase(),
-														),
+													(group) => group.name
+														.toLowerCase()
+														.replaceAll(RegExp(r"[-\s]"), "")
+														.contains(
+															value.text
+																.toLowerCase()
+																.replaceAll(RegExp(r"[-\s]"), "")
+															),
 													)
 													.map((group) => group.name)
 													.take(20);

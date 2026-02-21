@@ -9,7 +9,7 @@ part 'timetable_loading_bloc_event.dart';
 part 'timetable_loading_bloc_state.dart';
 
 class TimetableLoadingBloc extends Bloc<TimetableLoadingBlocEvent, TimetableLoadingBlocState> {
-  TimetableLoadingBloc() : super(TimetableInitialLoadingInProcessState()) {
+  TimetableLoadingBloc() : super(TimetableLoadingInitialState()) {
 		on<TimetableLoadingEnsureDataLoadedEvent>(_onEnsureDataLoaded);
 		on<TimetableLoadingUpdateEvent>(_onUpdate);
 	}
@@ -29,6 +29,8 @@ class TimetableLoadingBloc extends Bloc<TimetableLoadingBlocEvent, TimetableLoad
 		String? lastUpdateTime = prefs.getString(userLessonsUpdatedAt);
 		if (lastUpdateTime != null) {
 			emit(TimetableLoadingInProcessState());
+		} else {
+			emit(TimetableInitialLoadingInProcessState());
 		}
 		try {
 			DateTime updatedAt = await getIt.get<EnsureUserGroupClassesUpToDataUsecase>().execute();

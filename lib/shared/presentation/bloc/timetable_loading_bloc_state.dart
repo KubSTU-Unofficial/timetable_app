@@ -17,3 +17,5 @@ class TimetableLoadingErrorState extends TimetableLoadingBlocState {
 
   TimetableLoadingErrorState({required this.error});
 }
+
+class TimetableLoadingInitialState extends TimetableLoadingBlocState {}

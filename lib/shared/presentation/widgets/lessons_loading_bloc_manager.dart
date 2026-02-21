@@ -42,6 +42,7 @@ class _LessonsLoadingBlocManagerState extends State<LessonsLoadingBlocManager> {
 				) {
 					_refreshCompleter.complete();
 				}
+				if (loadingState is TimetableLoadingInitialState) { return SizedBox.expand(); }
     		if (loadingState is TimetableInitialLoadingInProcessState) { return LoadingIndicatorBlock(); }
     		return Column(
     			children: [

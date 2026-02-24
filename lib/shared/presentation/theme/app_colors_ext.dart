@@ -10,6 +10,7 @@ class AppColorsExtension extends ThemeExtension<AppColorsExtension> {
   // Текст
   final Color textPrimary;
   final Color textSecondary;
+  final Color textBody;
   final Color textInverse;
   final Color textAccent;
   final Color textFocused;
@@ -39,7 +40,8 @@ class AppColorsExtension extends ThemeExtension<AppColorsExtension> {
 		required this.secondary, 
 		required this.cardBackground, 
 		required this.textPrimary, 
-		required this.textSecondary, 
+		required this.textSecondary,
+    required this.textBody,
 		required this.textInverse, 
 		required this.textAccent, 
 		required this.textFocused, 
@@ -63,7 +65,8 @@ class AppColorsExtension extends ThemeExtension<AppColorsExtension> {
 		secondary: secondary, 
 		cardBackground: cardBackground, 
 		textPrimary: textPrimary, 
-		textSecondary: textSecondary, 
+		textSecondary: textSecondary,
+    textBody: textBody,
 		textInverse: textInverse, 
 		textAccent: textAccent, 
 		textFocused: textFocused, 
@@ -90,6 +93,7 @@ class AppColorsExtension extends ThemeExtension<AppColorsExtension> {
 			cardBackground: Color.lerp(cardBackground, other.cardBackground, t)!,
 			textPrimary: Color.lerp(textPrimary, other.textPrimary, t)!,
 			textSecondary: Color.lerp(textSecondary, other.textSecondary, t)!,
+      textBody: Color.lerp(textBody, other.textBody, t)!,
 			textInverse: Color.lerp(textInverse, other.textInverse, t)!,
 			textAccent: Color.lerp(textAccent, other.textAccent, t)!,
 			textFocused: Color.lerp(textFocused, other.textFocused, t)!,

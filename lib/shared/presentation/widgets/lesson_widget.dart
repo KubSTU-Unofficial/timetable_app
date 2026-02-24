@@ -3,9 +3,11 @@ import 'package:timetable_app/shared/domain/entities/lesson.dart';
 import 'package:timetable_app/shared/presentation/theme/theme_getter_ext.dart';
 
 class LessonWidget extends StatelessWidget {
-  const LessonWidget({super.key, required this.lesson});
+  const LessonWidget({super.key, required this.lesson,});
 
   final Lesson lesson;
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +26,11 @@ class LessonWidget extends StatelessWidget {
         tilePadding: EdgeInsets.fromLTRB(0, 0, 10, 0),
         title: _Title(lesson: lesson),
         subtitle: Padding(
-          padding: EdgeInsets.fromLTRB(46, 5, 0, 0),
+          padding: EdgeInsets.fromLTRB(20, 5, 0, 0),
           child: Text(
             lesson.name,
             style: TextStyle(
-              color: context.colors.textPrimary,
+              color: context.colors.textBody,
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
@@ -38,12 +40,11 @@ class LessonWidget extends StatelessWidget {
         collapsedTextColor: Colors.black,
         backgroundColor: context.colors.cardBackground,
         collapsedBackgroundColor: context.colors.cardBackground,
-        shape: RoundedRectangleBorder(
-          side: BorderSide(color: context.colors.borderFocused, width: 1),
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(3),
-            topRight: Radius.circular(3),
-          ),
+        shape: BorderDirectional(
+          top: BorderSide(color: context.colors.borderFocused, width: 1),
+          bottom: BorderSide(color: context.colors.borderFocused, width: 1),
+          start: BorderSide.none,
+          end: BorderSide.none,
         ),
         children: [
           Padding(
@@ -77,14 +78,14 @@ class _Title extends StatelessWidget {
                     child: Text(
                       "${lesson.timing.lessonNumber}",
                       style: TextStyle(
-                        color: context.colors.textPrimary,
+                        color: context.colors.textBody,
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                 ),
-                SizedBox(width: 5,),
+                SizedBox(width: 5),
                 Container(
                   color: context.colors.coloredFieldBackground,
                   child: Padding(
@@ -92,7 +93,7 @@ class _Title extends StatelessWidget {
                     child: Text(
                       lesson.type.translation,
                       style: TextStyle(
-                        color: context.colors.textPrimary,
+                        color: context.colors.textBody,
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                       ),
@@ -108,7 +109,7 @@ class _Title extends StatelessWidget {
                       child: Text(
                         lesson.classroom!,
                         style: TextStyle(
-                          color: context.colors.textPrimary,
+                          color: context.colors.textBody,
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
                         ),
@@ -120,7 +121,7 @@ class _Title extends StatelessWidget {
             Text(
               lesson.timing.lessonTime,
               style: TextStyle(
-                color: context.colors.textPrimary,
+                color: context.colors.textBody,
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
               ),
@@ -139,28 +140,31 @@ class _Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        if (lesson.timing.weeks != null)
-          TextTile(
-            text:
-                "Период: с ${lesson.timing.weeks!.from} по ${lesson.timing.weeks!.to} неделю;",
-          ),
-        if (lesson.timing.date != null)
-          TextTile(
-            text:
-                "Дата: ${lesson.timing.date!.day}.${lesson.timing.date!.month}.${lesson.timing.date!.year}",
-          ),
-        if (lesson.percentOfGroup != 100)
-          TextTile(text: "Процент группы: ${lesson.percentOfGroup}"),
-        if (lesson.isInLectureHall == true)
-          TextTile(text: "В лекционной аудитории: да"),
-        if (lesson.isOnline == true) TextTile(text: "Онлайн: да"),
-        if (lesson.comment != null)
-          TextTile(text: "Примечание: ${lesson.comment}"),
-        if (lesson.teacherName != null)
-          TextTile(text: "Преподователь: ${lesson.teacherName!}"),
-      ],
+    return Padding(
+      padding: EdgeInsets.fromLTRB(13, 5, 0, 0),
+      child: Column(
+        children: [
+          if (lesson.timing.weeks != null)
+            TextTile(
+              text:
+                  "Период: с ${lesson.timing.weeks!.from} по ${lesson.timing.weeks!.to} неделю;",
+            ),
+          if (lesson.timing.date != null)
+            TextTile(
+              text:
+                  "Дата: ${lesson.timing.date!.day}.${lesson.timing.date!.month}.${lesson.timing.date!.year}",
+            ),
+          if (lesson.percentOfGroup != 100)
+            TextTile(text: "Процент группы: ${lesson.percentOfGroup}"),
+          if (lesson.isInLectureHall == true)
+            TextTile(text: "В лекционной аудитории: да"),
+          if (lesson.isOnline == true) TextTile(text: "Онлайн: да"),
+          if (lesson.comment != null)
+            TextTile(text: "Примечание: ${lesson.comment}"),
+          if (lesson.teacherName != null)
+            TextTile(text: "${lesson.teacherName!}"),
+        ],
+      ),
     );
   }
 }
@@ -173,15 +177,16 @@ class TextTile extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Divider(color: context.colors.primary.withAlpha(100)),
+        // Divider(color: context.colors.primary.withAlpha(100)),
         Text(
           text,
           style: TextStyle(
-            color: context.colors.textPrimary,
+            color: context.colors.textBody,
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),
         ),
+        SizedBox(height: 10),
       ],
     );
   }

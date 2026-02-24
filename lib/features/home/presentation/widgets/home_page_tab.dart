@@ -39,36 +39,51 @@ class HomePageTab extends StatelessWidget {
       builder: (context, asyncSnapshot) {
 				if (asyncSnapshot.data == null) return SizedBox.expand();
         if (asyncSnapshot.data!.isEmpty) {
-          return Padding(
-            padding: EdgeInsets.all(20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  'ПАР НЕТ!!!',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: context.colors.textAccent,
+          return RefreshIndicator(
+						color: context.colors.primary,
+						backgroundColor: context.colors.background,
+						onRefresh: onRefreshRequested,
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+								return SingleChildScrollView(
+									physics: AlwaysScrollableScrollPhysics(),
+                  child: ConstrainedBox(
+										constraints: constraints,
+                    child: Padding(
+                      padding: EdgeInsets.all(20),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            'ПАР НЕТ!!!',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: context.colors.textAccent,
+                            ),
+                          ),
+                          Image.asset(
+                            'assets/chill_girl.gif',
+                            fit: BoxFit.contain,
+                            gaplessPlayback: true,
+                            width: 300,
+                            height: 300,
+                          ),
+                          Text(
+                            'ОТДОХНИ!!!',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: context.colors.textAccent,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
-                Image.asset(
-                  'assets/chill_girl.gif',
-                  fit: BoxFit.contain,
-                  gaplessPlayback: true,
-                  width: 300,
-                  height: 300,
-                ),
-                Text(
-                  'ОТДОХНИ!!!',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: context.colors.textAccent,
-                  ),
-                ),
-              ],
+                );
+              }
             ),
           );
         }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:timetable_app/shared/presentation/error_message.dart';
+import 'package:timetable_app/shared/presentation/widgets/error_message.dart';
 import 'package:timetable_app/shared/presentation/theme/theme_getter_ext.dart';
 
 class ErrorMessageBlock extends StatelessWidget {

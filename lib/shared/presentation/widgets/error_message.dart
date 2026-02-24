@@ -8,12 +8,16 @@ class ErrorMessage extends StatefulWidget {
 	final String circumstances;
 	final String error;
 	final int direction;
+	final Color? textColor;
+	final double offset;
 
 	const ErrorMessage({
 		super.key, 
 		required this.circumstances,
 		required this.error,
 		this.direction = up,
+		this.textColor,
+		this.offset = 8,
 	});
 
 	@override
@@ -40,7 +44,7 @@ class _ErrorMessageState extends State<ErrorMessage> {
 		    		TextSpan(
 		    			text: "⚠️ Произошла ",
 		    			style: TextStyle(
-		    				color: Colors.red,
+		    				color: widget.textColor ?? Colors.red,
 		    			),
 		    		),
 		    		WidgetSpan(
@@ -70,7 +74,7 @@ class _ErrorMessageState extends State<ErrorMessage> {
 														offset: Offset(
 															-offset.dx + 16,
 															widget.direction == ErrorMessage.up ? 
-															-8 : 8
+															-widget.offset : widget.offset
 														),
 														child: ConstrainedBox(
 															constraints: BoxConstraints(
@@ -126,8 +130,8 @@ class _ErrorMessageState extends State<ErrorMessage> {
 													begin: Alignment.centerLeft,
 													end: Alignment.centerRight,
 													colors: [
-														Color.lerp(Colors.red, Colors.black, 0.25)!,
-														Color.lerp(Colors.red, Colors.black, 0.5)!,
+														Color.lerp(widget.textColor ?? Colors.red, Colors.black, 0.15)!,
+														Color.lerp(widget.textColor ?? Colors.red, Colors.black, 0.25)!,
 													]
 												).createShader(bounds);
 											},
@@ -148,7 +152,7 @@ class _ErrorMessageState extends State<ErrorMessage> {
 						TextSpan(
 							text: " при ${widget.circumstances}. Повторите попытку позже.",
 							style: TextStyle(
-								color: Colors.red,
+								color: widget.textColor ?? Colors.red,
 							),
 						),
 					])),

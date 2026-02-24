@@ -15,6 +15,7 @@ import 'package:timetable_app/features/home/presentation/widgets/home_page_tab.d
 
 //Widgets
 import 'package:timetable_app/features/home/presentation/widgets/calendar.dart';
+import 'package:timetable_app/shared/presentation/bloc/timetable_loading/timetable_loading_bloc.dart';
 import 'package:timetable_app/shared/presentation/theme/theme_getter_ext.dart';
 import 'package:timetable_app/shared/presentation/widgets/lessons_loading_bloc_manager.dart';
 import 'package:timetable_app/shared/presentation/widgets/loading_indicator_block.dart';
@@ -75,118 +76,125 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 		  			nextDayData: final nextDayData,
 		  			selectedDateData: final selectedDateData,
 		  			selectedDate: final selectedDate,
-		  		) => Scaffold(
-		  			floatingActionButton: Calendar(
-		  				onPicked: (date) {
-		  					context.read<HomePageBloc>().add(HomePageGetForDateEvent(date: date));
-		  				},
-		  			),
-		  			floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-		  			backgroundColor: context.colors.background,
-		  			body: SafeArea(
-		  				child: LessonsLoadingBlocManager(
-		  					builder: (context, onUpdateRequested) {
-		  						return StreamBuilder(
-		  							stream: nextDayData?.lessons,
-		  							builder: (context, asyncSnapshot) {
-		  								String nextTabName = "Следующий день";
-		  								if (asyncSnapshot.data != null && asyncSnapshot.data!.isNotEmpty) {
-		  									nextTabName = _determineNextDayTabName(asyncSnapshot.data![0].timing.nextDate);
-		  								}
-		  								return Column(
-		  									children: [
-		  										SizedBox.square(
-		  											child: Container(
-		  												color: context.colors.background,
-		  												child: TabBar(
-																controller: _tabController,
-		  													indicatorColor: context.colors.primary,
-		  													indicatorWeight: 3.0,
-		  													dividerHeight: 1.0,
-		  													dividerColor: context.colors.primary,
-		  													labelColor: context.colors.textFocused,
-		  													tabs: [
-																	if (selectedDateData != null)
-		  														Tab(
-		  															child: Text(
-		  																style: TextStyle(
-		  																	color: context.colors.textAccent,
-		  																	fontSize: 18,
-		  																	fontWeight: FontWeight.bold,
-		  																),
-		  																"${selectedDate!.shortWeekdayName}, ${DateFormat("dd.MM").format(selectedDate)}",
-		  															),
-		  														),
-		  														Tab(
-		  															child: Text(
-		  																style: TextStyle(
-		  																	color: context.colors.textAccent,
-		  																	fontSize: 18,
-		  																	fontWeight: FontWeight.bold,
-		  																),
-		  																'Сегодня',
-		  															),
-		  														),
-		  														if (nextDayData != null)
-		  														Tab(
-		  															child: AutoSizeText(
-		  																wrapWords: false,
-		  																style: TextStyle(
-		  																	color: context.colors.textAccent,
-		  																	fontSize: 18,
-		  																	fontWeight: FontWeight.bold,
-		  																),
-		  																nextTabName,
-		  															),
-		  														),
-		  													],
-		  												),
-		  											),
-		  										),
-		  										Expanded(
-		  											child: TabBarView(
-		  												controller: _tabController,
-		  												children: [
-		  													//Пары на нужную дату
-																if (selectedDateData != null)
-		  													HomePageTab(
-		  														data: selectedDateData,
-		  														onRefreshRequested: onUpdateRequested,
-		  														onRetry: () {
-		  															if (selectedDate == null) return;
-																		_goToArbitraryDateTab = true;
-		  															context.read<HomePageBloc>().add(HomePageGetForDateEvent(
-		  																date: state.selectedDate!,
-		  															));
-		  														},
-		  													),
-		  													//Пары на сегодня
-		  													HomePageTab(
-		  														data: todayData,
-		  														onRefreshRequested: onUpdateRequested,
-		  														onRetry: () => context.read<HomePageBloc>().add(HomePageGetForTodayEvent()),
-		  													),
-		  													// Пары на завтра
-		  													if (nextDayData != null)
-		  													HomePageTab(
-		  														data: nextDayData,
-		  														onRefreshRequested: onUpdateRequested,
-		  														onRetry: () => context.read<HomePageBloc>().add(HomePageGetForNextDayEvent()),
-		  													),
-		  												],
-		  											),
-		  										),
-		  									],
-		  								);
-		  							}
-		  						);
-		  					},
-		  				),
-		  			),
-		  		)
-		  		};
-		  	},
-		  ),
+					) => Scaffold(
+							floatingActionButton: BlocBuilder<TimetableLoadingBloc, TimetableLoadingBlocState>(
+							builder: (context, loadingState) {
+								if (loadingState is! TimetableInitialLoadingErrorState && loadingState is! TimetableInitialLoadingInProcessState) {
+									return Calendar(
+										onPicked: (date) {
+											context.read<HomePageBloc>().add(HomePageGetForDateEvent(date: date));
+										},
+									);
+								}
+								return SizedBox.shrink();
+							  }
+							),
+							floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+							backgroundColor: context.colors.background,
+							body: SafeArea(
+								child: LessonsLoadingBlocManager(
+								  builder: (context, onUpdateRequested) {
+								    return StreamBuilder(
+								    	stream: nextDayData?.lessons,
+								    	builder: (context, asyncSnapshot) {
+								    		String nextTabName = "Следующий день";
+								    		if (asyncSnapshot.data != null && asyncSnapshot.data!.isNotEmpty) {
+													nextTabName = _determineNextDayTabName(asyncSnapshot.data![0].timing.nextDate);
+												}
+								    		return Column(
+								    			children: [
+								    				SizedBox.square(
+								    					child: Container(
+								    						color: context.colors.background,
+								    						child: TabBar(
+								    							controller: _tabController,
+								    							indicatorColor: context.colors.primary,
+								    							indicatorWeight: 3.0,
+								    							dividerHeight: 1.0,
+								    							dividerColor: context.colors.primary,
+								    							labelColor: context.colors.textFocused,
+								    							tabs: [
+								    								if (selectedDateData != null)
+								    								Tab(
+								    									child: Text(
+								    										style: TextStyle(
+								    											color: context.colors.textAccent,
+								    											fontSize: 18,
+								    											fontWeight: FontWeight.bold,
+								    										),
+								    										"${selectedDate!.shortWeekdayName}, ${DateFormat("dd.MM").format(selectedDate)}",
+								    									),
+								    								),
+								    								Tab(
+								    									child: Text(
+								    										style: TextStyle(
+								    											color: context.colors.textAccent,
+								    											fontSize: 18,
+								    											fontWeight: FontWeight.bold,
+								    										),
+								    										'Сегодня',
+								    									),
+								    								),
+								    								if (nextDayData != null)
+								    								Tab(
+								    									child: AutoSizeText(
+								    										wrapWords: false,
+								    										style: TextStyle(
+								    											color: context.colors.textAccent,
+								    											fontSize: 18,
+								    											fontWeight: FontWeight.bold,
+								    										),
+								    										nextTabName,
+								    									),
+								    								),
+								    							],
+								    						),
+								    					),
+								    				),
+								    				Expanded(
+								    					child: TabBarView(
+								    						controller: _tabController,
+								    						children: [
+								    							//Пары на нужную дату
+								    							if (selectedDateData != null)
+								    							HomePageTab(
+								    								data: selectedDateData,
+								    								onRefreshRequested: onUpdateRequested,
+								    								onRetry: () {
+								    									if (selectedDate == null) return;
+								    									_goToArbitraryDateTab = true;
+								    									context.read<HomePageBloc>().add(HomePageGetForDateEvent(
+								    										date: state.selectedDate!,
+								    									));
+								    								},
+								    							),
+								    							//Пары на сегодня
+								    							HomePageTab(
+								    								data: todayData,
+								    								onRefreshRequested: onUpdateRequested,
+								    								onRetry: () => context.read<HomePageBloc>().add(HomePageGetForTodayEvent()),
+								    							),
+								    							// Пары на завтра
+								    							if (nextDayData != null)
+								    							HomePageTab(
+								    								data: nextDayData,
+								    								onRefreshRequested: onUpdateRequested,
+								    								onRetry: () => context.read<HomePageBloc>().add(HomePageGetForNextDayEvent()),
+								    							),
+								    						],
+								    					),
+								    				),
+								    			],
+								    		);
+								    	}
+								    );
+								  }
+								),
+							),
+						)
+					};
+				},
+			),
 		);
 	}
 }

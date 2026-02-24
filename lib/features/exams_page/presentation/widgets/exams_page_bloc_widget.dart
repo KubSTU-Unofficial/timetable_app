@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:timetable_app/features/exams_page/domain/entities/exam.dart';
 import 'package:timetable_app/features/exams_page/presentation/bloc/local_bloc/exams_page_bloc.dart';
 import 'package:timetable_app/features/exams_page/presentation/bloc/remote_bloc/exams_loading_bloc.dart';
-import 'package:timetable_app/shared/presentation/error_message.dart';
+import 'package:timetable_app/shared/presentation/widgets/error_message.dart';
 import 'package:timetable_app/shared/presentation/theme/theme_getter_ext.dart';
 import 'package:timetable_app/shared/presentation/widgets/error_message_block.dart';
 import 'package:timetable_app/shared/presentation/widgets/loading_indicator_block.dart';

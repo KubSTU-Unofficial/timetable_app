@@ -2,10 +2,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:timetable_app/shared/presentation/bloc/timetable_loading/timetable_loading_bloc.dart';
-import 'package:timetable_app/shared/presentation/error_message.dart';
 import 'package:timetable_app/shared/presentation/theme/theme_getter_ext.dart';
+import 'package:timetable_app/shared/presentation/widgets/error_message_block.dart';
 import 'package:timetable_app/shared/presentation/widgets/loading_indicator_block.dart';
-import 'package:intl/intl.dart';
 
 
 class LessonsLoadingBlocManager extends StatefulWidget {
@@ -44,35 +43,30 @@ class _LessonsLoadingBlocManagerState extends State<LessonsLoadingBlocManager> {
 				}
 				if (loadingState is TimetableLoadingInitialState) { return SizedBox.expand(); }
     		if (loadingState is TimetableInitialLoadingInProcessState) { return LoadingIndicatorBlock(); }
+    		if (loadingState is TimetableInitialLoadingErrorState) { return ErrorMessageBlock(circumstances: "загрузке пар", errorMessage: loadingState.error, onRetry: () { context.read<TimetableLoadingBloc>().add(TimetableLoadingEnsureDataLoadedEvent()); },); }
+
     		return Column(
     			children: [
-    				if (loadingState is TimetableLoadingErrorState)
-    				ErrorMessage(circumstances: "загрузке пар", error: loadingState.error, direction: ErrorMessage.down,),
     				if (loadingState is TimetableLoadingInProcessState)
     				Padding(
     				  padding: const EdgeInsets.symmetric(vertical: 16.0),
     				  child: Row(
-    				  	mainAxisAlignment: .center,
-    				    children: [
+								mainAxisAlignment: MainAxisAlignment.center,
+								children: [
 									Text("Данные обновляются...", style: TextStyle(color: context.colors.textAccent),),
-    				    ],
-    				  ),
-    				),
-    				if (loadingState is TimetableLoadingReadyState)
-    				Padding(
-    				  padding: const EdgeInsets.symmetric(vertical: 16.0),
-    				  child: Text("Данные обновлены в ${DateFormat('dd-MM-yyyy, HH:mm').format(loadingState.updatedAt)}", style: TextStyle(color: context.colors.textAccent),),
-    				),
-    				Expanded(
-    					child: widget.builder(
-								context,
-								() => _onRefreshRequested(context),
+								],
 							),
-    				),
-    			],
-    		);
-    	},
-    );
-  }
+						),
+						Expanded(
+							child: widget.builder(
+								context,
+							() => _onRefreshRequested(context),
+							),
+						),
+					],
+				);
+			},
+		);
+	}
 }
 

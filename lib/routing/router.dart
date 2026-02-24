@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,15 +35,15 @@ const String teachersPagePath = "/teachers";
 const String schedulePagePath = "/schedule";
 const String settingsPagePath = "/settings";
 
+final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
+
 final router = GoRouter(
   initialLocation: homePagePath,
+	navigatorKey: rootNavigatorKey,
   routes: [
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) =>
-          BlocProvider(
-					create: (ctx) => TimetableLoadingBloc()..add(TimetableLoadingEnsureDataLoadedEvent()),
-					child: MainNavigationScreen(navigationShell: navigationShell)
-				),
+				MainNavigationScreen(navigationShell: navigationShell),
       branches: [
         StatefulShellBranch(
           routes: [

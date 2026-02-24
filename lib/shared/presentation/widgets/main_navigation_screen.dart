@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:timetable_app/shared/presentation/bloc/timetable_loading/timetable_loading_bloc.dart';
 
 // Виджеты
 import 'package:timetable_app/shared/presentation/widgets/navigation_bar.dart';
+import 'package:timetable_app/shared/presentation/widgets/timetable_update_toast_listener.dart';
 
 
 
@@ -19,7 +22,6 @@ class MainNavigationScreen extends StatelessWidget {
 
 	@override
 	Widget build(BuildContext context) {
-		//  final bool hideOnFirstTab = navigationShell.currentIndex == 0;
 
 		return PopScope(
 			canPop: false,
@@ -34,7 +36,10 @@ class MainNavigationScreen extends StatelessWidget {
 			},
 			child: Scaffold(
 				// Тело - отображает активный экран (выбирается navigationShell)
-				body: navigationShell,
+				body: BlocProvider(
+					create: (ctx) => TimetableLoadingBloc()..add(TimetableLoadingEnsureDataLoadedEvent()),
+					child: TimetableUpdateToastListener(child: navigationShell)
+				),
 				// Навигационная панель
 				bottomNavigationBar: CustomBottomNavigationBar(
 					currentIndex: navigationShell.currentIndex,

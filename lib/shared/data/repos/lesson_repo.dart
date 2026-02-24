@@ -52,7 +52,12 @@ class LessonRepo implements LessonRepoInt {
 
   @override
   Future<DateTime> updateLessonsForUser() async {
-		await _loadForGroupFromServer(_getUserGroup());
+		DateTime? lastUpdate = DateTime.tryParse(
+			prefs.getString(userLessonsUpdatedAt) ?? ""
+		);
+		if ((lastUpdate?.difference(DateTime.now()).inMinutes ?? 2).abs() > 1) {
+			await _loadForGroupFromServer(_getUserGroup());
+		}
 		DateTime now = DateTime.now();
 		prefs.setString(userLessonsUpdatedAt, now.toIso8601String());
 		return now;

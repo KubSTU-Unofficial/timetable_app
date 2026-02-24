@@ -18,7 +18,7 @@ class TimetableLoadingBloc extends Bloc<TimetableLoadingBlocEvent, TimetableLoad
 		try {
 			emit(TimetableLoadingInProcessState());
 			DateTime updatedAt = await getIt.get<UpdateLessonsForUserUsecase>().execute();
-			emit(TimetableLoadingReadyState(updatedAt: updatedAt));
+			emit(TimetableLoadingReadyState(updatedAt: updatedAt, causedByRefresh: true));
 		} catch (e) {
 			emit(TimetableLoadingErrorState(error: e.toString()));
 		}
@@ -34,9 +34,13 @@ class TimetableLoadingBloc extends Bloc<TimetableLoadingBlocEvent, TimetableLoad
 		}
 		try {
 			DateTime updatedAt = await getIt.get<EnsureUserGroupClassesUpToDataUsecase>().execute();
-			emit(TimetableLoadingReadyState(updatedAt: updatedAt));
+			emit(TimetableLoadingReadyState(updatedAt: updatedAt, causedByRefresh: false));
 		} catch (e) {
-			emit(TimetableLoadingErrorState(error: e.toString()));
+			if (state is TimetableInitialLoadingInProcessState) {
+				emit(TimetableInitialLoadingErrorState(error: e.toString()));
+			} else {
+				emit(TimetableLoadingErrorState(error: e.toString()));
+			}
 		}
 	}
 }

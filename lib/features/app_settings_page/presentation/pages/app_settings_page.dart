@@ -57,7 +57,7 @@ class AppSettingsPage extends StatelessWidget {
 			subtitle: const Text("Сбросить текущие настройки группы"),
 			trailing: ElevatedButton(
 				onPressed: () => _resetUserGroup(context),
-				child: const Text("Сменить"),
+				child: Text("Сменить", style: TextStyle(color: context.colors.textBody),),
 			),
 		);
 	}

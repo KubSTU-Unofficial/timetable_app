@@ -3,9 +3,11 @@ import 'package:timetable_app/shared/domain/entities/lesson.dart';
 import 'package:timetable_app/shared/presentation/theme/theme_getter_ext.dart';
 
 class LessonWidget extends StatelessWidget {
-  const LessonWidget({super.key, required this.lesson});
+  const LessonWidget({super.key, required this.lesson,});
 
   final Lesson lesson;
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class LessonWidget extends StatelessWidget {
           child: Text(
             lesson.name,
             style: TextStyle(
-              color: context.colors.textPrimary,
+              color: context.colors.textBody,
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
@@ -76,7 +78,7 @@ class _Title extends StatelessWidget {
                     child: Text(
                       "${lesson.timing.lessonNumber}",
                       style: TextStyle(
-                        color: context.colors.textPrimary,
+                        color: context.colors.textBody,
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                       ),
@@ -91,7 +93,7 @@ class _Title extends StatelessWidget {
                     child: Text(
                       lesson.type.translation,
                       style: TextStyle(
-                        color: context.colors.textPrimary,
+                        color: context.colors.textBody,
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                       ),
@@ -107,7 +109,7 @@ class _Title extends StatelessWidget {
                       child: Text(
                         lesson.classroom!,
                         style: TextStyle(
-                          color: context.colors.textPrimary,
+                          color: context.colors.textBody,
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
                         ),
@@ -119,7 +121,7 @@ class _Title extends StatelessWidget {
             Text(
               lesson.timing.lessonTime,
               style: TextStyle(
-                color: context.colors.textPrimary,
+                color: context.colors.textBody,
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
               ),
@@ -179,7 +181,7 @@ class TextTile extends StatelessWidget {
         Text(
           text,
           style: TextStyle(
-            color: context.colors.textPrimary,
+            color: context.colors.textBody,
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),

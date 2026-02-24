@@ -87,7 +87,7 @@ class _ExamsCardWidgetState extends State<ExamsCardWidget> {
                     child: TextContainer(
                       text: widget.exams.teacher,
                       fontSize: 18,
-                      color: context.colors.textPrimary.withAlpha(150),
+                      color: context.colors.textBody.withAlpha(150),
                     ),
                   ),
                 ),
@@ -117,7 +117,7 @@ class TextContainer extends StatelessWidget {
       text,
 			softWrap: true,
       style: TextStyle(
-        color: color ?? context.colors.textPrimary,
+        color: color ?? context.colors.textBody,
         fontSize: fontSize.toDouble(),
         fontWeight: FontWeight.bold,
       ),

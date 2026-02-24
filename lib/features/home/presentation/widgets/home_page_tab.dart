@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:timetable_app/features/home/presentation/bloc/home_page_bloc.dart';
 import 'package:timetable_app/shared/domain/entities/lesson.dart';
-import 'package:timetable_app/shared/presentation/theme/app_colors.dart';
+import 'package:timetable_app/shared/presentation/theme/theme_getter_ext.dart';
 import 'package:timetable_app/shared/presentation/widgets/error_message_block.dart';
 import 'package:timetable_app/shared/presentation/widgets/lesson_widget.dart';
 
@@ -23,7 +23,7 @@ class HomePageTab extends StatelessWidget {
       return Center(
         child: Text(
           "Выберите дату для показа",
-          style: TextStyle(color: AppColors.primary),
+          style: TextStyle(color: context.colors.primary),
         ),
       );
     }
@@ -47,10 +47,10 @@ class HomePageTab extends StatelessWidget {
               children: [
                 Text(
                   'ПАР НЕТ!!!',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.textAccent,
+                    color: context.colors.textAccent,
                   ),
                 ),
                 Image.asset(
@@ -62,10 +62,10 @@ class HomePageTab extends StatelessWidget {
                 ),
                 Text(
                   'ОТДОХНИ!!!',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.textAccent,
+                    color: context.colors.textAccent,
                   ),
                 ),
               ],
@@ -79,8 +79,8 @@ class HomePageTab extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
             child: RefreshIndicator(
-              color: AppColors.primary,
-              backgroundColor: AppColors.darkBackground,
+              color: context.colors.primary,
+              backgroundColor: context.colors.background,
               onRefresh: onRefreshRequested,
               child: ListView.separated(
                 itemCount: lessons.length,

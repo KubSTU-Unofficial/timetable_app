@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:timetable_app/shared/presentation/error_message.dart';
-import 'package:timetable_app/shared/presentation/theme/app_colors.dart';
+import 'package:timetable_app/shared/presentation/theme/theme_getter_ext.dart';
 
 class ErrorMessageBlock extends StatelessWidget {
   const ErrorMessageBlock({
@@ -30,7 +30,7 @@ class ErrorMessageBlock extends StatelessWidget {
 						TextButton(
 							onPressed: onRetry,
 							style: TextButton.styleFrom(
-								backgroundColor: AppColors.error,
+								backgroundColor: context.colors.error,
 								padding: const EdgeInsets.symmetric(
 									horizontal: 24,
 									vertical: 12,
@@ -41,7 +41,7 @@ class ErrorMessageBlock extends StatelessWidget {
 							),
 							child: Text(
 								"Попробовать снова",
-								style: TextStyle(color: AppColors.textPrimary),
+								style: TextStyle(color: context.colors.textPrimary),
 							),
 						),
 			  	],

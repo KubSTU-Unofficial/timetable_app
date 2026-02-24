@@ -6,8 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 // router
 import 'package:timetable_app/routing/router.dart';
 
-// AppColors
-import 'package:timetable_app/shared/presentation/theme/app_colors.dart';
+// context.colors
+import 'package:timetable_app/shared/presentation/theme/theme_getter_ext.dart';
 
 // Виджеты
 import 'package:timetable_app/shared/presentation/widgets/autocomplete_field.dart';
@@ -32,7 +32,7 @@ class _InitPageState extends State<InitPage> {
 	Widget build(BuildContext context) {
 		final isKeyboardVisible = MediaQuery.of(context).viewInsets.bottom > 0;
 		return Scaffold(
-			backgroundColor: AppColors.darkBackground,
+			backgroundColor: context.colors.background,
 			body: BlocListener<InitPageBloc, InitPageBlocState>(
 			listener: (BuildContext context, state) {
 				if (state is InitPageSetupFinished) {
@@ -66,14 +66,14 @@ class _InitPageState extends State<InitPage> {
 									  	child: Center(
 									  		child: Card(
 									  			shape: RoundedRectangleBorder(
-									  				side: BorderSide(color: AppColors.primary, width: 2),
+									  				side: BorderSide(color: context.colors.primary, width: 2),
 									  			),
 									  			elevation: 0,
 									  			color: Colors.transparent,
 									  			child: SvgPicture.asset(
 									  				'assets/logo.svg',
 									  				colorFilter: ColorFilter.mode(
-									  					AppColors.primary,
+									  					context.colors.primary,
 									  					BlendMode.srcOut,
 									  				),
 									  				width: 200,
@@ -90,7 +90,7 @@ class _InitPageState extends State<InitPage> {
 											textAlign: TextAlign.center,
 											"Впишите название своей группы, чтобы мы могли загрузить ваше расписание",
 											style: TextStyle(
-												color: AppColors.textAccent,
+												color: context.colors.textAccent,
 												fontSize: 20,
 												fontWeight: FontWeight.bold,
 											),
@@ -134,7 +134,7 @@ class _InitPageState extends State<InitPage> {
 											textAlign: TextAlign.center,
 											"Введено неверное значение. Пожалуйста, выберите группу из списка или введите заново свою группу",
 											style: TextStyle(
-												color: AppColors.error,
+												color: context.colors.error,
 												fontSize: 18,
 												fontWeight: FontWeight.bold,
 											),
@@ -157,7 +157,7 @@ class _InitPageState extends State<InitPage> {
 											);
 										},
 										style: TextButton.styleFrom(
-											backgroundColor: AppColors.primary,
+											backgroundColor: context.colors.primary,
 											padding: const EdgeInsets.symmetric(
 												horizontal: 24,
 												vertical: 12,
@@ -168,7 +168,7 @@ class _InitPageState extends State<InitPage> {
 										),
 										child: Text(
 											"Продолжить",
-											style: TextStyle(color: AppColors.textPrimary),
+											style: TextStyle(color: context.colors.textPrimary),
 										),
 									),
 									Spacer(flex: 2,),

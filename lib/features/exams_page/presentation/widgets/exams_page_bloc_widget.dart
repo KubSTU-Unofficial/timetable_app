@@ -7,7 +7,7 @@ import 'package:timetable_app/features/exams_page/domain/entities/exam.dart';
 import 'package:timetable_app/features/exams_page/presentation/bloc/local_bloc/exams_page_bloc.dart';
 import 'package:timetable_app/features/exams_page/presentation/bloc/remote_bloc/exams_loading_bloc.dart';
 import 'package:timetable_app/shared/presentation/error_message.dart';
-import 'package:timetable_app/shared/presentation/theme/app_colors.dart';
+import 'package:timetable_app/shared/presentation/theme/theme_getter_ext.dart';
 import 'package:timetable_app/shared/presentation/widgets/error_message_block.dart';
 import 'package:timetable_app/shared/presentation/widgets/loading_indicator_block.dart';
 
@@ -57,14 +57,14 @@ class _ExamsPageBlocWidgetState extends State<ExamsPageBlocWidget> {
 								child: Row(
 								mainAxisAlignment: .center,
 								children: [
-									Text("Данные обновляются...", style: TextStyle(color: AppColors.textAccent),),
+									Text("Данные обновляются...", style: TextStyle(color: context.colors.textAccent),),
 								],
 							),
 						),
 						if (loadingState is ExamsLoadingReadyState)
 						Padding(
 							padding: const EdgeInsets.symmetric(vertical: 16.0),
-							child: Text("Данные обновлены в ${DateFormat('dd-MM-yyyy, HH:mm').format(loadingState.updatedAt)}", style: TextStyle(color: AppColors.textAccent),),
+							child: Text("Данные обновлены в ${DateFormat('dd-MM-yyyy, HH:mm').format(loadingState.updatedAt)}", style: TextStyle(color: context.colors.textAccent),),
 						),
 						Expanded(
 							child: BlocBuilder<ExamsPageBloc, ExamsPageBlocState>(

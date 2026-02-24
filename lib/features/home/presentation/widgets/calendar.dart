@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:timetable_app/shared/presentation/theme/app_colors.dart';
+import 'package:timetable_app/shared/presentation/theme/theme_getter_ext.dart';
 
 class Calendar extends StatelessWidget {
   const Calendar({super.key, required this.onPicked});
@@ -16,39 +16,39 @@ class Calendar extends StatelessWidget {
         return Theme(
           data: ThemeData.dark().copyWith(
             colorScheme: ColorScheme.dark(
-              primary: AppColors.primary, // Цвет выделения (выбранная дата)
-              onPrimary: AppColors.darkBackground, // Цвет текста на выделенной дате
-              surface: AppColors.darkBackground, // Фон календаря
-              onSurface: AppColors.textAccent, // Цвет текста дат
+              primary: context.colors.primary, // Цвет выделения (выбранная дата)
+              onPrimary: context.colors.background, // Цвет текста на выделенной дате
+              surface: context.colors.background, // Фон календаря
+              onSurface: context.colors.textAccent, // Цвет текста дат
             ),
 
             // Настройка текста
             textTheme: TextTheme(
               headlineSmall: TextStyle(
-                color: AppColors.primary,
+                color: context.colors.primary,
               ), // Заголовок (год)
               titleLarge: TextStyle(
-                color: AppColors.primary,
+                color: context.colors.primary,
               ), // Заголовок (месяц)
-              bodyMedium: TextStyle(color: AppColors.textAccent), // Дни
-              labelSmall: TextStyle(color: AppColors.textAccent), // Дни недели
+              bodyMedium: TextStyle(color: context.colors.textAccent), // Дни
+              labelSmall: TextStyle(color: context.colors.textAccent), // Дни недели
             ),
 
 						dialogTheme: DialogThemeData(
-							backgroundColor: AppColors.darkBackground,
+							backgroundColor: context.colors.background,
 						),
 
             // Настройка AppBar внутри календаря
             appBarTheme: AppBarTheme(
-              backgroundColor: AppColors.darkBackground,
-              titleTextStyle: TextStyle(color: AppColors.primary, fontSize: 20),
-              iconTheme: IconThemeData(color: AppColors.primary),
+              backgroundColor: context.colors.background,
+              titleTextStyle: TextStyle(color: context.colors.primary, fontSize: 20),
+              iconTheme: IconThemeData(color: context.colors.primary),
             ),
 
             // Настройка кнопок действий (OK/Отмена)
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
-                foregroundColor: AppColors.primary, // Цвет текста кнопок
+                foregroundColor: context.colors.primary, // Цвет текста кнопок
               ),
             ),
           ),
@@ -70,11 +70,11 @@ class Calendar extends StatelessWidget {
         onPressed: () {
           _selectDate(context);
         },
-        backgroundColor: AppColors.darkBackground,
-        foregroundColor: AppColors.primary,
+        backgroundColor: context.colors.background,
+        foregroundColor: context.colors.primary,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(3),
-          side: BorderSide(color: AppColors.primaryDark, width: 2),
+          side: BorderSide(color: context.colors.primary, width: 2),
         ),
         child: Icon(Icons.calendar_today),
       ),

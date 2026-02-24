@@ -25,6 +25,8 @@ import 'package:timetable_app/shared/domain/usecases/get_all_classes_for_group_u
 import 'package:timetable_app/shared/domain/usecases/get_all_lessons_for_group_for_next_date_usecase.dart';
 import 'package:timetable_app/shared/domain/usecases/get_lessons_for_date_usecase.dart';
 import 'package:timetable_app/shared/domain/usecases/update_lessons_for_user_usecase.dart';
+import 'package:timetable_app/shared/presentation/theme/app_color_scheme.dart';
+import 'package:timetable_app/shared/presentation/theme/color_schemes_provider.dart';
 
 final	getIt = GetIt.asNewInstance();
 
@@ -39,6 +41,9 @@ Future<void> configureDependencises() async {
 	_initializeDaos();
 	_initializeRepositories();
 	_initializeUsecases();
+
+	List<AppColorScheme> colorSchemes = await ColorSchemesProvider.colorSchemes();
+	getIt.registerLazySingleton<List<AppColorScheme>>(() => colorSchemes);
 }
 
 void _initializeDaos() {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:timetable_app/features/timetable_page/presentation/bloc/timetable_page_bloc.dart';
 import 'package:timetable_app/shared/domain/entities/lesson.dart';
+import 'package:timetable_app/shared/presentation/theme/theme_getter_ext.dart';
 import 'package:timetable_app/shared/presentation/widgets/lesson_widget.dart';
 import 'package:timetable_app/shared/presentation/widgets/lessons_loading_bloc_manager.dart';
 
@@ -9,7 +10,6 @@ import 'package:timetable_app/shared/presentation/widgets/lessons_loading_bloc_m
 
 
 //Appcolor
-import 'package:timetable_app/shared/presentation/theme/app_colors.dart';
 import 'package:timetable_app/shared/presentation/widgets/error_message_block.dart';
 
 class TimetablePage extends StatefulWidget {
@@ -25,7 +25,7 @@ class _TimetablePageState extends State<TimetablePage> {
 		return DefaultTabController(
 			length: 2,
 			child: Scaffold(
-				backgroundColor: AppColors.darkBackground,
+				backgroundColor: context.colors.background,
 				body: SafeArea(
 					child: LessonsLoadingBlocManager(
 						builder: (BuildContext context, Future<void> Function() onRefreshRequested) { 
@@ -57,18 +57,18 @@ class _TimetablePageState extends State<TimetablePage> {
 													children: [
 														SizedBox.square(
 															child: Container(
-																color: AppColors.darkBackground,
+																color: context.colors.background,
 																child: TabBar(
-																	indicatorColor: AppColors.primary,
+																	indicatorColor: context.colors.primary,
 																	indicatorWeight: 3.0,
 																	dividerHeight: 1.0,
-																	dividerColor: AppColors.primary,
-																	labelColor: AppColors.focusedText,
+																	dividerColor: context.colors.primary,
+																	labelColor: context.colors.textFocused,
 																	tabs: [
 																		Tab(
 																			child: Text(
 																				style: TextStyle(
-																					color: AppColors.textAccent,
+																					color: context.colors.textAccent,
 																					fontSize: 18,
 																					fontWeight: FontWeight.bold,
 																				),
@@ -78,7 +78,7 @@ class _TimetablePageState extends State<TimetablePage> {
 																		Tab(
 																			child: Text(
 																				style: TextStyle(
-																					color: AppColors.textAccent,
+																					color: context.colors.textAccent,
 																					fontSize: 18,
 																					fontWeight: FontWeight.bold,
 																				),

@@ -12,7 +12,7 @@ import 'package:timetable_app/features/timetable_page/presentation/pages/timetab
 
 // Shared
 import 'package:timetable_app/shared/data/shared_prefs_keys.dart';
-import 'package:timetable_app/shared/presentation/bloc/timetable_loading_bloc.dart';
+import 'package:timetable_app/shared/presentation/bloc/timetable_loading/timetable_loading_bloc.dart';
 
 // Виджеты
 import 'package:timetable_app/shared/presentation/widgets/main_navigation_screen.dart';

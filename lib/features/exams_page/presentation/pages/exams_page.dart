@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:timetable_app/features/exams_page/presentation/widgets/exams_page_bloc_widget.dart';
-import 'package:timetable_app/shared/presentation/theme/app_colors.dart';
 
 //widgets
 import 'package:timetable_app/features/exams_page/presentation/widgets/exams_card_widget.dart';
+import 'package:timetable_app/shared/presentation/theme/theme_getter_ext.dart';
 
 class ExamsPage extends StatelessWidget {
   const ExamsPage({super.key});
@@ -11,7 +11,7 @@ class ExamsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.darkBackground,
+      backgroundColor: context.colors.background,
       body: SafeArea(
         child: Center(
           child: ExamsPageBlocWidget(

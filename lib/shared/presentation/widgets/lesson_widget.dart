@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:timetable_app/shared/domain/entities/lesson.dart';
-import 'package:timetable_app/shared/presentation/theme/app_colors.dart';
+import 'package:timetable_app/shared/presentation/theme/theme_getter_ext.dart';
 
 class LessonWidget extends StatelessWidget {
   const LessonWidget({super.key, required this.lesson});
@@ -11,10 +11,10 @@ class LessonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.darkSurface,
+        color: context.colors.cardBackground,
         boxShadow: [
           BoxShadow(
-            color: AppColors.shadow,
+            color: context.colors.shadow,
             blurRadius: 5,
             offset: Offset(0, 0),
           ),
@@ -28,7 +28,7 @@ class LessonWidget extends StatelessWidget {
           child: Text(
             lesson.name,
             style: TextStyle(
-              color: Colors.white,
+              color: context.colors.textPrimary,
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
@@ -36,10 +36,10 @@ class LessonWidget extends StatelessWidget {
         ),
         showTrailingIcon: false,
         collapsedTextColor: Colors.black,
-        backgroundColor: AppColors.darkSurface,
-        collapsedBackgroundColor: AppColors.darkSurface,
-        shape: const RoundedRectangleBorder(
-          side: BorderSide(color: AppColors.focusedBorder, width: 1),
+        backgroundColor: context.colors.cardBackground,
+        collapsedBackgroundColor: context.colors.cardBackground,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: context.colors.borderFocused, width: 1),
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(3),
             topRight: Radius.circular(3),
@@ -71,13 +71,13 @@ class _Title extends StatelessWidget {
             Row(
               children: [
                 Container(
-                  color: AppColors.darkBrown,
+                  color: context.colors.coloredFieldBackground,
                   child: Padding(
                     padding: const EdgeInsets.only(left: 20, right: 8),
                     child: Text(
                       "${lesson.timing.lessonNumber}",
                       style: TextStyle(
-                        color: Colors.white,
+                        color: context.colors.textPrimary,
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                       ),
@@ -86,13 +86,13 @@ class _Title extends StatelessWidget {
                 ),
                 SizedBox(width: 5,),
                 Container(
-                  color: AppColors.darkBrown,
+                  color: context.colors.coloredFieldBackground,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: Text(
                       lesson.type.translation,
                       style: TextStyle(
-                        color: Colors.white,
+                        color: context.colors.textPrimary,
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                       ),
@@ -102,13 +102,13 @@ class _Title extends StatelessWidget {
                 SizedBox(width: 5),
                 if (lesson.classroom != null)
                   Container(
-                    color: AppColors.darkBrown,
+                    color: context.colors.coloredFieldBackground,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: Text(
                         lesson.classroom!,
                         style: TextStyle(
-                          color: Colors.white,
+                          color: context.colors.textPrimary,
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
                         ),
@@ -120,7 +120,7 @@ class _Title extends StatelessWidget {
             Text(
               lesson.timing.lessonTime,
               style: TextStyle(
-                color: Colors.white,
+                color: context.colors.textPrimary,
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
               ),
@@ -142,42 +142,42 @@ class _Body extends StatelessWidget {
     return Column(
       children: [
         if (lesson.timing.weeks != null)
-          Texttile(
+          TextTile(
             text:
                 "Период: с ${lesson.timing.weeks!.from} по ${lesson.timing.weeks!.to} неделю;",
           ),
         if (lesson.timing.date != null)
-          Texttile(
+          TextTile(
             text:
                 "Дата: ${lesson.timing.date!.day}.${lesson.timing.date!.month}.${lesson.timing.date!.year}",
           ),
         if (lesson.percentOfGroup != 100)
-          Texttile(text: "Процент группы: ${lesson.percentOfGroup}"),
+          TextTile(text: "Процент группы: ${lesson.percentOfGroup}"),
         if (lesson.isInLectureHall == true)
-          Texttile(text: "В лекционной аудитории: да"),
-        if (lesson.isOnline == true) Texttile(text: "Онлайн: да"),
+          TextTile(text: "В лекционной аудитории: да"),
+        if (lesson.isOnline == true) TextTile(text: "Онлайн: да"),
         if (lesson.comment != null)
-          Texttile(text: "Примечание: ${lesson.comment}"),
+          TextTile(text: "Примечание: ${lesson.comment}"),
         if (lesson.teacherName != null)
-          Texttile(text: "Преподователь: ${lesson.teacherName!}"),
+          TextTile(text: "Преподователь: ${lesson.teacherName!}"),
       ],
     );
   }
 }
 
-class Texttile extends StatelessWidget {
-  const Texttile({super.key, required this.text});
+class TextTile extends StatelessWidget {
+  const TextTile({super.key, required this.text});
   final String text;
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Divider(color: AppColors.primary.withAlpha(100)),
+        Divider(color: context.colors.primary.withAlpha(100)),
         Text(
           text,
           style: TextStyle(
-            color: Colors.white,
+            color: context.colors.textPrimary,
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),

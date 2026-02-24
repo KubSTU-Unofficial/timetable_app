@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:timetable_app/features/exams_page/domain/entities/exam.dart';
 
-//AppColors
-import 'package:timetable_app/shared/presentation/theme/app_colors.dart';
+//context.colors
+import 'package:timetable_app/shared/presentation/theme/theme_getter_ext.dart';
 
 // final String group;
 // final String name;
@@ -25,10 +25,10 @@ class _ExamsCardWidgetState extends State<ExamsCardWidget> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.darkSurface,
+        color: context.colors.cardBackground,
         boxShadow: [
           BoxShadow(
-            color: AppColors.shadow,
+            color: context.colors.shadow,
             blurRadius: 5,
             offset: Offset(0, 0),
           ),
@@ -41,7 +41,7 @@ class _ExamsCardWidgetState extends State<ExamsCardWidget> {
             Row(
               children: [
                 Container(
-                  color: AppColors.darkBrown,
+                  color: context.colors.coloredFieldBackground,
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(20, 0, 8, 0),
                     child: TextContainer(
@@ -52,7 +52,7 @@ class _ExamsCardWidgetState extends State<ExamsCardWidget> {
                 SizedBox(width: 5),
 
                 Container(
-                  color: AppColors.darkBrown,
+                  color: context.colors.coloredFieldBackground,
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: TextContainer(text: widget.exams.classroom),
                 ),
@@ -87,7 +87,7 @@ class _ExamsCardWidgetState extends State<ExamsCardWidget> {
                     child: TextContainer(
                       text: widget.exams.teacher,
                       fontSize: 18,
-                      color: AppColors.darkTextPrimary.withAlpha(150),
+                      color: context.colors.textPrimary.withAlpha(150),
                     ),
                   ),
                 ),
@@ -105,11 +105,11 @@ class TextContainer extends StatelessWidget {
     super.key,
     required this.text,
     this.fontSize = 18,
-    this.color = AppColors.darkTextPrimary,
+    this.color,
   });
   final String text;
   final int fontSize;
-  final Color color;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +117,7 @@ class TextContainer extends StatelessWidget {
       text,
 			softWrap: true,
       style: TextStyle(
-        color: color,
+        color: color ?? context.colors.textPrimary,
         fontSize: fontSize.toDouble(),
         fontWeight: FontWeight.bold,
       ),

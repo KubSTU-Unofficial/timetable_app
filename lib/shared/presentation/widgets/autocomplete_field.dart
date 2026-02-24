@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // Shared
-import 'package:timetable_app/shared/presentation/theme/app_colors.dart';
+import 'package:timetable_app/shared/presentation/theme/theme_getter_ext.dart';
 
 class AutocompleteField<T> extends StatefulWidget {
   const AutocompleteField({
@@ -37,24 +37,24 @@ class _AutocompleteFieldState extends State<AutocompleteField> {
 				controller: textEditingController,
 				focusNode: focusNode,
 				// Если нужна заливка, раскомментируй filled и подгони цвет текста в style
-				style: const TextStyle(color: Colors.white), // Цвет вводимого текста
+				style: TextStyle(color: context.colors.textPrimary), // Цвет вводимого текста
 					decoration: InputDecoration(
 						// filled: true,
 						labelStyle: TextStyle(color: Colors.grey),
 						hintText: widget.label,
-						hintStyle: TextStyle(color: AppColors.textDisabled),
-						fillColor: AppColors.surface,
+						hintStyle: TextStyle(color: context.colors.textSecondary),
+						fillColor: context.colors.cardBackground,
 						enabledBorder: OutlineInputBorder(
 							borderRadius: BorderRadius.circular(8),
 							borderSide: BorderSide(
-								color: AppColors.enabledBorder,
+								color: context.colors.borderEnabled,
 								width: 1.0,
 							),
 						),
 						focusedBorder: OutlineInputBorder(
 							borderRadius: BorderRadius.circular(8),
 							borderSide: BorderSide(
-								color: AppColors.focusedBorder,
+								color: context.colors.borderFocused,
 								width: 1.0,
 							),
 						),
@@ -80,7 +80,7 @@ class _AutocompleteFieldState extends State<AutocompleteField> {
 										controller: controller,
 										trackVisibility: true,
 										thumbVisibility: true,
-										trackBorderColor: AppColors.darkBackground,
+										trackBorderColor: context.colors.background,
 										thickness: 8,
 					  			  child: ListView.builder(
 											controller: controller,
@@ -90,7 +90,7 @@ class _AutocompleteFieldState extends State<AutocompleteField> {
 					  			  	itemBuilder: (BuildContext context, int index) {
 					  			  		final String option = options.elementAt(index);
 					  			  		return ListTile(
-					  			  			title: Text(option, style: const TextStyle(color: Colors.white)),
+					  			  			title: Text(option, style: TextStyle(color: context.colors.textInverse)),
 					  			  			onTap: () => onSelected(option),
 					  			  		);
 					  			  	},

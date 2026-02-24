@@ -12,10 +12,10 @@ import 'package:timetable_app/features/home/presentation/widgets/home_page_tab.d
 // Shared
 
 //appcolors
-import 'package:timetable_app/shared/presentation/theme/app_colors.dart';
 
 //Widgets
 import 'package:timetable_app/features/home/presentation/widgets/calendar.dart';
+import 'package:timetable_app/shared/presentation/theme/theme_getter_ext.dart';
 import 'package:timetable_app/shared/presentation/widgets/lessons_loading_bloc_manager.dart';
 import 'package:timetable_app/shared/presentation/widgets/loading_indicator_block.dart';
 import 'package:timetable_app/shared/utils/week_day_name_ext.dart';
@@ -82,7 +82,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 		  				},
 		  			),
 		  			floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-		  			backgroundColor: AppColors.darkBackground,
+		  			backgroundColor: context.colors.background,
 		  			body: SafeArea(
 		  				child: LessonsLoadingBlocManager(
 		  					builder: (context, onUpdateRequested) {
@@ -97,20 +97,20 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 		  									children: [
 		  										SizedBox.square(
 		  											child: Container(
-		  												color: AppColors.darkBackground,
+		  												color: context.colors.background,
 		  												child: TabBar(
 																controller: _tabController,
-		  													indicatorColor: AppColors.primary,
+		  													indicatorColor: context.colors.primary,
 		  													indicatorWeight: 3.0,
 		  													dividerHeight: 1.0,
-		  													dividerColor: AppColors.primary,
-		  													labelColor: AppColors.focusedText,
+		  													dividerColor: context.colors.primary,
+		  													labelColor: context.colors.textFocused,
 		  													tabs: [
 																	if (selectedDateData != null)
 		  														Tab(
 		  															child: Text(
 		  																style: TextStyle(
-		  																	color: AppColors.textAccent,
+		  																	color: context.colors.textAccent,
 		  																	fontSize: 18,
 		  																	fontWeight: FontWeight.bold,
 		  																),
@@ -120,7 +120,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 		  														Tab(
 		  															child: Text(
 		  																style: TextStyle(
-		  																	color: AppColors.textAccent,
+		  																	color: context.colors.textAccent,
 		  																	fontSize: 18,
 		  																	fontWeight: FontWeight.bold,
 		  																),
@@ -132,7 +132,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 		  															child: AutoSizeText(
 		  																wrapWords: false,
 		  																style: TextStyle(
-		  																	color: AppColors.textAccent,
+		  																	color: context.colors.textAccent,
 		  																	fontSize: 18,
 		  																	fontWeight: FontWeight.bold,
 		  																),

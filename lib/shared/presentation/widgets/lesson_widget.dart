@@ -24,7 +24,7 @@ class LessonWidget extends StatelessWidget {
         tilePadding: EdgeInsets.fromLTRB(0, 0, 10, 0),
         title: _Title(lesson: lesson),
         subtitle: Padding(
-          padding: EdgeInsets.fromLTRB(46, 5, 0, 0),
+          padding: EdgeInsets.fromLTRB(20, 5, 0, 0),
           child: Text(
             lesson.name,
             style: TextStyle(
@@ -38,12 +38,11 @@ class LessonWidget extends StatelessWidget {
         collapsedTextColor: Colors.black,
         backgroundColor: context.colors.cardBackground,
         collapsedBackgroundColor: context.colors.cardBackground,
-        shape: RoundedRectangleBorder(
-          side: BorderSide(color: context.colors.borderFocused, width: 1),
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(3),
-            topRight: Radius.circular(3),
-          ),
+        shape: BorderDirectional(
+          top: BorderSide(color: context.colors.borderFocused, width: 1),
+          bottom: BorderSide(color: context.colors.borderFocused, width: 1),
+          start: BorderSide.none,
+          end: BorderSide.none,
         ),
         children: [
           Padding(
@@ -84,7 +83,7 @@ class _Title extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(width: 5,),
+                SizedBox(width: 5),
                 Container(
                   color: context.colors.coloredFieldBackground,
                   child: Padding(
@@ -139,28 +138,31 @@ class _Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        if (lesson.timing.weeks != null)
-          TextTile(
-            text:
-                "Период: с ${lesson.timing.weeks!.from} по ${lesson.timing.weeks!.to} неделю;",
-          ),
-        if (lesson.timing.date != null)
-          TextTile(
-            text:
-                "Дата: ${lesson.timing.date!.day}.${lesson.timing.date!.month}.${lesson.timing.date!.year}",
-          ),
-        if (lesson.percentOfGroup != 100)
-          TextTile(text: "Процент группы: ${lesson.percentOfGroup}"),
-        if (lesson.isInLectureHall == true)
-          TextTile(text: "В лекционной аудитории: да"),
-        if (lesson.isOnline == true) TextTile(text: "Онлайн: да"),
-        if (lesson.comment != null)
-          TextTile(text: "Примечание: ${lesson.comment}"),
-        if (lesson.teacherName != null)
-          TextTile(text: "Преподователь: ${lesson.teacherName!}"),
-      ],
+    return Padding(
+      padding: EdgeInsets.fromLTRB(13, 5, 0, 0),
+      child: Column(
+        children: [
+          if (lesson.timing.weeks != null)
+            TextTile(
+              text:
+                  "Период: с ${lesson.timing.weeks!.from} по ${lesson.timing.weeks!.to} неделю;",
+            ),
+          if (lesson.timing.date != null)
+            TextTile(
+              text:
+                  "Дата: ${lesson.timing.date!.day}.${lesson.timing.date!.month}.${lesson.timing.date!.year}",
+            ),
+          if (lesson.percentOfGroup != 100)
+            TextTile(text: "Процент группы: ${lesson.percentOfGroup}"),
+          if (lesson.isInLectureHall == true)
+            TextTile(text: "В лекционной аудитории: да"),
+          if (lesson.isOnline == true) TextTile(text: "Онлайн: да"),
+          if (lesson.comment != null)
+            TextTile(text: "Примечание: ${lesson.comment}"),
+          if (lesson.teacherName != null)
+            TextTile(text: "${lesson.teacherName!}"),
+        ],
+      ),
     );
   }
 }
@@ -173,7 +175,7 @@ class TextTile extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Divider(color: context.colors.primary.withAlpha(100)),
+        // Divider(color: context.colors.primary.withAlpha(100)),
         Text(
           text,
           style: TextStyle(
@@ -182,6 +184,7 @@ class TextTile extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
+        SizedBox(height: 10),
       ],
     );
   }

@@ -15,7 +15,7 @@ class ColorSchemesProvider {
 
 				textPrimary: Color(0xFF0F172A),
 				textSecondary: Color(0xFF64748B),
-        textBody: Color(0xFFFFFFFF),
+        textBody: Color(0xFF000000),
 				textInverse: Color(0xFF94A3B8),
 				textAccent: Color(0xFFEA580C),
 				textFocused: Color(0xFFEA580C), 
@@ -77,7 +77,7 @@ class ColorSchemesProvider {
 
         textPrimary: Color(0xFF1E1B4B), // Очень темно-синий/фиолетовый
         textSecondary: Color(0xFF6B7280),
-        textBody: Color(0xFFFFFFFF),
+        textBody: Color(0xFF000000),
         textInverse: Color(0xFFF3F4F6),
         textAccent: Color(0xFFC026D3), // Глубокий розовый
         textFocused: Color(0xFF8B5CF6), 

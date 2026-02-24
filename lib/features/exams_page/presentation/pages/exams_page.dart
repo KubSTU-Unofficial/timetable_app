@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:timetable_app/features/exams_page/presentation/widgets/exams_page_bloc_widget.dart';
 import 'package:timetable_app/shared/presentation/theme/app_colors.dart';
 
-//widgets
-import 'package:timetable_app/features/exams_page/presentation/widgets/exams_card_widget.dart';
-
 class ExamsPage extends StatelessWidget {
   const ExamsPage({super.key});
 
@@ -26,8 +23,10 @@ class ExamsPage extends StatelessWidget {
                   child: ListView.builder(
                     itemCount: exams.length,
                     itemBuilder: (ctx, idx) {
-                      return Placeholder(); 
-                      //ExamsCardWidget(exams: exams[idx]);
+                      return Container(
+                        color: AppColors.darkSurface,
+                        child: Text("${idx + 1}. ${exams[idx].name}"),
+                      );
                     },
                   ),
                 );

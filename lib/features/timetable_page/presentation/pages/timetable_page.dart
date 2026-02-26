@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:timetable_app/features/timetable_page/presentation/bloc/timetable_page_bloc.dart';
+import 'package:timetable_app/features/timetable_page/presentation/widgets/two_week_timetable.dart';
 import 'package:timetable_app/shared/domain/entities/lesson.dart';
 import 'package:timetable_app/shared/presentation/theme/theme_getter_ext.dart';
 import 'package:timetable_app/shared/presentation/widgets/lesson_widget.dart';
 import 'package:timetable_app/shared/presentation/widgets/lessons_loading_bloc_manager.dart';
-
-//Widgets
-
-
-//Appcolor
 import 'package:timetable_app/shared/presentation/widgets/error_message_block.dart';
 
 class TimetablePage extends StatefulWidget {
@@ -48,90 +44,26 @@ class _TimetablePageState extends State<TimetablePage> {
 											stream: lessons,
 											builder: (context, asyncSnapshot) {
 												if (asyncSnapshot.data == null) {
-																											return SizedBox.shrink();
-																																							}
-												List<Lesson> evenWeekLessons = asyncSnapshot.data!.where((l) => l.timing.weeks!.isEven).toList();
-												List<Lesson> oddWeekLessons = asyncSnapshot.data!.where((l) => !l.timing.weeks!.isEven).toList();
+													return SizedBox.shrink();
+												}
+												// Для очников
+												if (asyncSnapshot.data!.first.timing.weeks != null) {
 
-												return Column(
-													children: [
-														SizedBox.square(
-															child: Container(
-																color: context.colors.background,
-																child: TabBar(
-																	indicatorColor: context.colors.primary,
-																	indicatorWeight: 3.0,
-																	dividerHeight: 1.0,
-																	dividerColor: context.colors.primary,
-																	labelColor: context.colors.textFocused,
-																	tabs: [
-																		Tab(
-																			child: Text(
-																				style: TextStyle(
-																					color: context.colors.textAccent,
-																					fontSize: 18,
-																					fontWeight: FontWeight.bold,
-																				),
-																				'Четная',
-																			),
-																		),
-																		Tab(
-																			child: Text(
-																				style: TextStyle(
-																					color: context.colors.textAccent,
-																					fontSize: 18,
-																					fontWeight: FontWeight.bold,
-																				),
-																				'Нечетная',
-																			),
-																		),
-																	],
-																),
-															),
-														),
-														Expanded(
-															child: TabBarView(
-																children: [
-																	// Четная неделя
-																	Center(
-																		child: Padding(
-																			padding: EdgeInsets.fromLTRB(5, 10, 5, 0),
-																			child: RefreshIndicator(
-																				onRefresh: onRefreshRequested,
-																			  child: ListView.separated(
-																			  	itemCount: evenWeekLessons.length,
-																			  	separatorBuilder: (context, index) =>
-																			  		SizedBox(height: 8),
-																			  	itemBuilder: (context, index) =>
-																			  		LessonWidget(
-																			  			lesson: evenWeekLessons[index],
-																			  		),
-																			  ),
-																			),
-																		),
-																	),
-																	// Нечетная неделя
-																	Center(
-																		child: Padding(
-																			padding: EdgeInsets.fromLTRB(5, 10, 5, 0),
-																			child: RefreshIndicator(
-																				onRefresh: onRefreshRequested,
-																			  child: ListView.separated(
-																			  	itemCount: evenWeekLessons.length,
-																			  	separatorBuilder: (context, index) =>
-																			  		SizedBox(height: 8),
-																			  	itemBuilder: (context, index) =>
-																			  		LessonWidget(
-																			  			lesson: oddWeekLessons[index],
-																			  		),
-																			  ),
-																			),
-																		),
-																	),
-																],
-															),
-														),
-													],
+													List<Lesson> evenWeekLessons = asyncSnapshot.data!.where((l) => l.timing.weeks!.isEven).toList();
+													List<Lesson> oddWeekLessons = asyncSnapshot.data!.where((l) => !l.timing.weeks!.isEven).toList();
+
+													return TwoWeekTimetable(
+														evenWeekLessons: evenWeekLessons,
+														oddWeekLessons: oddWeekLessons,
+														onRefreshRequested: onRefreshRequested,
+													);
+												}
+												// Для заочников, тоже нужно будет потом сделать нормально
+												return ListView.separated(
+													itemCount: asyncSnapshot.data!.length,
+													separatorBuilder: (context, index) =>
+														SizedBox(height: 8),
+													itemBuilder: (context, index) => LessonWidget(lesson: asyncSnapshot.data![index]),
 												);
 											},
 										),

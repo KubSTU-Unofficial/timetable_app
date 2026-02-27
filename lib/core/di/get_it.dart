@@ -15,6 +15,13 @@ import 'package:timetable_app/features/initial_settings_page/data/datasources/da
 import 'package:timetable_app/features/initial_settings_page/data/repos/group_repo.dart';
 import 'package:timetable_app/features/initial_settings_page/domain/repo_ints/group_repo_int.dart';
 import 'package:timetable_app/features/initial_settings_page/domain/usecases/get_all_groups_usecase.dart';
+import 'package:timetable_app/features/teachers_page/data/datasources/api/mock_teachers_remote_datasource.dart';
+import 'package:timetable_app/features/teachers_page/data/datasources/api/teachers_remote_datasource_int.dart';
+import 'package:timetable_app/features/teachers_page/data/datasources/database/teachers_dao.dart';
+import 'package:timetable_app/features/teachers_page/data/datasources/repos/teachers_repo.dart';
+import 'package:timetable_app/features/teachers_page/domain/repo_ints/teachers_repo_int.dart';
+import 'package:timetable_app/features/teachers_page/domain/usecases/get_all_teachers_usecase.dart';
+import 'package:timetable_app/features/teachers_page/domain/usecases/get_lessons_for_teacher_usecase.dart';
 import 'package:timetable_app/shared/data/datasources/api/lessons/lesson_remote_data_source_int.dart';
 import 'package:timetable_app/shared/data/datasources/api/lessons/lesson_remote_datasource.dart';
 import 'package:timetable_app/shared/data/datasources/database/lessons_dao.dart';
@@ -50,6 +57,7 @@ void _initializeDaos() {
 	getIt.registerLazySingleton(() => GroupsDao(getIt.get()));
 	getIt.registerLazySingleton(() => LessonsDao(getIt.get()));
 	getIt.registerLazySingleton(() => ExamsDao(getIt.get()));
+	getIt.registerLazySingleton(() => TeachersDao(getIt.get()));
 	// .. Объекты доступа к данным других сущностей здесь
 }
 
@@ -58,6 +66,7 @@ void _initializeRemoteSources() {
 	getIt.registerLazySingleton<GroupRemoteDataSourceInt>(() => GroupRemoteDataSource());
 	getIt.registerLazySingleton<LessonRemoteDataSourceInt>(() => LessonRemoteDatasource());
 	getIt.registerLazySingleton<ExamRemoteDataSourceInt>(() => MockExamRemoteDatasource());
+	getIt.registerLazySingleton<TeachersRemoteDatasourceInt>(() => MockTeachersRemoteDatasource());
 	// ... Апишки для других сущностей здесь
 }
 
@@ -69,12 +78,19 @@ void _initializeRepositories() {
 	));
 
 	getIt.registerLazySingleton<LessonRepoInt>(() => LessonRepo(
-		db: getIt.get(),
+		lessonsDao: getIt.get(),
+		teachersDao: getIt.get(),
 		api: getIt.get(),
 		prefs: getIt.get(),
 	));
 
 	getIt.registerLazySingleton<ExamRepoInt>(() => ExamRepo(
+		db: getIt.get(),
+		api: getIt.get(),
+		prefs: getIt.get(),
+	));
+
+	getIt.registerLazySingleton<TeachersRepoInt>(() => TeachersRepo(
 		db: getIt.get(),
 		api: getIt.get(),
 		prefs: getIt.get(),
@@ -116,6 +132,14 @@ void _initializeUsecases() {
 	));
 
 	getIt.registerLazySingleton<UpdateExamsForUserUsecase>(() => UpdateExamsForUserUsecase(
+		repo: getIt.get()
+	));
+
+	getIt.registerLazySingleton<GetAllTeachersUsecase>(() => GetAllTeachersUsecase(
+		repo: getIt.get()
+	));
+
+	getIt.registerLazySingleton<GetLessonsForTeacherUsecase>(() => GetLessonsForTeacherUsecase(
 		repo: getIt.get()
 	));
 	// ... Другие сценарии здесь

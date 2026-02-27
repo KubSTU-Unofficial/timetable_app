@@ -18,6 +18,15 @@ class LessonsDao extends DatabaseAccessor<Database> with _$LessonsDaoMixin {
 		})).watch();
 	}
 
+	Stream<List<LessonsEntry>> selectByTeacher(String teacherName) {
+		return (select(lessons)..where((e) {
+			return e.teacherName.equals(teacherName) &
+				e.startDate.isSmallerOrEqualValue(DateTime.now()) &
+				e.endDate.isBiggerOrEqualValue(DateTime.now());
+			
+		})).watch();
+	}
+
 	Future<void> saveAllForGroup(List<LessonsCompanion> lessonList) async {
 		if (lessonList.isEmpty) { return; }
 		for (int i = 0; i < lessonList.length - 1; i++) {
@@ -25,6 +34,21 @@ class LessonsDao extends DatabaseAccessor<Database> with _$LessonsDaoMixin {
 		}
 		return transaction(() async {
 			await (delete(lessons)..where((e) => e.group.equals(lessonList[0].group.value))).go();
+			await batch((batch) async {
+				batch.insertAll(lessons, lessonList);
+			});
+		});
+	}
+	
+	Future<void> saveAllForTeacher(List<LessonsCompanion> lessonList) async {
+		if (lessonList.isEmpty) { return; }
+		String? teacherName = lessonList[0].teacherName.value;
+		if (teacherName == null) { return; }
+		for (int i = 0; i < lessonList.length - 1; i++) {
+			if (lessonList[i].teacherName.value != lessonList[i + 1].teacherName.value) { throw InvalidDataException("Переданы пары с разными перподавателями"); }
+		}
+		return transaction(() async {
+			await (delete(lessons)..where((e) => e.teacherName.equals(teacherName))).go();
 			await batch((batch) async {
 				batch.insertAll(lessons, lessonList);
 			});
@@ -73,4 +97,7 @@ class LessonsDao extends DatabaseAccessor<Database> with _$LessonsDaoMixin {
 				);
 		})).watch();
 	}
+
+	Future<List<String>> getAllTeachers() async =>
+		(await (selectOnly(lessons)..addColumns([lessons.teacherName])).get()).map((e) => e.read<String>(lessons.teacherName)!).toList();
 }

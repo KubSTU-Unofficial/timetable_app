@@ -162,7 +162,7 @@ class _Body extends StatelessWidget {
           if (lesson.comment != null)
             TextTile(text: "Примечание: ${lesson.comment}"),
           if (lesson.teacherName != null)
-            TextTile(text: "${lesson.teacherName!}"),
+            TextTile(text: lesson.teacherName!),
         ],
       ),
     );

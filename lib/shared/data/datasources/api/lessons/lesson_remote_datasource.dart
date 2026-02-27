@@ -12,5 +12,14 @@ class LessonRemoteDatasource implements LessonRemoteDataSourceInt {
 		List<LessonDTO> lessons = body.map((e) => LessonDTO.fromJson(e as Map<String, dynamic>)).toList();
 		return lessons;
   }
+
+  @override
+  Future<List<LessonDTO>> getByTeacher(String teacher) async {
+		List<dynamic> body = await Api.get(
+			"groups/$teacher/timetable",
+		);
+		List<LessonDTO> lessons = body.map((e) => LessonDTO.fromJson(e as Map<String, dynamic>)).toList();
+		return lessons;
+  }
   
 }

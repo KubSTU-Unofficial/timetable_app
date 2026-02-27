@@ -1691,20 +1691,239 @@ class ExamsCompanion extends UpdateCompanion<ExamsEntry> {
   }
 }
 
+class $TeachersTable extends Teachers
+    with TableInfo<$TeachersTable, TeachersEntry> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TeachersTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [name, updatedAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'teachers';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<TeachersEntry> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {name};
+  @override
+  TeachersEntry map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TeachersEntry(
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+    );
+  }
+
+  @override
+  $TeachersTable createAlias(String alias) {
+    return $TeachersTable(attachedDatabase, alias);
+  }
+}
+
+class TeachersEntry extends DataClass implements Insertable<TeachersEntry> {
+  final String name;
+  final DateTime updatedAt;
+  const TeachersEntry({required this.name, required this.updatedAt});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['name'] = Variable<String>(name);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    return map;
+  }
+
+  TeachersCompanion toCompanion(bool nullToAbsent) {
+    return TeachersCompanion(name: Value(name), updatedAt: Value(updatedAt));
+  }
+
+  factory TeachersEntry.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TeachersEntry(
+      name: serializer.fromJson<String>(json['name']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'name': serializer.toJson<String>(name),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+    };
+  }
+
+  TeachersEntry copyWith({String? name, DateTime? updatedAt}) => TeachersEntry(
+    name: name ?? this.name,
+    updatedAt: updatedAt ?? this.updatedAt,
+  );
+  TeachersEntry copyWithCompanion(TeachersCompanion data) {
+    return TeachersEntry(
+      name: data.name.present ? data.name.value : this.name,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TeachersEntry(')
+          ..write('name: $name, ')
+          ..write('updatedAt: $updatedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(name, updatedAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TeachersEntry &&
+          other.name == this.name &&
+          other.updatedAt == this.updatedAt);
+}
+
+class TeachersCompanion extends UpdateCompanion<TeachersEntry> {
+  final Value<String> name;
+  final Value<DateTime> updatedAt;
+  final Value<int> rowid;
+  const TeachersCompanion({
+    this.name = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  TeachersCompanion.insert({
+    required String name,
+    required DateTime updatedAt,
+    this.rowid = const Value.absent(),
+  }) : name = Value(name),
+       updatedAt = Value(updatedAt);
+  static Insertable<TeachersEntry> custom({
+    Expression<String>? name,
+    Expression<DateTime>? updatedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (name != null) 'name': name,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  TeachersCompanion copyWith({
+    Value<String>? name,
+    Value<DateTime>? updatedAt,
+    Value<int>? rowid,
+  }) {
+    return TeachersCompanion(
+      name: name ?? this.name,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TeachersCompanion(')
+          ..write('name: $name, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$Database extends GeneratedDatabase {
   _$Database(QueryExecutor e) : super(e);
   $DatabaseManager get managers => $DatabaseManager(this);
   late final $GroupsTable groups = $GroupsTable(this);
   late final $LessonsTable lessons = $LessonsTable(this);
   late final $ExamsTable exams = $ExamsTable(this);
+  late final $TeachersTable teachers = $TeachersTable(this);
   late final GroupsDao groupsDao = GroupsDao(this as Database);
   late final LessonsDao lessonsDao = LessonsDao(this as Database);
   late final ExamsDao examsDao = ExamsDao(this as Database);
+  late final TeachersDao teachersDao = TeachersDao(this as Database);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [groups, lessons, exams];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [
+    groups,
+    lessons,
+    exams,
+    teachers,
+  ];
 }
 
 typedef $$GroupsTableCreateCompanionBuilder =
@@ -2512,6 +2731,149 @@ typedef $$ExamsTableProcessedTableManager =
       ExamsEntry,
       PrefetchHooks Function()
     >;
+typedef $$TeachersTableCreateCompanionBuilder =
+    TeachersCompanion Function({
+      required String name,
+      required DateTime updatedAt,
+      Value<int> rowid,
+    });
+typedef $$TeachersTableUpdateCompanionBuilder =
+    TeachersCompanion Function({
+      Value<String> name,
+      Value<DateTime> updatedAt,
+      Value<int> rowid,
+    });
+
+class $$TeachersTableFilterComposer
+    extends Composer<_$Database, $TeachersTable> {
+  $$TeachersTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$TeachersTableOrderingComposer
+    extends Composer<_$Database, $TeachersTable> {
+  $$TeachersTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$TeachersTableAnnotationComposer
+    extends Composer<_$Database, $TeachersTable> {
+  $$TeachersTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+}
+
+class $$TeachersTableTableManager
+    extends
+        RootTableManager<
+          _$Database,
+          $TeachersTable,
+          TeachersEntry,
+          $$TeachersTableFilterComposer,
+          $$TeachersTableOrderingComposer,
+          $$TeachersTableAnnotationComposer,
+          $$TeachersTableCreateCompanionBuilder,
+          $$TeachersTableUpdateCompanionBuilder,
+          (
+            TeachersEntry,
+            BaseReferences<_$Database, $TeachersTable, TeachersEntry>,
+          ),
+          TeachersEntry,
+          PrefetchHooks Function()
+        > {
+  $$TeachersTableTableManager(_$Database db, $TeachersTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$TeachersTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$TeachersTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$TeachersTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> name = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => TeachersCompanion(
+                name: name,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String name,
+                required DateTime updatedAt,
+                Value<int> rowid = const Value.absent(),
+              }) => TeachersCompanion.insert(
+                name: name,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$TeachersTableProcessedTableManager =
+    ProcessedTableManager<
+      _$Database,
+      $TeachersTable,
+      TeachersEntry,
+      $$TeachersTableFilterComposer,
+      $$TeachersTableOrderingComposer,
+      $$TeachersTableAnnotationComposer,
+      $$TeachersTableCreateCompanionBuilder,
+      $$TeachersTableUpdateCompanionBuilder,
+      (
+        TeachersEntry,
+        BaseReferences<_$Database, $TeachersTable, TeachersEntry>,
+      ),
+      TeachersEntry,
+      PrefetchHooks Function()
+    >;
 
 class $DatabaseManager {
   final _$Database _db;
@@ -2522,4 +2884,6 @@ class $DatabaseManager {
       $$LessonsTableTableManager(_db, _db.lessons);
   $$ExamsTableTableManager get exams =>
       $$ExamsTableTableManager(_db, _db.exams);
+  $$TeachersTableTableManager get teachers =>
+      $$TeachersTableTableManager(_db, _db.teachers);
 }

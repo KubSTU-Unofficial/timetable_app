@@ -8,12 +8,12 @@ import 'package:timetable_app/core/di/get_it.dart';
 import 'package:timetable_app/features/exams_page/presentation/bloc/local_bloc/exams_page_bloc.dart';
 import 'package:timetable_app/features/exams_page/presentation/bloc/remote_bloc/exams_loading_bloc.dart';
 import 'package:timetable_app/features/home/presentation/bloc/home_page_bloc.dart';
+import 'package:timetable_app/features/teachers_page/presentation/bloc/teachers_page_bloc.dart';
 import 'package:timetable_app/features/timetable_page/presentation/bloc/timetable_page_bloc.dart';
 import 'package:timetable_app/features/timetable_page/presentation/pages/timetable_page.dart';
 
 // Shared
 import 'package:timetable_app/shared/data/shared_prefs_keys.dart';
-import 'package:timetable_app/shared/presentation/bloc/timetable_loading/timetable_loading_bloc.dart';
 
 // Виджеты
 import 'package:timetable_app/shared/presentation/widgets/main_navigation_screen.dart';
@@ -49,7 +49,10 @@ final router = GoRouter(
           routes: [
             GoRoute(
               path: teachersPagePath,
-              builder: (ctx, state) => TeachersPage(),
+              builder: (ctx, state) => BlocProvider(
+								create: (ctx) => TeachersPageBloc()..add(TeachersPageInitEvent()),
+								child: TeachersPage()
+							),
             ),
           ],
         ),
@@ -58,7 +61,7 @@ final router = GoRouter(
             GoRoute(
               path: schedulePagePath,
               builder: (ctx, state) => BlocProvider(
-							create: (ctx) => TimetablePageBloc()..add(TimetablePageLessonsRequested()),
+								create: (ctx) => TimetablePageBloc()..add(TimetablePageLessonsRequested()),
 								child: TimetablePage()
 							),
             ),

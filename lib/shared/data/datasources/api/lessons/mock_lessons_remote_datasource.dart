@@ -9,5 +9,11 @@ class MockLessonsRemoteDatasource implements LessonRemoteDataSourceInt {
 		await Future.delayed(Duration(seconds: 5));
 		return lessonsTestExample;
   }
+
+  @override
+  Future<List<LessonDTO>> getByTeacher(String teacher) {
+    // TODO: implement getByTeacher
+    throw UnimplementedError();
+  }
   
 }

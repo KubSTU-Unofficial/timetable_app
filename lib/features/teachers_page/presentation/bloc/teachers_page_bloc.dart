@@ -10,17 +10,30 @@ part 'teachers_page_bloc_state.dart';
 class TeachersPageBloc extends Bloc<TeachersPageBlocEvent, TeachersPageBlocState>  {
   TeachersPageBloc() : super(TeachersPageInitialState()) {
 		on<TeachersPageInitEvent>((TeachersPageInitEvent event, Emitter<TeachersPageBlocState> emit) async {
-			emit(TeachersPageLoadedState(
-				teachers: await getIt.get<GetAllTeachersUsecase>().execute()
-			));
+			try {
+			  emit(TeachersPageLoadedState(
+			  	teachers: await getIt.get<GetAllTeachersUsecase>().execute()
+			  ));
+			} on Exception catch (e) {
+				emit(TeachersPageTeachersErrorState(error: e.toString()));
+			}
 		});
 
 		on<TeacherLessonsRequestedForDateEvent>((TeacherLessonsRequestedForDateEvent event, Emitter<TeachersPageBlocState> emit) async {
 			if (state is! TeachersPageLoadedState) return;
-			emit(TeachersPageLoadedState(
-				teachers: (state as TeachersPageLoadedState).teachers,
-				lessons: getIt.get<GetLessonsForTeacherForDateUsecase>().execute(event.name, event.date),
-			));
+			try {
+			  emit(TeachersPageLoadedState(
+			  	teachers: (state as TeachersPageLoadedState).teachers,
+			  	lessons: getIt.get<GetLessonsForTeacherForDateUsecase>().execute(event.name, event.date),
+					error: null,
+			  ));
+			} on Exception catch (e) {
+			  emit(TeachersPageLoadedState(
+			  	teachers: (state as TeachersPageLoadedState).teachers,
+			  	lessons: null,
+					error: e.toString(),
+			  ));
+			}
 		});
 	}
 }

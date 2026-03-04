@@ -15,7 +15,7 @@ class TeachersDao extends DatabaseAccessor<Database> with _$TeachersDaoMixin {
 				b.insertAll(teachers, teachersList.map((e) => 
 					TeachersCompanion(
 						name: Value(e),
-						updatedAt: Value(DateTime.now()),
+						updatedAt: Value(DateTime(1970)),
 					)
 				));
 			});

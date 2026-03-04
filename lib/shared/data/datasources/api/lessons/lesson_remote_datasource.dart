@@ -16,7 +16,7 @@ class LessonRemoteDatasource implements LessonRemoteDataSourceInt {
   @override
   Future<List<LessonDTO>> getByTeacherForDate(String teacher, DateTime date) async {
 		List<dynamic> body = await Api.get(
-			"teachers/$teacher/timetable?date=${date.day}-${date.month}-${date.year}",
+			"teachers/$teacher/timetable?date=${date.year}-${date.month}-${date.day}",
 		);
 		List<LessonDTO> lessons = body.map((e) => LessonDTO.fromJson(e as Map<String, dynamic>)).toList();
 		return lessons;

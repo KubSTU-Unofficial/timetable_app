@@ -6,6 +6,7 @@ class GetLessonsForTeacherForDateUsecase {
 
   GetLessonsForTeacherForDateUsecase({required this.repo});
 
-	Stream<List<Lesson>> execute(String name, DateTime date) =>
-		repo.getForTeacherForDate(name, date);
+	Stream<List<Lesson>> execute(String name, DateTime date) {
+		return repo.getForTeacherForDate(name, date);
+	}
 }

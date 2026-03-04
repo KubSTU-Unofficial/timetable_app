@@ -5,8 +5,9 @@ class TeachersRemoteDataSource implements TeachersRemoteDatasourceInt {
 
   @override
   Future<List<String>> getAll() async {
-		return await Api.get(
+		List<dynamic> teachers = await Api.get(
 			"teachers"
 		);
+		return teachers.map((e) => e.toString()).toList();
   }
 }

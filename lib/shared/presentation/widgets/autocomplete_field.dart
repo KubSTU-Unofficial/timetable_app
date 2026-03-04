@@ -10,12 +10,14 @@ class AutocompleteField<T> extends StatefulWidget {
 		required this.optionsBuilder,
 		this.label,
 		this.onSelected,
+		this.autofocus = true,
 	});
 
 	final TextEditingController controller;
 	final AutocompleteOptionsBuilder<String> optionsBuilder;
 	final void Function(T)? onSelected;
 	final String? label;
+	final bool autofocus;
 
   @override
   State<AutocompleteField> createState() => _AutocompleteFieldState();
@@ -36,6 +38,7 @@ class _AutocompleteFieldState extends State<AutocompleteField> {
 			return TextFormField(
 				controller: textEditingController,
 				focusNode: focusNode,
+				autofocus: widget.autofocus,
 				// Если нужна заливка, раскомментируй filled и подгони цвет текста в style
 				style: TextStyle(color: context.colors.textPrimary), // Цвет вводимого текста
 					decoration: InputDecoration(

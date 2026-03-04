@@ -1,11 +1,12 @@
 import 'package:drift/drift.dart';
 import 'package:timetable_app/core/data/database/database.dart';
+import 'package:timetable_app/features/teachers_page/data/models/teachers_table.dart';
 import 'package:timetable_app/shared/data/models/class/lessons_table.dart';
 import 'package:timetable_app/shared/utils/week_of_year_ext.dart';
 
 part 'lessons_dao.g.dart';
 
-@DriftAccessor(tables: [Lessons])
+@DriftAccessor(tables: [Lessons, Teachers])
 class LessonsDao extends DatabaseAccessor<Database> with _$LessonsDaoMixin {
   LessonsDao(super.attachedDatabase);
   
@@ -45,7 +46,7 @@ class LessonsDao extends DatabaseAccessor<Database> with _$LessonsDaoMixin {
 		});
 	}
 	
-	Future<void> saveAllForTeacher(List<LessonsCompanion> lessonList) async {
+	Future<void> saveAllForTeacherForDay(List<LessonsCompanion> lessonList, DateTime date) async {
 		if (lessonList.isEmpty) { return; }
 		String? teacherName = lessonList[0].teacherName.value;
 		if (teacherName == null) { return; }
@@ -53,10 +54,19 @@ class LessonsDao extends DatabaseAccessor<Database> with _$LessonsDaoMixin {
 			if (lessonList[i].teacherName.value != lessonList[i + 1].teacherName.value) { throw InvalidDataException("Переданы пары с разными перподавателями"); }
 		}
 		return transaction(() async {
-			await (delete(lessons)..where((e) => e.teacherName.equals(teacherName))).go();
+			await (delete(lessons)..where((e) => e.teacherName.equals(teacherName) & 
+		(
+				e.date.equals(date) |
+				e.startDate.isSmallerOrEqualValue(date) &
+				e.endDate.isBiggerOrEqualValue(date) &
+				e.isWeekEven.equals(date.weekOfYear % 2 == 0) &
+				e.dayOfWeek.equals(date.weekday)
+			)	)).go();
 			await batch((batch) async {
 				batch.insertAll(lessons, lessonList);
 			});
+			await (update(teachers)..where((e) => e.name.equals(teacherName)))
+				.write(TeachersEntry(name: teacherName, updatedAt: DateTime.now()));
 		});
 	}
 

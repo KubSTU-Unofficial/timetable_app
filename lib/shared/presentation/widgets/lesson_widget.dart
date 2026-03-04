@@ -3,9 +3,16 @@ import 'package:timetable_app/shared/domain/entities/lesson.dart';
 import 'package:timetable_app/shared/presentation/theme/theme_getter_ext.dart';
 
 class LessonWidget extends StatelessWidget {
-  const LessonWidget({super.key, required this.lesson,});
+  const LessonWidget({
+		super.key,
+		required this.lesson,
+		this.showTeacher = true,
+		this.showGroup = false,
+	});
 
   final Lesson lesson;
+	final bool showTeacher;
+	final bool showGroup;
 
   
 
@@ -49,7 +56,11 @@ class LessonWidget extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: _Body(lesson: lesson),
+            child: _Body(
+							lesson: lesson,
+							showTeacher: showTeacher,
+							showGroup: showGroup,
+						),
           ),
         ],
       ),
@@ -134,9 +145,11 @@ class _Title extends StatelessWidget {
 }
 
 class _Body extends StatelessWidget {
-  const _Body({required this.lesson});
+  const _Body({required this.lesson, required this.showTeacher, required this.showGroup});
 
   final Lesson lesson;
+	final bool showTeacher;
+	final bool showGroup;
 
   @override
   Widget build(BuildContext context) {
@@ -147,47 +160,49 @@ class _Body extends StatelessWidget {
           if (lesson.timing.weeks != null)
             TextTile(
               text:
-                  "Период: с ${lesson.timing.weeks!.from} по ${lesson.timing.weeks!.to} неделю;",
-            ),
-          if (lesson.timing.date != null)
-            TextTile(
-              text:
-                  "Дата: ${lesson.timing.date!.day}.${lesson.timing.date!.month}.${lesson.timing.date!.year}",
-            ),
-          if (lesson.percentOfGroup != 100)
-            TextTile(text: "Процент группы: ${lesson.percentOfGroup}"),
-          if (lesson.isInLectureHall == true)
-            TextTile(text: "В лекционной аудитории: да"),
-          if (lesson.isOnline == true) TextTile(text: "Онлайн: да"),
-          if (lesson.comment != null)
-            TextTile(text: "Примечание: ${lesson.comment}"),
-          if (lesson.teacherName != null)
-            TextTile(text: lesson.teacherName!),
-        ],
-      ),
-    );
-  }
+						"Период: с ${lesson.timing.weeks!.from} по ${lesson.timing.weeks!.to} неделю;",
+					),
+					if (lesson.timing.date != null)
+					TextTile(
+						text:
+						"Дата: ${lesson.timing.date!.day}.${lesson.timing.date!.month}.${lesson.timing.date!.year}",
+					),
+					if (lesson.percentOfGroup != 100)
+					TextTile(text: "Процент группы: ${lesson.percentOfGroup}"),
+					if (lesson.isInLectureHall == true)
+					TextTile(text: "В лекционной аудитории: да"),
+					if (lesson.isOnline == true) TextTile(text: "Онлайн: да"),
+					if (lesson.comment != null)
+					TextTile(text: "Примечание: ${lesson.comment}"),
+					if (lesson.teacherName != null && showTeacher)
+					TextTile(text: lesson.teacherName!),
+					if (showGroup)
+					TextTile(text: lesson.group),
+				],
+			),
+		);
+	}
 }
 
 class TextTile extends StatelessWidget {
-  const TextTile({super.key, required this.text});
-  final String text;
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        // Divider(color: context.colors.primary.withAlpha(100)),
-        Text(
-          text,
-          style: TextStyle(
-            color: context.colors.textBody,
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        SizedBox(height: 10),
-      ],
-    );
-  }
+	const TextTile({super.key, required this.text});
+	final String text;
+	@override
+	Widget build(BuildContext context) {
+		return Column(
+			crossAxisAlignment: CrossAxisAlignment.stretch,
+			children: [
+				// Divider(color: context.colors.primary.withAlpha(100)),
+				Text(
+					text,
+					style: TextStyle(
+						color: context.colors.textBody,
+						fontSize: 16,
+						fontWeight: FontWeight.bold,
+					),
+				),
+				SizedBox(height: 10),
+			],
+		);
+	}
 }

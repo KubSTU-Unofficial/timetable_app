@@ -15,7 +15,7 @@ import 'package:timetable_app/features/initial_settings_page/data/datasources/da
 import 'package:timetable_app/features/initial_settings_page/data/repos/group_repo.dart';
 import 'package:timetable_app/features/initial_settings_page/domain/repo_ints/group_repo_int.dart';
 import 'package:timetable_app/features/initial_settings_page/domain/usecases/get_all_groups_usecase.dart';
-import 'package:timetable_app/features/teachers_page/data/datasources/api/mock_teachers_remote_datasource.dart';
+import 'package:timetable_app/features/teachers_page/data/datasources/api/teachers_remote_datasource.dart';
 import 'package:timetable_app/features/teachers_page/data/datasources/api/teachers_remote_datasource_int.dart';
 import 'package:timetable_app/features/teachers_page/data/datasources/database/teachers_dao.dart';
 import 'package:timetable_app/features/teachers_page/data/datasources/repos/teachers_repo.dart';
@@ -66,7 +66,7 @@ void _initializeRemoteSources() {
 	getIt.registerLazySingleton<GroupRemoteDataSourceInt>(() => GroupRemoteDataSource());
 	getIt.registerLazySingleton<LessonRemoteDataSourceInt>(() => LessonRemoteDatasource());
 	getIt.registerLazySingleton<ExamRemoteDataSourceInt>(() => MockExamRemoteDatasource());
-	getIt.registerLazySingleton<TeachersRemoteDatasourceInt>(() => MockTeachersRemoteDatasource());
+	getIt.registerLazySingleton<TeachersRemoteDatasourceInt>(() => TeachersRemoteDataSource());
 	// ... Апишки для других сущностей здесь
 }
 

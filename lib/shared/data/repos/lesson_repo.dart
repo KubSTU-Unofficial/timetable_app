@@ -73,13 +73,15 @@ class LessonRepo implements LessonRepoInt {
 
   @override
   Stream<List<Lesson>> getForTeacherForDate(String name, DateTime date) {
-		// Раскомментируем, когда будет готов API
 		teachersDao.getUpdateDate(name).then((updatedAt) {
-			if (updatedAt == null || DateTime.now().difference(updatedAt).inHours > 12) {
-				(api.getByTeacherForDate(name, date)).then((value) => {
-					lessonsDao.saveAllForTeacher(
-						value.map((e) => e.toLesson()).toList().toCompanions()
-					)
+			// Пока в API не появится получение всего расписания сразу
+			// ignore: dead_code
+			if (true || updatedAt == null || DateTime.now().difference(updatedAt).inHours > 12) {
+				(api.getByTeacherForDate(name, date)).then((value) {
+					lessonsDao.saveAllForTeacherForDay(
+						value.map((e) => e.toLesson()).toList().toCompanions(),
+						date,
+					);
 				});
 			}
 		});

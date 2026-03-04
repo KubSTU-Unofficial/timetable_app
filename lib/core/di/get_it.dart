@@ -21,7 +21,7 @@ import 'package:timetable_app/features/teachers_page/data/datasources/database/t
 import 'package:timetable_app/features/teachers_page/data/datasources/repos/teachers_repo.dart';
 import 'package:timetable_app/features/teachers_page/domain/repo_ints/teachers_repo_int.dart';
 import 'package:timetable_app/features/teachers_page/domain/usecases/get_all_teachers_usecase.dart';
-import 'package:timetable_app/features/teachers_page/domain/usecases/get_lessons_for_teacher_usecase.dart';
+import 'package:timetable_app/features/teachers_page/domain/usecases/get_lessons_for_teacher_for_date_usecase.dart';
 import 'package:timetable_app/shared/data/datasources/api/lessons/lesson_remote_data_source_int.dart';
 import 'package:timetable_app/shared/data/datasources/api/lessons/lesson_remote_datasource.dart';
 import 'package:timetable_app/shared/data/datasources/database/lessons_dao.dart';
@@ -139,7 +139,7 @@ void _initializeUsecases() {
 		repo: getIt.get()
 	));
 
-	getIt.registerLazySingleton<GetLessonsForTeacherUsecase>(() => GetLessonsForTeacherUsecase(
+	getIt.registerLazySingleton<GetLessonsForTeacherForDateUsecase>(() => GetLessonsForTeacherForDateUsecase(
 		repo: getIt.get()
 	));
 	// ... Другие сценарии здесь

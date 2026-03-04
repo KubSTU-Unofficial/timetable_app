@@ -72,17 +72,17 @@ class LessonRepo implements LessonRepoInt {
   }
 
   @override
-  Stream<List<Lesson>> getAllForTeacher(String name) {
+  Stream<List<Lesson>> getForTeacherForDate(String name, DateTime date) {
 		// Раскомментируем, когда будет готов API
-		// teachersDao.getUpdateDate(name).then((updatedAt) {
-		// 	if (updatedAt == null || DateTime.now().difference(updatedAt).inHours > 12) {
-		// 		(api.getByTeacher(name)).then((value) => {
-		// 			lessonsDao.saveAllForTeacher(
-		// 				value.map((e) => e.toLesson()).toList().toCompanions()
-		// 			)
-		// 		});
-		// 	}
-		// });
-		return lessonsDao.selectByTeacher(name).map((e) => e.toLessonList());
+		teachersDao.getUpdateDate(name).then((updatedAt) {
+			if (updatedAt == null || DateTime.now().difference(updatedAt).inHours > 12) {
+				(api.getByTeacherForDate(name, date)).then((value) => {
+					lessonsDao.saveAllForTeacher(
+						value.map((e) => e.toLesson()).toList().toCompanions()
+					)
+				});
+			}
+		});
+		return lessonsDao.selectByTeacherForDate(name, date).map((e) => e.toLessonList());
   }
 }

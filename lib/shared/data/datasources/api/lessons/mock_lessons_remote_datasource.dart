@@ -11,7 +11,7 @@ class MockLessonsRemoteDatasource implements LessonRemoteDataSourceInt {
   }
 
   @override
-  Future<List<LessonDTO>> getByTeacher(String teacher) {
+  Future<List<LessonDTO>> getByTeacherForDate(String teacher, DateTime date) {
     // TODO: implement getByTeacher
     throw UnimplementedError();
   }

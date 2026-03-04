@@ -18,11 +18,16 @@ class LessonsDao extends DatabaseAccessor<Database> with _$LessonsDaoMixin {
 		})).watch();
 	}
 
-	Stream<List<LessonsEntry>> selectByTeacher(String teacherName) {
+	Stream<List<LessonsEntry>> selectByTeacherForDate(String teacherName, DateTime date) {
 		return (select(lessons)..where((e) {
 			return e.teacherName.equals(teacherName) &
-				e.startDate.isSmallerOrEqualValue(DateTime.now()) &
-				e.endDate.isBiggerOrEqualValue(DateTime.now());
+			(
+				e.date.equals(date) |
+				e.startDate.isSmallerOrEqualValue(date) &
+				e.endDate.isBiggerOrEqualValue(date) &
+				e.isWeekEven.equals(date.weekOfYear % 2 == 0) &
+				e.dayOfWeek.equals(date.weekday)
+			);
 			
 		})).watch();
 	}

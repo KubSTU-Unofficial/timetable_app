@@ -4,8 +4,9 @@ abstract class TeachersPageBlocEvent {}
 
 class TeachersPageInitEvent implements TeachersPageBlocEvent {}
 
-class TeacherRequestedEvent implements TeachersPageBlocEvent {
+class TeacherLessonsRequestedForDateEvent implements TeachersPageBlocEvent {
 	final String name;
+	final DateTime date;
 
-  TeacherRequestedEvent({required this.name});
+  TeacherLessonsRequestedForDateEvent({required this.name, required this.date});
 }

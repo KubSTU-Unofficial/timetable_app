@@ -15,5 +15,5 @@ abstract class LessonRepoInt {
 
   Future<DateTime> updateLessonsForUser();
 
-	Stream<List<Lesson>> getAllForTeacher(String name);
+	Stream<List<Lesson>> getForTeacherForDate(String name, DateTime date);
 }

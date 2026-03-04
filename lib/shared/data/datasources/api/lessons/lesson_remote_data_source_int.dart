@@ -4,6 +4,6 @@ abstract class LessonRemoteDataSourceInt {
 
 	Future<List<LessonDTO>> getByGroup(String group);
 
-	Future<List<LessonDTO>> getByTeacher(String teacher);
+	Future<List<LessonDTO>> getByTeacherForDate(String teacher, DateTime date);
 
 }

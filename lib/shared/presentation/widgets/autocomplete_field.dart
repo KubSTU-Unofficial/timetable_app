@@ -105,7 +105,10 @@ class _AutocompleteFieldState extends State<AutocompleteField> {
 					),
 				);
 			},
-			onSelected: widget.onSelected,
+			onSelected: (value) {
+				widget.onSelected?.call(value);
+				_focusNode.unfocus();
+			},
 			// onSelected: ,
 		);
 	}

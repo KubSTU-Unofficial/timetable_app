@@ -4,7 +4,7 @@ import 'package:timetable_app/features/teachers_page/data/datasources/api/teache
 
 class MockTeachersRemoteDatasource implements TeachersRemoteDatasourceInt {
   @override
-  Future<List<String>> getAll() {
+  Future<List<String>> getAllNames() {
 		return getIt.get<Database>().lessonsDao.getAllTeachers();
   }
   

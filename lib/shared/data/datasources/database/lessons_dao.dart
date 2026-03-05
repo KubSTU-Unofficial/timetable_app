@@ -1,12 +1,12 @@
 import 'package:drift/drift.dart';
 import 'package:timetable_app/core/data/database/database.dart';
-import 'package:timetable_app/features/teachers_page/data/models/teachers_table.dart';
+import 'package:timetable_app/features/teachers_page/data/models/teacher_dates_table.dart';
 import 'package:timetable_app/shared/data/models/class/lessons_table.dart';
 import 'package:timetable_app/shared/utils/week_of_year_ext.dart';
 
 part 'lessons_dao.g.dart';
 
-@DriftAccessor(tables: [Lessons, Teachers])
+@DriftAccessor(tables: [Lessons, TeacherDates])
 class LessonsDao extends DatabaseAccessor<Database> with _$LessonsDaoMixin {
   LessonsDao(super.attachedDatabase);
   
@@ -65,8 +65,8 @@ class LessonsDao extends DatabaseAccessor<Database> with _$LessonsDaoMixin {
 			await batch((batch) async {
 				batch.insertAll(lessons, lessonList);
 			});
-			await (update(teachers)..where((e) => e.name.equals(teacherName)))
-				.write(TeachersEntry(name: teacherName, updatedAt: DateTime.now()));
+			await (update(teacherDates)..where((e) => e.name.equals(teacherName) & e.date.equals(date)))
+				.write(TeacherDatesEntry(name: teacherName, updatedAt: DateTime.now(), date: date));
 		});
 	}
 

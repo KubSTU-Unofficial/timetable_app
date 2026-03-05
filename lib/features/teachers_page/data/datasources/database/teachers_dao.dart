@@ -1,30 +1,33 @@
 import 'package:drift/drift.dart';
 import 'package:timetable_app/core/data/database/database.dart';
-import 'package:timetable_app/features/teachers_page/data/models/teachers_table.dart';
+import 'package:timetable_app/features/teachers_page/data/models/teacher_dates_table.dart';
 
 part 'teachers_dao.g.dart';
 
-@DriftAccessor(tables: [Teachers])
+@DriftAccessor(tables: [TeacherDates])
 class TeachersDao extends DatabaseAccessor<Database> with _$TeachersDaoMixin {
   TeachersDao(super.attachedDatabase);
 
-	Future<void> updateAll(List<String> teachersList) =>
+	Future<void> saveNameList(List<String> teachersList) =>
 		transaction(() async {
-			await delete(teachers).go();
+			await delete(teacherDates).go();
 			await batch((b) {
-				b.insertAll(teachers, teachersList.map((e) => 
-					TeachersCompanion(
+				b.insertAll(teacherDates, teachersList.map((e) => 
+					TeacherDatesCompanion(
 						name: Value(e),
-						updatedAt: Value(DateTime(1970)),
+						updatedAt: Value.absent(),
+						date: Value.absent(),
 					)
 				));
 			});
 		});
 
-	Future<DateTime?> getUpdateDate(String name) async =>
-		(await (select(teachers)..where((e) => e.name.equals(name))).getSingleOrNull())?.updatedAt;
+	Future<DateTime?> getUpdatedAtForDate(String name, DateTime date) async =>
+		(await (select(teacherDates)..where((e) => 
+			e.name.equals(name) & e.date.equals(date)
+		)).getSingleOrNull())?.updatedAt;
 
-	Future<List<String>> getAll() async =>
-		(await (select(teachers)).get()).map((e) => e.name).toList();
+	Future<List<String>> getAllNames() async =>
+		(await (selectOnly(teacherDates)..addColumns([teacherDates.name])).get()).map((e) => e.read(teacherDates.name)).map((e) => e.toString()).toList();
   
 }

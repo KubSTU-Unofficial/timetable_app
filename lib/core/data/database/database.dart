@@ -6,14 +6,14 @@ import 'package:timetable_app/features/exams_page/data/models/exam_table.dart';
 import 'package:timetable_app/features/initial_settings_page/data/datasources/database/groups_dao.dart';
 import 'package:timetable_app/features/initial_settings_page/data/models/groups_table.dart';
 import 'package:timetable_app/features/teachers_page/data/datasources/database/teachers_dao.dart';
-import 'package:timetable_app/features/teachers_page/data/models/teachers_table.dart';
+import 'package:timetable_app/features/teachers_page/data/models/teacher_dates_table.dart';
 import 'package:timetable_app/shared/data/datasources/database/lessons_dao.dart';
 import 'package:timetable_app/shared/data/models/class/lessons_table.dart';
 part 'database.g.dart';
 
 
 @DriftDatabase(
-	tables: [Groups, Lessons, Exams, Teachers],
+	tables: [Groups, Lessons, Exams, TeacherDates],
 	daos: [GroupsDao, LessonsDao, ExamsDao, TeachersDao]
 )
 class Database extends _$Database {

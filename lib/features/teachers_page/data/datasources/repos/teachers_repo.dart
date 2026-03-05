@@ -17,10 +17,10 @@ class  TeachersRepo implements TeachersRepoInt {
 			prefs.getString(teachersUpdatedAtKey) ?? ""
 		);
 		if (lastUpdate == null || DateTime.now().difference(lastUpdate).inDays > 60) {
-			db.updateAll(await api.getAll());
+			db.saveNameList(await api.getAllNames());
 			prefs.setString(teachersUpdatedAtKey, DateTime.now().toString());
 		}
-		return await db.getAll();
+		return await db.getAllNames();
   }
   
 }

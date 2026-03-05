@@ -4,7 +4,7 @@ import 'package:timetable_app/features/teachers_page/data/datasources/api/teache
 class TeachersRemoteDataSource implements TeachersRemoteDatasourceInt {
 
   @override
-  Future<List<String>> getAll() async {
+  Future<List<String>> getAllNames() async {
 		List<dynamic> teachers = await Api.get(
 			"teachers"
 		);

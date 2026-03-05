@@ -1,5 +1,5 @@
 abstract class TeachersRemoteDatasourceInt {
 
-	Future<List<String>> getAll();
+	Future<List<String>> getAllNames();
   
 }

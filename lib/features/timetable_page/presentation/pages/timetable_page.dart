@@ -43,8 +43,32 @@ class _TimetablePageState extends State<TimetablePage> {
 										StreamBuilder(
 											stream: lessons,
 											builder: (context, asyncSnapshot) {
+												print("LESSONS");
+												print(lessons);
 												if (asyncSnapshot.data == null) {
 													return SizedBox.shrink();
+												}
+												if (asyncSnapshot.data!.isEmpty) {
+													return Center(
+													  child: Column(
+													  	mainAxisAlignment: MainAxisAlignment.center,
+													  	children: [
+													  		Text(
+													  			"Пар нет либо возникла ошибка.",
+													  			style: TextStyle(
+													  				fontSize: 18,
+													  			),
+													  		),
+													  		OutlinedButton(
+																	onPressed: onRefreshRequested,
+																	child: Text(
+																		"Обновить",
+																		style: TextStyle(fontSize: 18),
+																	),
+																)
+													  	],
+													  ),
+													);
 												}
 												// Для очников
 												if (asyncSnapshot.data!.first.timing.weeks != null) {

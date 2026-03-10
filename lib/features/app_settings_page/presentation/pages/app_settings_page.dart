@@ -105,10 +105,13 @@ class AppSettingsPage extends StatelessWidget {
 
 	/// Логика сброса группы
 	Future<void> _resetUserGroup(BuildContext context) async {
-		await getIt.get<SharedPreferences>().setString(userGroupKey, "");
+		SharedPreferences prefs = getIt.get<SharedPreferences>();
+		await prefs.remove(userGroupKey);
+		await prefs.remove(userLessonsUpdatedAt);
+		await prefs.remove(userExamsUpdatedAt);
 		if (context.mounted) {
-		context.go(homePagePath);
-	}
+			context.go(homePagePath);
+		}
 	}
 
 }

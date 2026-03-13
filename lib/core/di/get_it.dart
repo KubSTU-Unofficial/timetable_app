@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timetable_app/core/data/database/database.dart';
 import 'package:timetable_app/features/exams_page/data/datasources/api/exam_remote_data_source_int.dart';
+import 'package:timetable_app/features/exams_page/data/datasources/api/exam_remote_datasource.dart';
 import 'package:timetable_app/features/exams_page/data/datasources/api/mock_exam_remote_datasource.dart';
 import 'package:timetable_app/features/exams_page/data/datasources/database/exams_dao.dart';
 import 'package:timetable_app/features/exams_page/data/repos/exam_repo.dart';
@@ -65,7 +66,7 @@ void _initializeRemoteSources() {
 	// Подставляем тестовый источник данных, т.к. API пока нет
 	getIt.registerLazySingleton<GroupRemoteDataSourceInt>(() => GroupRemoteDataSource());
 	getIt.registerLazySingleton<LessonRemoteDataSourceInt>(() => LessonRemoteDatasource());
-	getIt.registerLazySingleton<ExamRemoteDataSourceInt>(() => MockExamRemoteDatasource());
+	getIt.registerLazySingleton<ExamRemoteDataSourceInt>(() => ExamRemoteDatasource());
 	getIt.registerLazySingleton<TeachersRemoteDatasourceInt>(() => TeachersRemoteDataSource());
 	// ... Апишки для других сущностей здесь
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:timetable_app/features/teachers_page/presentation/bloc/teachers_page_bloc.dart';
 // заглушка, макет будущей страницы не более
 
@@ -94,14 +95,24 @@ class _TeachersPageState extends State<TeachersPage> {
 													onPressed: () => _setDate(context, date.add(Duration(days: -1))),
 													icon: Icon(Icons.arrow_left)
 												),
-												IconButton(
-													onPressed: () {
-														showDateSelector(
-															context,
-															(selectedDate) => _setDate(context, selectedDate),
-														);
-													},
-													icon: Icon(Icons.calendar_month)
+												Row(
+												  children: [
+												    IconButton(
+												    	onPressed: () {
+												    		showDateSelector(
+												    			context,
+												    			(selectedDate) => _setDate(context, selectedDate),
+												    		);
+												    	},
+												    	icon: Row(
+																spacing: 8.0,
+												    	  children: [
+																	Text(DateFormat("dd:MM:yyyy").format(date)),
+												    	    Icon(Icons.calendar_month),
+												    	  ],
+												    	)
+												    ),
+												  ],
 												),
 												IconButton(
 													onPressed: () => _setDate(context, date.add(Duration(days: 1))),

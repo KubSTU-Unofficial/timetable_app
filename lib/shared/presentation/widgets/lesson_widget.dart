@@ -80,45 +80,15 @@ class _Title extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              children: [
-                Container(
-                  color: context.colors.coloredFieldBackground,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 20, right: 8),
-                    child: Text(
-                      "${lesson.timing.lessonNumber}",
-                      style: TextStyle(
-                        color: context.colors.textBody,
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(width: 5),
-                Container(
-                  color: context.colors.coloredFieldBackground,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: Text(
-                      lesson.type.translation,
-                      style: TextStyle(
-                        color: context.colors.textBody,
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(width: 5),
-                if (lesson.classroom != null)
+            Flexible(
+              child: Row(
+                children: [
                   Container(
                     color: context.colors.coloredFieldBackground,
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      padding: const EdgeInsets.only(left: 20, right: 8),
                       child: Text(
-                        lesson.classroom!,
+                        "${lesson.timing.lessonNumber}",
                         style: TextStyle(
                           color: context.colors.textBody,
                           fontSize: 14,
@@ -127,39 +97,93 @@ class _Title extends StatelessWidget {
                       ),
                     ),
                   ),
-              ],
-            ),
-            Text(
-              lesson.timing.lessonTime,
-              style: TextStyle(
-                color: context.colors.textBody,
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
+                  SizedBox(width: 5),
+									Flexible(
+									  child: LayoutBuilder(
+											builder: (context, constraints) {
+												TextStyle style = TextStyle(
+													color: context.colors.textBody,
+													fontSize: 14,
+													fontWeight: FontWeight.bold,
+												);
+
+												final textScaler = MediaQuery.of(context).textScaler;
+
+												final textPainter = TextPainter(
+													text: TextSpan(text: lesson.type.translation, style: style),
+													textDirection: TextDirection.ltr,
+													maxLines: 1,
+													textScaler: textScaler,
+												)..layout(maxWidth: constraints.maxWidth);
+
+												bool fits = !textPainter.didExceedMaxLines;
+
+									  		return Container(
+									  			color: context.colors.coloredFieldBackground,
+									  			child: Padding(
+									  				padding: const EdgeInsets.symmetric(horizontal: 8),
+									  				child: Text(
+									  					fits ?
+									  					lesson.type.translation :
+									  					lesson.type.shortTranslation,
+															softWrap: false,
+									  					style: style,
+									  				),
+									  			),
+									  		);
+									  	}
+									  ),
+									),
+									SizedBox(width: 5),
+									if (lesson.classroom != null)
+									Container(
+										color: context.colors.coloredFieldBackground,
+										child: Padding(
+											padding: const EdgeInsets.symmetric(horizontal: 8),
+											child: Text(
+												lesson.classroom!,
+												style: TextStyle(
+													color: context.colors.textBody,
+													fontSize: 14,
+													fontWeight: FontWeight.bold,
+												),
+											),
+										),
+									),
+								],
+							),
+						),
+						Text(
+							lesson.timing.lessonTime,
+							style: TextStyle(
+								color: context.colors.textBody,
+								fontSize: 14,
+								fontWeight: FontWeight.bold,
+							),
+						),
+					],
+				),
+			],
+		);
+	}
 }
 
 class _Body extends StatelessWidget {
-  const _Body({required this.lesson, required this.showTeacher, required this.showGroup});
+	const _Body({required this.lesson, required this.showTeacher, required this.showGroup});
 
-  final Lesson lesson;
+	final Lesson lesson;
 	final bool showTeacher;
 	final bool showGroup;
 
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.fromLTRB(13, 5, 0, 0),
-      child: Column(
-        children: [
-          if (lesson.timing.weeks != null)
-            TextTile(
-              text:
+	@override
+	Widget build(BuildContext context) {
+		return Padding(
+			padding: EdgeInsets.fromLTRB(13, 5, 0, 0),
+			child: Column(
+				children: [
+					if (lesson.timing.weeks != null)
+					TextTile(
+						text:
 						"Период: с ${lesson.timing.weeks!.from} по ${lesson.timing.weeks!.to} неделю;",
 					),
 					if (lesson.timing.date != null)

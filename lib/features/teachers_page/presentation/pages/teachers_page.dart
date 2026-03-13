@@ -51,31 +51,36 @@ class _TeachersPageState extends State<TeachersPage> {
 								child: Column(
 									mainAxisAlignment: MainAxisAlignment.center,
 									children: [
-										AutocompleteField(
-											label: "Имя преподавателя",
-											controller: _controller,
-											autofocus: false,
-											onSelected: (value) {
-												if (value == null) return;
-												setState(() {
-													name = value.toString();
-												});
-												context.read<TeachersPageBloc>().add(
-													TeacherLessonsRequestedForDateEvent(
-														name: value.toString(),
-														date: date,
-													)
-												);
-											},
-											optionsBuilder: (value) {
-												if (value.text.isEmpty) {
-													return const Iterable.empty();
-												}
-												return state.teachers.where(
-													(t) => t.toLowerCase()
-														.contains(value.text.toLowerCase())
-													);
-											}
+										Padding(
+										  padding: const EdgeInsets.symmetric(
+												horizontal: 16.0,
+											),
+										  child: AutocompleteField(
+										  	label: "Имя преподавателя",
+										  	controller: _controller,
+										  	autofocus: false,
+										  	onSelected: (value) {
+										  		if (value == null) return;
+										  		setState(() {
+										  			name = value.toString();
+										  		});
+										  		context.read<TeachersPageBloc>().add(
+										  			TeacherLessonsRequestedForDateEvent(
+										  				name: value.toString(),
+										  				date: date,
+										  			)
+										  		);
+										  	},
+										  	optionsBuilder: (value) {
+										  		if (value.text.isEmpty) {
+										  			return const Iterable.empty();
+										  		}
+										  		return state.teachers.where(
+										  			(t) => t.toLowerCase()
+										  				.contains(value.text.toLowerCase())
+										  			);
+										  	}
+										  ),
 										),
 										if(state.error != null)
 										ErrorMessage(
@@ -132,8 +137,11 @@ class _TeachersPageState extends State<TeachersPage> {
 										  		if (asyncSnapshot.data == null || asyncSnapshot.data!.isEmpty) {
 										  			return Text("Пар нет");
 										  		}
-										  		return ListView.builder(
+										  		return ListView.separated(
 										  			itemCount: asyncSnapshot.data!.length,
+														separatorBuilder: (context, index) {
+															return SizedBox(height: 8,);
+														},
 										  			itemBuilder: (context, index) {
 										  				return LessonWidget(
 																lesson: asyncSnapshot.data![index],

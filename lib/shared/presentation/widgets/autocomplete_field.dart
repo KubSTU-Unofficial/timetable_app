@@ -94,7 +94,10 @@ class _AutocompleteFieldState extends State<AutocompleteField> {
 					  			  		final String option = options.elementAt(index);
 					  			  		return ListTile(
 					  			  			title: Text(option, style: TextStyle(color: context.colors.textInverse)),
-					  			  			onTap: () => onSelected(option),
+					  			  			onTap: () {
+														_focusNode.unfocus();
+														onSelected(option);
+													},
 					  			  		);
 					  			  	},
 					  			  ),

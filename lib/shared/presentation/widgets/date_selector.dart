@@ -10,6 +10,7 @@ Future<void> showDateSelector(
 		initialDate: DateTime.now(), // Используем выбранную дату или текущую
 		firstDate: DateTime(1800), // Минимальная дата
 		lastDate: DateTime(2100), // Максимальная дата
+    locale: Locale('ru'),
 		builder: (BuildContext context, Widget? child) {
 			return Theme(
 				data: ThemeData.dark().copyWith(

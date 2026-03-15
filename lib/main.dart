@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+
 
 // Core
 import 'package:timetable_app/core/di/get_it.dart';
@@ -34,10 +36,19 @@ class MyApp extends StatelessWidget {
 					ThemeBlocReadyState() => MaterialApp.router(
 						builder: FToastBuilder(),
 						title: 'Flutter Demo',
-						theme: state.colorScheme.light, // Ваши настройки из предыдущего ответа
+						theme: state.colorScheme.light,
 						darkTheme: state.colorScheme.dark,
 						themeMode: state.themeMode,
 						routerConfig: router,
+            supportedLocales: const [
+							Locale('ru'), // Русский
+							Locale('en'), // Английский как запасной
+						],
+						localizationsDelegates: const [
+							GlobalMaterialLocalizations.delegate,
+							GlobalWidgetsLocalizations.delegate,
+							GlobalCupertinoLocalizations.delegate,
+						],
 					)
 				};
 			}

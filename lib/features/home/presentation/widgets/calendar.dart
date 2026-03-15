@@ -11,7 +11,7 @@ class Calendar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsetsGeometry.all(5),
+      padding: const EdgeInsetsGeometry.all(5),
       child: FloatingActionButton(
         onPressed: () {
           showDateSelector(context, onPicked);
@@ -22,7 +22,7 @@ class Calendar extends StatelessWidget {
           borderRadius: BorderRadius.circular(3),
           side: BorderSide(color: context.colors.primary, width: 2),
         ),
-        child: Icon(Icons.calendar_today),
+        child: const Icon(Icons.calendar_today),
       ),
     );
   }

@@ -16,102 +16,139 @@ import 'package:timetable_app/shared/presentation/theme/app_color_scheme.dart';
 import 'package:timetable_app/shared/presentation/theme/theme_getter_ext.dart';
 
 class AppSettingsPage extends StatelessWidget {
-	const AppSettingsPage({super.key});
+  const AppSettingsPage({super.key});
 
-	@override
-	Widget build(BuildContext context) {
-		return Scaffold(
-			backgroundColor: context.colors.background,
-			appBar: AppBar(
-				title: const Text('Настройки приложения'),
-				centerTitle: true,
-			),
-			body: SafeArea(
-				child: BlocBuilder<ThemeBloc, ThemeBlocState>(
-					builder: (context, state) {
-						// Если состояние не готово, показываем загрузку
-						if (state is! ThemeBlocReadyState) {
-						return const Center(child: CircularProgressIndicator());
-					}
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: context.colors.background,
+      appBar: AppBar(
+        title: const Text("Настройки приложения"),
+        titleTextStyle: TextStyle(
+          color: context.colors.primary,
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+        ),
+        centerTitle: true,
+      ),
+      body: SafeArea(
+        child: BlocBuilder<ThemeBloc, ThemeBlocState>(
+          builder: (context, state) {
+            // Если состояние не готово, показываем загрузку
+            if (state is! ThemeBlocReadyState) {
+              return const Center(child: CircularProgressIndicator());
+            }
 
-						return ListView(
-							padding: const EdgeInsets.all(16.0),
-							children: [
-								_buildGroupSection(context),
-								const Divider(height: 32),
-								_buildThemeDropdown(context, state),
-								const SizedBox(height: 16),
-								_buildColorSchemeDropdown(context, state),
-							],
-						);
-					},
-				),
-			),
-		);
-	}
+            return ListView(
+              padding: const EdgeInsets.all(16.0),
+              children: [
+                _buildGroupSection(context),
+                const Divider(height: 32),
+                _buildThemeDropdown(context, state),
+                const SizedBox(height: 16),
+                _buildColorSchemeDropdown(context, state),
+              ],
+            );
+          },
+        ),
+      ),
+    );
+  }
 
-	/// Секция смены группы
-	Widget _buildGroupSection(BuildContext context) {
-		return ListTile(
-			title: const Text("Аккаунт"),
-			subtitle: const Text("Сбросить текущие настройки группы"),
-			trailing: ElevatedButton(
-				onPressed: () => _resetUserGroup(context),
-				child: Text("Сменить", style: TextStyle(color: context.colors.textBody),),
-			),
-		);
-	}
+  /// Секция смены группы
+  Widget _buildGroupSection(BuildContext context) {
+    return ListTile(
+      title: const Text(
+        "Аккаунт",
+        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      ),
+      subtitle: const Text(
+        "Сбросить текущие настройки группы",
+        style: TextStyle(fontWeight: FontWeight.bold),
+      ),
+      trailing: ElevatedButton(
+        onPressed: () => _resetUserGroup(context),
+        style: ElevatedButton.styleFrom(
+          minimumSize: Size(120, 45),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3)),
+          backgroundColor: context.colors.cardBackground.withAlpha(20),
+        ),
+        child: Text(
+          "Сменит",
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            color: context.colors.primary,
+          ),
+        ),
+      ),
+    );
+  }
 
-	/// Выбор темы (Светлая/Темная/Системная)
-	Widget _buildThemeDropdown(BuildContext context, ThemeBlocReadyState state) {
-		return ListTile(
-			title: const Text("Тема оформления"),
-			trailing: DropdownButton<ThemeMode>(
-			value: state.themeMode,
-			onChanged: (mode) {
-				if (mode != null) {
-					context.read<ThemeBloc>().add(SetThemeModeEvent(mode.name));
-				}
-			},
-			items: const [
-				DropdownMenuItem(value: ThemeMode.light, child: Text("Светлая")),
-				DropdownMenuItem(value: ThemeMode.dark, child: Text("Темная")),
-				DropdownMenuItem(value: ThemeMode.system, child: Text("Системная")),
-			],
-		),
-		);
-	}
+  /// Выбор темы (Светлая/Темная/Системная)
+  Widget _buildThemeDropdown(BuildContext context, ThemeBlocReadyState state) {
+    return ListTile(
+      title: const Text(
+        "Тема оформления",
+        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      ),
+      trailing: DropdownButtonHideUnderline(
+        child: DropdownButton<ThemeMode>(
+          value: state.themeMode,
+          onChanged: (mode) {
+            if (mode != null) {
+              context.read<ThemeBloc>().add(SetThemeModeEvent(mode.name));
+            }
+          },
+          items: const [
+            DropdownMenuItem(value: ThemeMode.light, child: Text("Светлая")),
+            DropdownMenuItem(value: ThemeMode.dark, child: Text("Темная")),
+            DropdownMenuItem(value: ThemeMode.system, child: Text("Системная")),
+          ],
+        ),
+      ),
+    );
+  }
 
-	/// Выбор цветовой схемы
-	Widget _buildColorSchemeDropdown(BuildContext context, ThemeBlocReadyState state) {
-		final schemes = getIt.get<List<AppColorScheme>>();
+  /// Выбор цветовой схемы
+  Widget _buildColorSchemeDropdown(
+    BuildContext context,
+    ThemeBlocReadyState state,
+  ) {
+    final schemes = getIt.get<List<AppColorScheme>>();
 
-		return ListTile(
-			title: const Text("Цветовая схема"),
-			trailing: DropdownButton<AppColorScheme>(
-			value: state.colorScheme,
-			onChanged: (scheme) {
-				if (scheme != null) {
-					context.read<ThemeBloc>().add(SetColorSchemeEvent(scheme.name));
-				}
-			},
-			items: schemes.map((scheme) => DropdownMenuItem(
-				value: scheme,
-				child: Text(scheme.name),
-			)).toList(),
-		),
-		);
-	}
+    return ListTile(
+      title: const Text(
+        "Цветовая схема",
+        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      ),
+      trailing: DropdownButtonHideUnderline(
+        child: DropdownButton<AppColorScheme>(
+          value: state.colorScheme,
+          onChanged: (scheme) {
+            if (scheme != null) {
+              context.read<ThemeBloc>().add(SetColorSchemeEvent(scheme.name));
+            }
+          },
+          items: schemes
+              .map(
+                (scheme) =>
+                    DropdownMenuItem(value: scheme, child: Text(scheme.name)),
+              )
+              .toList(),
+        ),
+      ),
+    );
+  }
 
-	/// Логика сброса группы
-	Future<void> _resetUserGroup(BuildContext context) async {
-		SharedPreferences prefs = getIt.get<SharedPreferences>();
-		await prefs.remove(userGroupKey);
-		await prefs.remove(userLessonsUpdatedAt);
-		await prefs.remove(userExamsUpdatedAt);
-		if (context.mounted) {
-			context.go(homePagePath);
-		}
-	}
-
+  /// Логика сброса группы
+  Future<void> _resetUserGroup(BuildContext context) async {
+    SharedPreferences prefs = getIt.get<SharedPreferences>();
+    await prefs.remove(userGroupKey);
+    await prefs.remove(userLessonsUpdatedAt);
+    await prefs.remove(userExamsUpdatedAt);
+    if (context.mounted) {
+      context.go(homePagePath);
+    }
+  }
 }

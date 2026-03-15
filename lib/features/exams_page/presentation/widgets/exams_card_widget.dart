@@ -5,14 +5,6 @@ import 'package:timetable_app/features/exams_page/domain/entities/exam.dart';
 //context.colors
 import 'package:timetable_app/shared/presentation/theme/theme_getter_ext.dart';
 
-// final String group;
-// final String name;
-// final DateTime date;
-// final String classroom;
-// final String teacher;
-// final int year;
-// final int semester;
-
 class ExamsCardWidget extends StatefulWidget {
   const ExamsCardWidget({super.key, required this.exams});
   final Exam exams;
@@ -49,14 +41,14 @@ class _ExamsCardWidgetState extends State<ExamsCardWidget> {
                     ),
                   ),
                 ),
-                SizedBox(width: 5),
+                const SizedBox(width: 5),
 
                 Container(
                   color: context.colors.coloredFieldBackground,
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: TextContainer(text: widget.exams.classroom),
                 ),
-                Spacer(),
+                const Spacer(),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
                   child: TextContainer(
@@ -65,7 +57,7 @@ class _ExamsCardWidgetState extends State<ExamsCardWidget> {
                 ),
               ],
             ),
-            SizedBox(height: 5),
+            const SizedBox(height: 5),
             Row(
               children: [
                 Expanded(
@@ -76,7 +68,7 @@ class _ExamsCardWidgetState extends State<ExamsCardWidget> {
                     ),
                   ),
                 ),
-                SizedBox(width: 5),
+                const SizedBox(width: 5),
               ],
             ),
             Row(

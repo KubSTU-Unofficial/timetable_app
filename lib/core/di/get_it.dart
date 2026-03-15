@@ -3,7 +3,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timetable_app/core/data/database/database.dart';
 import 'package:timetable_app/features/exams_page/data/datasources/api/exam_remote_data_source_int.dart';
 import 'package:timetable_app/features/exams_page/data/datasources/api/exam_remote_datasource.dart';
-import 'package:timetable_app/features/exams_page/data/datasources/api/mock_exam_remote_datasource.dart';
 import 'package:timetable_app/features/exams_page/data/datasources/database/exams_dao.dart';
 import 'package:timetable_app/features/exams_page/data/repos/exam_repo.dart';
 import 'package:timetable_app/features/exams_page/domain/repo_ints/exam_repo_int.dart';

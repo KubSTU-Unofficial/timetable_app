@@ -28,7 +28,7 @@ class ExamsPage extends StatelessWidget {
                         child: ConstrainedBox(
                           constraints: constraints,
                           child: Column(
-                            spacing: 8.0,
+                            spacing: 16.0,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               const Text(
@@ -42,8 +42,7 @@ class ExamsPage extends StatelessWidget {
                                 onPressed: onRefreshRequested,
                                 style: ElevatedButton.styleFrom(
                                   minimumSize: Size(120, 45),
-                                  backgroundColor: context.colors.cardBackground
-                                      .withAlpha(20),
+                                  backgroundColor: context.colors.cardBackground,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(3),
                                   ),

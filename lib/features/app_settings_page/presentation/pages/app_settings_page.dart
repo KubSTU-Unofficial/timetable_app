@@ -84,10 +84,10 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
         style: ElevatedButton.styleFrom(
           minimumSize: Size(120, 45),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3)),
-          backgroundColor: context.colors.cardBackground.withAlpha(20),
+          backgroundColor: context.colors.cardBackground,
         ),
         child: Text(
-          "Сменит",
+          "Сменить",
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,

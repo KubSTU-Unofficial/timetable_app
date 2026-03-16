@@ -60,6 +60,8 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                 _developersInfo(context),
                 const SizedBox(height: 5),
                 _appInfo(context),
+                const SizedBox(height: 5),
+                _license(context),
               ],
             );
           },
@@ -200,6 +202,7 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
               const SizedBox(width: 10),
               Text(
                 "UI/UX",
+								softWrap: true,
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w100),
               ),
             ],
@@ -217,6 +220,7 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
               ),
               Text(
                 "Business Logic",
+								softWrap: true,
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w100),
               ),
             ],
@@ -237,9 +241,12 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               const SizedBox(width: 10),
-              Text(
-                "Backend Developer",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w100),
+              Expanded(
+                child: Text(
+                  "Backend Developer",
+									softWrap: true,
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w100),
+                ),
               ),
             ],
           ),
@@ -289,6 +296,31 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
             SimpleGitHubLink(),
           ],
         ),
+      ],
+    );
+  }
+
+  Widget _license(BuildContext context) {
+    return ExpansionTile(
+      title: Text(
+        "Лицензия",
+        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      ),
+      shape: BorderDirectional(
+        top: BorderSide.none,
+        bottom: BorderSide.none,
+        start: BorderSide.none,
+        end: BorderSide.none,
+      ),
+      collapsedIconColor: context.colors.accent,
+      iconColor: context.colors.primary,
+      childrenPadding: const EdgeInsets.fromLTRB(15, 0, 16, 0),
+      children: [
+				Text("""
+Copyright (C) 2026 DtheCan, Electroplayer, Fjerileik-norlod-sym-fjerir
+This program comes with ABSOLUTELY NO WARRANTY.
+This is free software, and you are welcome to redistribute it under certain conditions.
+					""")
       ],
     );
   }

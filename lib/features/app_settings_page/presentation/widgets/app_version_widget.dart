@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-class GetVersionApp extends StatefulWidget {
+class AppVersionWidget extends StatefulWidget {
+  const AppVersionWidget({super.key});
+
   @override
-  _GetVersionAppState createState() => _GetVersionAppState();
+  State<AppVersionWidget> createState() => _AppVersionWidgetState();
 }
 
-class _GetVersionAppState extends State<GetVersionApp> {
+class _AppVersionWidgetState extends State<AppVersionWidget> {
   String _appVersion = 'Загрузка...';
 
   @override

@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:go_router/go_router.dart';
 
 //widgets
-import 'package:timetable_app/features/app_settings_page/presentation/widgets/get_version_app.dart';
+import 'package:timetable_app/features/app_settings_page/presentation/widgets/app_version_widget.dart';
 import 'package:timetable_app/features/app_settings_page/presentation/widgets/simple_github_link.dart';
 
 //router
@@ -59,7 +59,7 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                 const SizedBox(height: 5),
                 _developersInfo(context),
                 const SizedBox(height: 5),
-                _InfoApp(context),
+                _appInfo(context),
               ],
             );
           },
@@ -249,7 +249,7 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
   }
 
   /// Инфо о приложении
-  Widget _InfoApp(BuildContext context) {
+  Widget _appInfo(BuildContext context) {
     return ExpansionTile(
       title: Text(
         "О приложении",
@@ -268,7 +268,7 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
         const SizedBox(height: 5),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [GetVersionApp()],
+          children: [AppVersionWidget()],
         ),
         const SizedBox(height: 5),
         Row(

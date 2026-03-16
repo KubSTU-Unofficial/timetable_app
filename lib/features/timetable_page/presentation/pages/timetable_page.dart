@@ -43,8 +43,6 @@ class _TimetablePageState extends State<TimetablePage> {
 										StreamBuilder(
 											stream: lessons,
 											builder: (context, asyncSnapshot) {
-												print("LESSONS");
-												print(lessons);
 												if (asyncSnapshot.data == null) {
 													return SizedBox.shrink();
 												}

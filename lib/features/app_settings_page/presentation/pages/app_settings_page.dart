@@ -3,6 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:go_router/go_router.dart';
 
+//widgets
+import 'package:timetable_app/features/app_settings_page/presentation/widgets/get_version_app.dart';
+import 'package:timetable_app/features/app_settings_page/presentation/widgets/simple_github_link.dart';
+
 //router
 import 'package:timetable_app/routing/router.dart';
 
@@ -15,15 +19,20 @@ import 'package:timetable_app/shared/presentation/bloc/theme/theme_bloc.dart';
 import 'package:timetable_app/shared/presentation/theme/app_color_scheme.dart';
 import 'package:timetable_app/shared/presentation/theme/theme_getter_ext.dart';
 
-class AppSettingsPage extends StatelessWidget {
+class AppSettingsPage extends StatefulWidget {
   const AppSettingsPage({super.key});
 
+  @override
+  State<AppSettingsPage> createState() => _AppSettingsPageState();
+}
+
+class _AppSettingsPageState extends State<AppSettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: context.colors.background,
       appBar: AppBar(
-        title: const Text("Настройки приложения"),
+        title: Column(children: [const Text("Настройки приложения")]),
         titleTextStyle: TextStyle(
           color: context.colors.primary,
           fontSize: 20,
@@ -40,13 +49,17 @@ class AppSettingsPage extends StatelessWidget {
             }
 
             return ListView(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(10.0),
               children: [
                 _buildGroupSection(context),
-                const Divider(height: 32),
+                const Divider(height: 16),
                 _buildThemeDropdown(context, state),
-                const SizedBox(height: 16),
+                const SizedBox(height: 5),
                 _buildColorSchemeDropdown(context, state),
+                const SizedBox(height: 5),
+                _developersInfo(context),
+                const SizedBox(height: 5),
+                _InfoApp(context),
               ],
             );
           },
@@ -94,6 +107,7 @@ class AppSettingsPage extends StatelessWidget {
       ),
       trailing: DropdownButtonHideUnderline(
         child: DropdownButton<ThemeMode>(
+          iconEnabledColor: context.colors.accent,
           value: state.themeMode,
           onChanged: (mode) {
             if (mode != null) {
@@ -124,6 +138,7 @@ class AppSettingsPage extends StatelessWidget {
       ),
       trailing: DropdownButtonHideUnderline(
         child: DropdownButton<AppColorScheme>(
+          iconEnabledColor: context.colors.accent,
           value: state.colorScheme,
           onChanged: (scheme) {
             if (scheme != null) {
@@ -150,5 +165,131 @@ class AppSettingsPage extends StatelessWidget {
     if (context.mounted) {
       context.go(homePagePath);
     }
+  }
+
+  /// О разработчиках
+  Widget _developersInfo(BuildContext context) {
+    return ExpansionTile(
+      collapsedIconColor: context.colors.accent,
+      iconColor: context.colors.primary,
+      title: Text(
+        "Разработчики",
+        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      ),
+      shape: BorderDirectional(
+        top: BorderSide.none,
+        bottom: BorderSide.none,
+        start: BorderSide.none,
+        end: BorderSide.none,
+      ),
+      children: [
+        const SizedBox(height: 10),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
+          child: Row(
+            children: [
+              CircleAvatar(
+                radius: 20,
+                backgroundImage: AssetImage('assets/avatars/avatar_mont3r.jpg'),
+              ),
+              const SizedBox(width: 10),
+              Text(
+                "DtheCan",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(width: 10),
+              Text(
+                "UI/UX",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w100),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 10),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
+          child: Row(
+            children: [
+              CircleAvatar(radius: 20),
+              Text(
+                "                        ",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              Text(
+                "Business Logic",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w100),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 10),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
+          child: Row(
+            children: [
+              CircleAvatar(
+                radius: 20,
+                backgroundImage: AssetImage('assets/avatars/Electroplayer.png'),
+              ),
+              const SizedBox(width: 10),
+              Text(
+                "Electroplayer",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(width: 10),
+              Text(
+                "Backend Developer",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w100),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  /// Инфо о приложении
+  Widget _InfoApp(BuildContext context) {
+    return ExpansionTile(
+      title: Text(
+        "О приложении",
+        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      ),
+      shape: BorderDirectional(
+        top: BorderSide.none,
+        bottom: BorderSide.none,
+        start: BorderSide.none,
+        end: BorderSide.none,
+      ),
+      collapsedIconColor: context.colors.accent,
+      iconColor: context.colors.primary,
+      childrenPadding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
+      children: [
+        const SizedBox(height: 5),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [GetVersionApp()],
+        ),
+        const SizedBox(height: 5),
+        Row(
+          children: [
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(200),
+                color: Colors.white,
+              ),
+              child: Image(
+                image: AssetImage('assets/GitHub_Invertocat_Black.png'),
+                fit: BoxFit.cover,
+              ),
+            ),
+            const SizedBox(width: 10,),
+            SimpleGitHubLink(),
+          ],
+        ),
+      ],
+    );
   }
 }

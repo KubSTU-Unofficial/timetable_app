@@ -115,4 +115,7 @@ class LessonsDao extends DatabaseAccessor<Database> with _$LessonsDaoMixin {
 
 	Future<List<String>> getAllTeachers() async =>
 		(await (selectOnly(lessons)..addColumns([lessons.teacherName])).get()).map((e) => e.read<String>(lessons.teacherName)!).toList();
+
+	Future<void> deleteForGroup(String group) =>
+		(delete(lessons)..where((e) => e.group.equals(group))).go();
 }

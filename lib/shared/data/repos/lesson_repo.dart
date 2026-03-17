@@ -85,4 +85,11 @@ class LessonRepo implements LessonRepoInt {
 		});
 		return lessonsDao.selectByTeacherForDate(name, date).map((e) => e.toLessonList());
   }
+
+  @override
+  Future<void> clearLessonsForUser() {
+		return lessonsDao.deleteForGroup(
+			_getUserGroup()
+		);
+  }
 }

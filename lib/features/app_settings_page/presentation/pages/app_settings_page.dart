@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:go_router/go_router.dart';
+import 'package:timetable_app/features/app_settings_page/domain/usecases/delete_user_group_data_usecase.dart';
 
 //widgets
 import 'package:timetable_app/features/app_settings_page/presentation/widgets/app_version_widget.dart';
@@ -14,7 +14,6 @@ import 'package:timetable_app/routing/router.dart';
 import 'package:timetable_app/core/di/get_it.dart';
 
 //shared
-import 'package:timetable_app/shared/data/shared_prefs_keys.dart';
 import 'package:timetable_app/shared/presentation/bloc/theme/theme_bloc.dart';
 import 'package:timetable_app/shared/presentation/theme/app_color_scheme.dart';
 import 'package:timetable_app/shared/presentation/theme/theme_getter_ext.dart';
@@ -160,10 +159,8 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
 
   /// Логика сброса группы
   Future<void> _resetUserGroup(BuildContext context) async {
-    SharedPreferences prefs = getIt.get<SharedPreferences>();
-    await prefs.remove(userGroupKey);
-    await prefs.remove(userLessonsUpdatedAt);
-    await prefs.remove(userExamsUpdatedAt);
+    DeleteUserGroupDataUsecase deleteUserDataUsecase = getIt.get<DeleteUserGroupDataUsecase>();
+		await deleteUserDataUsecase.execute();
     if (context.mounted) {
       context.go(homePagePath);
     }

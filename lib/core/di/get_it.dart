@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timetable_app/core/data/database/database.dart';
+import 'package:timetable_app/features/app_settings_page/domain/usecases/delete_user_group_data_usecase.dart';
 import 'package:timetable_app/features/exams_page/data/datasources/api/exam_remote_data_source_int.dart';
 import 'package:timetable_app/features/exams_page/data/datasources/api/exam_remote_datasource.dart';
 import 'package:timetable_app/features/exams_page/data/datasources/database/exams_dao.dart';
@@ -102,7 +103,7 @@ void _initializeUsecases() {
 	getIt.registerLazySingleton<GetAllGroupsUsecase>(() => GetAllGroupsUsecase(
 		repo: getIt.get()
 	));
-	
+
 	getIt.registerLazySingleton<GetAllLessonsForUserGroupUsecase>(() => GetAllLessonsForUserGroupUsecase(
 		repo: getIt.get()
 	));
@@ -121,6 +122,11 @@ void _initializeUsecases() {
 
 	getIt.registerLazySingleton<UpdateLessonsForUserUsecase>(() => UpdateLessonsForUserUsecase(
 		repo: getIt.get()
+	));
+
+	getIt.registerLazySingleton<DeleteUserGroupDataUsecase>(() => DeleteUserGroupDataUsecase(
+		lessonsRepo: getIt.get(),
+		prefs: getIt.get()
 	));
 
 	getIt.registerLazySingleton<GetAllExamsForUserUsecase>(() => GetAllExamsForUserUsecase(

@@ -16,4 +16,6 @@ abstract class LessonRepoInt {
   Future<DateTime> updateLessonsForUser();
 
 	Stream<List<Lesson>> getForTeacherForDate(String name, DateTime date);
+
+	Future<void> clearLessonsForUser();
 }

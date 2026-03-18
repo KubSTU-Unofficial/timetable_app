@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
 					ThemeBlocNonInitializedState() => SizedBox.expand(),
 					ThemeBlocReadyState() => MaterialApp.router(
 						builder: FToastBuilder(),
-						title: 'Flutter Demo',
+						title: 'Finally Schedule',
 						theme: state.colorScheme.light,
 						darkTheme: state.colorScheme.dark,
 						themeMode: state.themeMode,

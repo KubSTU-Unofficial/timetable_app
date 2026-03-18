@@ -31,11 +31,16 @@ class ExamsPage extends StatelessWidget {
                             spacing: 16.0,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const Text(
-                                "Информации об экзаменах пока нет.",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+																	horizontal: 16.0,
+																),
+                                child: const Text(
+                                  "Информации об экзаменах пока нет.",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
                               ElevatedButton(

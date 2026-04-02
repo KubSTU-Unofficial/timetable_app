@@ -5,7 +5,7 @@ import 'package:timetable_app/features/app_settings_page/domain/usecases/delete_
 
 //widgets
 import 'package:timetable_app/features/app_settings_page/presentation/widgets/app_version_widget.dart';
-import 'package:timetable_app/features/app_settings_page/presentation/widgets/simple_github_link.dart';
+import 'package:timetable_app/shared/presentation/widgets/simple_link.dart';
 
 //router
 import 'package:timetable_app/routing/router.dart';
@@ -17,6 +17,7 @@ import 'package:timetable_app/core/di/get_it.dart';
 import 'package:timetable_app/shared/presentation/bloc/theme/theme_bloc.dart';
 import 'package:timetable_app/shared/presentation/theme/app_color_scheme.dart';
 import 'package:timetable_app/shared/presentation/theme/theme_getter_ext.dart';
+import 'package:timetable_app/shared/presentation/widgets/simple_link.dart';
 
 class AppSettingsPage extends StatefulWidget {
   const AppSettingsPage({super.key});
@@ -159,8 +160,9 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
 
   /// Логика сброса группы
   Future<void> _resetUserGroup(BuildContext context) async {
-    DeleteUserGroupDataUsecase deleteUserDataUsecase = getIt.get<DeleteUserGroupDataUsecase>();
-		await deleteUserDataUsecase.execute();
+    DeleteUserGroupDataUsecase deleteUserDataUsecase = getIt
+        .get<DeleteUserGroupDataUsecase>();
+    await deleteUserDataUsecase.execute();
     if (context.mounted) {
       context.go(homePagePath);
     }
@@ -199,7 +201,7 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
               const SizedBox(width: 10),
               Text(
                 "UI/UX",
-								softWrap: true,
+                softWrap: true,
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w100),
               ),
             ],
@@ -217,7 +219,7 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
               ),
               Text(
                 "Business Logic",
-								softWrap: true,
+                softWrap: true,
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w100),
               ),
             ],
@@ -241,7 +243,7 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
               Expanded(
                 child: Text(
                   "Backend Developer",
-									softWrap: true,
+                  softWrap: true,
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w100),
                 ),
               ),
@@ -289,8 +291,11 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                 fit: BoxFit.cover,
               ),
             ),
-            const SizedBox(width: 10,),
-            SimpleGitHubLink(),
+            const SizedBox(width: 10),
+            SimpleLink(
+              text: 'Github',
+              url: 'https://github.com/KubSTU-Unofficial/timetable_app/tree/main?tab=readme-ov-file',
+            ),
           ],
         ),
       ],
@@ -313,11 +318,11 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
       iconColor: context.colors.primary,
       childrenPadding: const EdgeInsets.fromLTRB(15, 0, 16, 0),
       children: [
-				Text("""
+        Text("""
 Copyright (C) 2026 DtheCan, Electroplayer, Fjerileik-norlod-sym-fjerir
 This program comes with ABSOLUTELY NO WARRANTY.
 This is free software, and you are welcome to redistribute it under certain conditions.
-					""")
+					"""),
       ],
     );
   }

@@ -17,7 +17,6 @@ import 'package:timetable_app/core/di/get_it.dart';
 import 'package:timetable_app/shared/presentation/bloc/theme/theme_bloc.dart';
 import 'package:timetable_app/shared/presentation/theme/app_color_scheme.dart';
 import 'package:timetable_app/shared/presentation/theme/theme_getter_ext.dart';
-import 'package:timetable_app/shared/presentation/widgets/simple_link.dart';
 
 class AppSettingsPage extends StatefulWidget {
   const AppSettingsPage({super.key});
